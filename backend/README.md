@@ -1,8 +1,8 @@
 # Java backend for platform
 
 ## Technologies:
-Java 17
-Maven Project
+Java 17\
+Maven Project\
 Spring Boot 3.0.5
 
 ## Overview:

@@ -1,12 +1,22 @@
 import logo from './logo.svg';
 import './App.css';
-import LessonPage from './components/LessonPage/LessonPage';
+import LessonPage from './components/pages/LessonPage/LessonPage';
+import HomePage from './components/pages/HomePage/HomePage';
+import Layout from './components/pages/Layout/Layout';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <LessonPage></LessonPage>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Layout />} >
+          <Route index element={<HomePage />} />  
+          <Route path="lesson" element={<LessonPage />} />
+          <Route path="*" element={<HomePage />} />
+        </Route>
+      </Routes>
+      
+    </BrowserRouter>
   );
 }
 

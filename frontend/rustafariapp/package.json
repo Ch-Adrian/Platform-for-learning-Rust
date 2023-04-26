@@ -11,6 +11,8 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",
     "react-dom": "^18.2.0",
+    "react-drag-drop-files": "^2.3.9",
+    "react-dropzone": "^14.2.3",
     "react-markdown": "^8.0.7",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
@@ -38,5 +40,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "react-router-dom": "^6.10.0"
   }
 }

@@ -1,14 +1,16 @@
-import React from 'react'
-import SamplePage from "../../assets/SampleLessonPage.json"
-import TextCell from '../Cells/TextCell/TextCell';
-import CodeCell from "../Cells/CodeCell/CodeCell"
+import React, { useEffect, useMemo, useState } from 'react'
+import SamplePage from "../../../assets/SampleLessonPage.json"
+import TextCell from '../../Cells/TextCell/TextCell';
+import CodeCell from "../../Cells/CodeCell/CodeCell"
 import "./LessonPage.css"
+import { useLocation, useNavigate } from 'react-router-dom'
 
 
 const LessonPage = () => {
 
-    let pageDefinition = SamplePage;
-    console.log(pageDefinition["pages"]);
+    const location = useLocation()
+    const [pageDefinition, setPageDefinition] = useState(null);
+
 
     const extractStructure = (page) => {
         page.cells.forEach(element => {
@@ -16,10 +18,13 @@ const LessonPage = () => {
         });
     }
 
-    extractStructure(pageDefinition);
+    useMemo(() => {
+        setPageDefinition(location.state.lessonFile);
+    }, [location]);
+
     return (
         <div className='page-container'>
-            {pageDefinition.cells.map((cell, idx) => {
+            {pageDefinition ? pageDefinition.cells.map((cell, idx) => {
             if (cell.type === "text") {
                 return (
                     <TextCell key={idx} text={cell.value}></TextCell>
@@ -29,7 +34,8 @@ const LessonPage = () => {
                     <CodeCell key={idx} text={cell.value}></CodeCell>
                 )
             }
-        })}
+        }) 
+        : null}
         </div>
         
     )

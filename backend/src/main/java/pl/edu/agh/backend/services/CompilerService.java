@@ -1,16 +1,21 @@
-package pl.edu.agh.backend.compiler;
+package pl.edu.agh.backend.services;
 
 import org.apache.commons.io.FileUtils;
+import org.springframework.stereotype.Service;
+import pl.edu.agh.backend.compiler.RustFile;
+import pl.edu.agh.backend.compiler.CompilerResponse;
+
 import java.io.*;
 import java.nio.file.Paths;
 
-public class RustCompiler {
-    public RustOutput run(RustFile rustFile) {
+@Service
+public class CompilerService {
+    public CompilerResponse run(RustFile rustFile) {
         String path = Paths.get(rustFile.directory()) + File.separator + rustFile.fileName();
         FileWriter fileToCompile;
         try {
             fileToCompile = new FileWriter(path);
-            fileToCompile.write(rustFile.code());
+            fileToCompile.write(rustFile.content());
             fileToCompile.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -32,7 +37,7 @@ public class RustCompiler {
             process.waitFor();
             if (!output.isEmpty()) {
                 FileUtils.cleanDirectory(new File(rustFile.directory()));
-                return new RustOutput(1, output.toString());
+                return new CompilerResponse(1, output.toString());
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -52,12 +57,12 @@ public class RustCompiler {
             }
             process.waitFor();
             FileUtils.cleanDirectory(new File(rustFile.directory()));
-            return new RustOutput(0, output.toString());
+            return new CompilerResponse(0, output.toString());
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        return new RustOutput(1, "");
+        return new CompilerResponse(1, "");
     }
 }

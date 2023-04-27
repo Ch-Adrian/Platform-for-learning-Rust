@@ -1,16 +1,18 @@
 package pl.edu.agh.backend.compiler;
 
-public class Input {
-    public String getItem() {
-        return item;
-    }
+public class StudentInput {
 
-    private String item;
+    private final String item;
 
-    public Input() {
+    public StudentInput() {
         item = "";
     }
-    public Input(String item) {
+
+    public StudentInput(String item) {
         this.item = item;
+    }
+
+    public String getItem() {
+        return item;
     }
 }

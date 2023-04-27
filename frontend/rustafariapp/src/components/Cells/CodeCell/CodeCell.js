@@ -2,6 +2,9 @@ import React, { useRef } from 'react'
 import Editor from '@monaco-editor/react';
 import Button from 'react-bootstrap/Button';
 import "./CodeCell.css"
+import axios from 'axios'
+
+const RUST_COMPILER_REST_API_URL = "http://localhost:8080/lesson/code"
 
 const CodeCell = (props) => {
   const editorRef = useRef(null);
@@ -23,6 +26,17 @@ const CodeCell = (props) => {
     console.log(editorRef.current.getValue());
   }
 
+  function compile() {
+    axios
+    .post(RUST_COMPILER_REST_API_URL, {
+      item: editorRef.current.getValue()
+    }
+    
+    )
+  .then((response) => editorRef.current.setValue(response.data))
+  .catch((err) => console.log(err));
+  };
+
 
   return (
     <div>
@@ -42,7 +56,7 @@ const CodeCell = (props) => {
        onMount={handleEditorDidMount} 
        defaultValue={props.text} />
       <div className='editor-button-container'>
-       <Button className='editor-button' variant="success">Run code</Button>{' '}
+       <Button onClick={compile} className='editor-button' variant="success">Run code</Button>{' '}
       </div>  
     </div>
   )

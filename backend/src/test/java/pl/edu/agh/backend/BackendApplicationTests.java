@@ -2,7 +2,7 @@ package pl.edu.agh.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import pl.edu.agh.backend.compiler.RustCompiler;
+import pl.edu.agh.backend.services.CompilerService;
 import pl.edu.agh.backend.compiler.RustFile;
 
 import static org.springframework.test.util.AssertionErrors.*;
@@ -12,22 +12,22 @@ class BackendApplicationTests {
 
 	@Test
 	void correctFile() {
-		RustCompiler rustCompiler = new RustCompiler();
+		CompilerService compilerService = new CompilerService();
 		String code = """
 				fn main() {
 				    println!("Hello, world!");
 				}
 				""";
 
-		String actual = rustCompiler.run(
-				new RustFile("main.rs", "src/main/resources/rust", code)).output();
+		String actual = compilerService.run(
+				new RustFile("main.rs", "src/main/resources/rust", code)).content();
 
 		assertEquals("", "Hello, world!", actual);
 	}
 
 	@Test
 	void fileWithErrorOutput() {
-		RustCompiler rustCompiler = new RustCompiler();
+		CompilerService compilerService = new CompilerService();
 		String code = """
 				fn main() {
 				    println!("Hello, world!");
@@ -35,7 +35,7 @@ class BackendApplicationTests {
 				}
 				""";
 
-		int actual = rustCompiler.run(new RustFile("main.rs", "src/main/resources/rust", code)).code();
+		int actual = compilerService.run(new RustFile("main.rs", "src/main/resources/rust", code)).code();
 
 		assertEquals("", 1, actual);
 	}

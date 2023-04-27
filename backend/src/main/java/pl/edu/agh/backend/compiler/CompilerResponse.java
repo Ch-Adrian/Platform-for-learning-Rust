@@ -1,4 +1,4 @@
 package pl.edu.agh.backend.compiler;
 
-public record RustOutput(int code, String output) {
+public record CompilerResponse(int code, String content) {
 }

@@ -1,16 +1,15 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React from "react";
 import {useDropzone} from 'react-dropzone';
-import Dropzone from 'react-dropzone';
 import "./FilePicker.css";
 
 const FilePicker = (props) => {
-    const onDrop = useCallback(file => {
+    const onDrop = file => {
         const read = new FileReader();
         read.readAsBinaryString(file[0])
         read.onloadend = () => {
-            props.openLesson(JSON.parse(read.result))
+            props.openLesson(JSON.parse(read.result), file[0].name)
         }
-    }, [])
+    }
 
     const {getRootProps, 
         getInputProps, 

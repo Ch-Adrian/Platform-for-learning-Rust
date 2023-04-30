@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import LessonPage from './components/pages/LessonPage/LessonPage';
 import HomePage from './components/pages/HomePage/HomePage';
@@ -11,7 +10,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Layout />} >
           <Route index element={<HomePage />} />  
-          <Route path="lesson" element={<LessonPage />} />
+          <Route path="lesson/:name/:page" element={<LessonPage />} />
           <Route path="*" element={<HomePage />} />
         </Route>
       </Routes>

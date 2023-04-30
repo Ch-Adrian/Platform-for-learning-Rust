@@ -2,31 +2,34 @@ import React, { useMemo, useState } from 'react'
 import TextCell from '../../Cells/TextCell/TextCell';
 import CodeCell from "../../Cells/CodeCell/CodeCell"
 import "./LessonPage.css"
-import { useLocation } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 
 
 const LessonPage = () => {
-
-    const location = useLocation()
-    const [pageDefinition, setPageDefinition] = useState(null);
+    const { page } = useParams();
+    const location = useLocation();
+    const [lessonDefinition, setLessonDefinition] = useState(null);
 
 
     useMemo(() => {
-        setPageDefinition(location.state.lessonFile);
+        setLessonDefinition(location.state.lessonFile);
     }, [location]);
 
     const updateCell = (newCell, idx) => {
-        setPageDefinition({
-            cells: pageDefinition.cells.map((cell, i) => {
-                if (i === idx) return newCell;
-                return cell;
+        let modifiedPage = {...lessonDefinition};
+        modifiedPage.pages[page].cells[idx] = newCell;
+        setLessonDefinition({
+            pages: lessonDefinition.pages.map((pageDef, iPage) => {
+                if (iPage === page) return {cells: modifiedPage.pages[page].cells}
+                else return {...pageDef}
+
             })
         });
     }
 
     return (
         <div className='page-container'>
-            {pageDefinition && pageDefinition.cells.map((cell, idx) => {
+            {lessonDefinition && lessonDefinition.pages[page].cells.map((cell, idx) => {
             if (cell.type === "text") {
                 return (
                     <TextCell key={idx} text={cell.value} cell={cell} cellIdx={idx}></TextCell>

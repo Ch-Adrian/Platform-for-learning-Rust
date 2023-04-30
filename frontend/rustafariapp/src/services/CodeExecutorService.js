@@ -7,7 +7,7 @@ const CodeExecutorService = {
         .post(RUST_COMPILER_REST_API_URL, {
           item: codeValue
         });
-        if (response.status != 200) {
+        if (response.status !== 200) {
             throw new Error(response.data);
         } else {
             return response;

@@ -3,6 +3,7 @@ import Editor from '@monaco-editor/react';
 import Button from 'react-bootstrap/Button';
 import "./CodeCell.css"
 import CodeExecutorService from '../../../services/CodeExecutorService';
+import OutputCell from '../OutputCell/OutputCell';
 
 
 const CodeCell = (props) => {
@@ -21,13 +22,14 @@ const CodeCell = (props) => {
     monaco.editor.setTheme('rustafariapp');
   }
 
-  function compile() {
-  CodeExecutorService.compileAndRun(editorRef.current.getValue())
+  const compile = () => {
+    CodeExecutorService.compileAndRun(editorRef.current.getValue())
     .then((res) => {
-      editorRef.current.setValue(res.data)
+      let modifiedCell = props.cell;
+      modifiedCell.output = res.data;
+      props.updateCell(modifiedCell, props.cellIdx);
     })
     .catch((err) => console.log(err));
-
   };
 
 
@@ -38,19 +40,20 @@ const CodeCell = (props) => {
         minimap: {
           enabled: false,
         },
-        fontSize: 14,
+        fontSize: 18,
         wordWrap: "on",
         lineNumbers: "off",
-  
       }}
        height="20vh" 
        width="100%"
        defaultLanguage="rust" 
        onMount={handleEditorDidMount} 
        defaultValue={props.text} />
+      {props.cell.output && <OutputCell output={props.cell.output}></OutputCell>}
       <div className='editor-button-container'>
        <Button onClick={compile} className='editor-button' variant="success">Run code</Button>{' '}
       </div>  
+      
     </div>
   )
 }

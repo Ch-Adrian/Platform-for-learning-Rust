@@ -1,9 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import SamplePage from "../../../assets/SampleLessonPage.json"
+import React, { useMemo, useState } from 'react'
 import TextCell from '../../Cells/TextCell/TextCell';
 import CodeCell from "../../Cells/CodeCell/CodeCell"
 import "./LessonPage.css"
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 
 const LessonPage = () => {
@@ -12,30 +11,33 @@ const LessonPage = () => {
     const [pageDefinition, setPageDefinition] = useState(null);
 
 
-    const extractStructure = (page) => {
-        page.cells.forEach(element => {
-            console.log(element);
-        });
-    }
-
     useMemo(() => {
         setPageDefinition(location.state.lessonFile);
     }, [location]);
 
+    const updateCell = (newCell, idx) => {
+        setPageDefinition({
+            cells: pageDefinition.cells.map((cell, i) => {
+                if (i === idx) return newCell;
+                return cell;
+            })
+        });
+    }
+
     return (
         <div className='page-container'>
-            {pageDefinition ? pageDefinition.cells.map((cell, idx) => {
+            {pageDefinition && pageDefinition.cells.map((cell, idx) => {
             if (cell.type === "text") {
                 return (
-                    <TextCell key={idx} text={cell.value}></TextCell>
+                    <TextCell key={idx} text={cell.value} cell={cell} cellIdx={idx}></TextCell>
                 )
             } else if (cell.type === "code") {
                 return (
-                    <CodeCell key={idx} text={cell.value}></CodeCell>
+                    <CodeCell key={idx} text={cell.value} cell={cell} cellIdx={idx} updateCell={updateCell}></CodeCell>
                 )
             }
-        }) 
-        : null}
+            return null;
+        })}
         </div>
         
     )

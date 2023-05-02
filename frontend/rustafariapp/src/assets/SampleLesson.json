@@ -4,7 +4,8 @@
             "cells": [
                 {
                     "type": "code",
-                    "value": "fn main() {println!(\"TestTest!\");}"
+                    "value": "fn main() {println!(\"TestTest!\");}\n fn testFunc() -> i8 {\n    return 5;\n}",
+                    "test": "#[test]\n  fn exploration() {\n      assert_eq!(testFunc(), 4);\n  }"
                 },
                 {
                     "type": "text",

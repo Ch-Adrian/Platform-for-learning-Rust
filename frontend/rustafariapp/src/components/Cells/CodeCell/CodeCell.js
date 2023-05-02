@@ -22,11 +22,22 @@ const CodeCell = (props) => {
     monaco.editor.setTheme('rustafariapp');
   }
 
-  const compile = () => {
-    CodeExecutorService.compileAndRun(editorRef.current.getValue())
+  const compile = async () => {
+    let modifiedCell = props.cell;
+    if (props.cell.test){
+      await CodeExecutorService.compileTestAndRun(editorRef.current.getValue(), props.cell.test)
+      .then((res) => {
+        modifiedCell.output = res.data;
+        modifiedCell.output += "\n";
+      })
+      .catch((err) => console.log(err));
+    } else {
+      modifiedCell.output = "";
+    }
+
+    await CodeExecutorService.compileAndRun(editorRef.current.getValue())
     .then((res) => {
-      let modifiedCell = props.cell;
-      modifiedCell.output = res.data;
+      modifiedCell.output += res.data;
       props.updateCell(modifiedCell, props.cellIdx);
     })
     .catch((err) => console.log(err));

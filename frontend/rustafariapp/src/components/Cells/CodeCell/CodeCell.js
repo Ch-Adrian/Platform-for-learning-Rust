@@ -46,6 +46,7 @@ const CodeCell = (props) => {
 
   return (
     <div>
+
       <Editor 
        options={{
         minimap: {
@@ -60,11 +61,12 @@ const CodeCell = (props) => {
        defaultLanguage="rust" 
        onMount={handleEditorDidMount} 
        defaultValue={props.text} />
-      {props.cell.output && <OutputCell output={props.cell.output}></OutputCell>}
+
       <div className='editor-button-container'>
        <Button onClick={compile} className='editor-button' variant="success">Run code</Button>{' '}
       </div>  
-      
+
+      {props.cell.output && <OutputCell output={props.cell.output}></OutputCell>}
     </div>
   )
 }

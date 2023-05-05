@@ -61,6 +61,8 @@ public class CompilerService {
             }
             process.waitFor();
             FileUtils.cleanDirectory(new File(rustFile.directory()));
+            this.createFileGitKeep(rustFile.directory());
+
             // return new CompilerResponse(0, output.toString());
         } catch (IOException e) {
             e.printStackTrace();
@@ -119,6 +121,8 @@ public class CompilerService {
             }
             process.waitFor();
             FileUtils.cleanDirectory(new File(rustTestFile.directory()));
+            this.createFileGitKeep(rustTestFile.directory());
+
         } catch (IOException e) {
             e.printStackTrace();
             return new CompilerResponse(1, output.toString());
@@ -126,5 +130,16 @@ public class CompilerService {
             throw new RuntimeException(e);
         }
         return new CompilerResponse(0, output.toString());
+    }
+
+    private void createFileGitKeep(String directory) {
+        try {
+            File gitKeep = new File(directory + "\\" + ".gitkeep");
+            if (gitKeep.createNewFile()) {
+                System.out.println("File .gitkeep created.");
+            }
+        } catch(IOException exception){
+            System.err.println("Error: Cannot create .gitkeep file.");
+        }
     }
 }

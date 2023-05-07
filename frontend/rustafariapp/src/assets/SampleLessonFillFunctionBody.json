@@ -1,0 +1,16 @@
+{
+    "pages": [
+        {
+            "cells": [
+                {
+                    "type": "text",
+                    "value": "**In the code below, body of function `count_to_ten`, which sould print natural numbers from 1 to 10, is missing - try to implement it and run the code.**"
+                },
+                {
+                    "type": "code",
+                    "value": "pub fn count_to_ten() {\n    //TODO\n}\n\nfn main(){\n  count_to_ten();\n}"
+                }
+            ]
+        }
+    ]
+}

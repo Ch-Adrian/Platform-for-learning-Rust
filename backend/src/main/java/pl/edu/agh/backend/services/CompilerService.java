@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.edu.agh.backend.compiler.RustFile;
 import pl.edu.agh.backend.compiler.RustTestFile;
 import pl.edu.agh.backend.compiler.CompilerResponse;
-
+import pl.edu.agh.backend.compiler.Status;
 import java.io.*;
 import java.nio.file.Paths;
 
@@ -14,6 +14,7 @@ public class CompilerService {
     public CompilerResponse run(RustFile rustFile) {
         String path = Paths.get(rustFile.directory()) + File.separator + rustFile.fileName();
         FileWriter fileToCompile;
+
         try {
             fileToCompile = new FileWriter(path);
             fileToCompile.write(rustFile.content());
@@ -21,115 +22,143 @@ public class CompilerService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        ProcessBuilder processBuilder = new ProcessBuilder();
 
+        ProcessBuilder processBuilder = new ProcessBuilder();
         String[] compileCommand = {"rustc", path, "--out-dir", rustFile.directory()};
         processBuilder.command(compileCommand);
-        StringBuilder output = new StringBuilder();
+        StringBuilder compilerMessage = new StringBuilder();
+
         try {
             Process process = processBuilder.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-
             String line;
-            // StringBuilder output = new StringBuilder();
+
             while ((line = reader.readLine()) != null) {
                 System.out.println(line);
-                output.append(line);
-                output.append("\n");
+                compilerMessage.append(line);
+                compilerMessage.append("\n");
             }
+
             process.waitFor();
-            // if (!output.isEmpty()) {
-            //     FileUtils.cleanDirectory(new File(rustFile.directory()));
-            //     return new CompilerResponse(1, output.toString());
-            // }
+            File fileExecutable = new File(path.split("\\.")[0] + ".exe");
+
+            if (!fileExecutable.exists()) {
+                FileUtils.cleanDirectory(new File(rustFile.directory()));
+                return CompilerResponse.builder()
+                        .status(Status.ERROR)
+                        .compilerMessage(compilerMessage.toString())
+                        .build();
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
-        String outputFile = rustFile.fileName().split("\\.")[0] + ".exe";
-        processBuilder.command(Paths.get(rustFile.directory()) + File.separator + outputFile);
+        StringBuilder actualOutput = new StringBuilder();
+        processBuilder.command(path.split("\\.")[0] + ".exe");
+
         try {
             Process process = processBuilder.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
-            // StringBuilder output = new StringBuilder();
+
             while ((line = reader.readLine()) != null) {
-                output.append(line);
-                output.append("\n");
+                actualOutput.append(line);
+                actualOutput.append("\n");
             }
+
             process.waitFor();
             FileUtils.cleanDirectory(new File(rustFile.directory()));
-            this.createFileGitKeep(rustFile.directory());
+            createFileGitKeep(rustFile.directory());
 
-            // return new CompilerResponse(0, output.toString());
         } catch (IOException e) {
             e.printStackTrace();
-            return new CompilerResponse(1, output.toString());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        return new CompilerResponse(0, output.toString());
+        return CompilerResponse.builder()
+                .status(getStatus(compilerMessage))
+                .compilerMessage(compilerMessage.toString())
+                .actualOutput(actualOutput.toString())
+                .build();
     }
-
-    public CompilerResponse runTests(RustTestFile rustTestFile) {
-        String path = Paths.get(rustTestFile.directory()) + File.separator + rustTestFile.fileName();
+    public CompilerResponse runTests(RustTestFile rustFile) {
+        String path = Paths.get(rustFile.directory()) + File.separator + rustFile.fileName();
         FileWriter fileToCompile;
+
         try {
             fileToCompile = new FileWriter(path);
-            fileToCompile.write("mod tests {");
-            fileToCompile.write(rustTestFile.content());
-            fileToCompile.write(rustTestFile.testContent());
-            fileToCompile.write("}");
+            fileToCompile.write("mod tests {"); // wrap
+            fileToCompile.write(rustFile.content());
+            fileToCompile.write(rustFile.testContent()); // tests
+            fileToCompile.write("}"); // wrap
             fileToCompile.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        ProcessBuilder processBuilder = new ProcessBuilder();
 
-        String[] compileCommand = {"rustc", path, "--out-dir", rustTestFile.directory(), "--test"};
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        String[] compileCommand = {"rustc", path, "--out-dir", rustFile.directory(), "--test"};
         processBuilder.command(compileCommand);
-        StringBuilder output = new StringBuilder();
+        StringBuilder compilerMessage = new StringBuilder();
+
         try {
             Process process = processBuilder.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-
             String line;
             
             while ((line = reader.readLine()) != null) {
                 System.out.println(line);
-                output.append(line);
-                output.append("\n");
+                compilerMessage.append(line);
+                compilerMessage.append("\n");
             }
+
             process.waitFor();
+            File fileExecutable = new File(path.split("\\.")[0] + ".exe");
+
+            if (!fileExecutable.exists()) {
+                FileUtils.cleanDirectory(new File(rustFile.directory()));
+                return CompilerResponse.builder()
+                        .status(Status.ERROR)
+                        .compilerMessage(compilerMessage.toString())
+                        .build();
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
-        String outputFile = rustTestFile.fileName().split("\\.")[0] + ".exe";
-        processBuilder.command(Paths.get(rustTestFile.directory()) + File.separator + outputFile);
+        StringBuilder actualOutput = new StringBuilder();
+        processBuilder.command(path.split("\\.")[0] + ".exe");
+
         try {
             Process process = processBuilder.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
+
             while ((line = reader.readLine()) != null) {
-                output.append(line);
-                output.append("\n");
+                actualOutput.append(line);
+                actualOutput.append("\n");
             }
+
             process.waitFor();
-            FileUtils.cleanDirectory(new File(rustTestFile.directory()));
-            this.createFileGitKeep(rustTestFile.directory());
+            FileUtils.cleanDirectory(new File(rustFile.directory()));
+            createFileGitKeep(rustFile.directory());
 
         } catch (IOException e) {
             e.printStackTrace();
-            return new CompilerResponse(1, output.toString());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        return new CompilerResponse(0, output.toString());
+        return CompilerResponse.builder()
+                .status(getStatus(compilerMessage))
+                .compilerMessage(compilerMessage.toString())
+                .actualOutput(actualOutput.toString())
+                .build();
     }
 
     private void createFileGitKeep(String directory) {
@@ -140,6 +169,14 @@ public class CompilerService {
             }
         } catch(IOException exception){
             System.err.println("Error: Cannot create .gitkeep file.");
+        }
+    }
+
+    private Status getStatus(StringBuilder message) {
+        if (message.isEmpty()) {
+            return Status.NORMAL;
+        } else {
+            return Status.WARNINGS;
         }
     }
 }

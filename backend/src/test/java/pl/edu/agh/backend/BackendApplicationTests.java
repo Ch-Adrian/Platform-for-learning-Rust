@@ -2,6 +2,7 @@ package pl.edu.agh.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import pl.edu.agh.backend.compiler.Status;
 import pl.edu.agh.backend.services.CompilerService;
 import pl.edu.agh.backend.compiler.RustFile;
 
@@ -9,6 +10,7 @@ import static org.springframework.test.util.AssertionErrors.*;
 
 @SpringBootTest
 class BackendApplicationTests {
+
 
 	@Test
 	void correctFile() {
@@ -19,10 +21,13 @@ class BackendApplicationTests {
 				}
 				""";
 
-		String actual = compilerService.run(
-				new RustFile("main.rs", "src/main/resources/rust", code)).content();
+		String actual = compilerService.run(RustFile.builder()
+							.fileName("main.rs")
+							.directory("src/main/resources/rust")
+							.content(code)
+							.build()).getActualOutput();
 
-		assertEquals("", "Hello, world!", actual);
+		assertEquals("", "Hello, world!\n", actual); // There is always empty line in the end of an output.
 	}
 
 	@Test
@@ -35,8 +40,12 @@ class BackendApplicationTests {
 				}
 				""";
 
-		int actual = compilerService.run(new RustFile("main.rs", "src/main/resources/rust", code)).code();
+		Status actual = compilerService.run(RustFile.builder()
+							.fileName("main.rs")
+							.directory("src/main/resources/rust")
+							.content(code)
+							.build()).getStatus();
 
-		assertEquals("", 1, actual);
+		assertEquals("", Status.ERROR, actual);
 	}
 }

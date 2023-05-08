@@ -3,6 +3,7 @@ import TextCell from '../../Cells/TextCell/TextCell';
 import CodeCell from "../../Cells/CodeCell/CodeCell"
 import "./LessonPage.css"
 import { useLocation, useParams } from 'react-router-dom'
+import EmptyCell from '../../Cells/EmptyCell/EmptyCell';
 
 
 const LessonPage = () => {
@@ -37,6 +38,10 @@ const LessonPage = () => {
             } else if (cell.type === "code") {
                 return (
                     <CodeCell key={idx} text={cell.value} cell={cell} cellIdx={idx} updateCell={updateCell}></CodeCell>
+                )
+            } else if (cell.type === "empty") {
+                return (
+                    <EmptyCell key={idx} text={cell.value} cell={cell} cellIdx={idx}></EmptyCell>
                 )
             }
             return null;

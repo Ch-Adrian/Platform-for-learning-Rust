@@ -1,0 +1,32 @@
+{
+    "pages": [
+        {
+            "cells": [
+                {
+                    "type": "text",
+                    "value": "# Petle w jezyku rust \n \n ### Petla for: \n \n Rust kocham rusta ```javascript var testBox = box(););``` "
+                },
+                {
+                    "type": "code",
+                    "value": "pub fn add(a: i32, b: i32) i32 {\n      a + b;\n  }\n  \n  fn main(){\n  \n      println!(\"{}\", add(1,2));\n  \n  }"
+                },
+                {
+                    "type": "text",
+                    "value": "**In following code something is missing. Try to find out what should be inside parenthesis to make code working.  \n  Pay attention to the compiler error output - it may be useful to find the solution.**"
+                },
+                {
+                    "type": "empty",
+                    "value": ""
+                },
+                {
+                    "type": "text",
+                    "value": "**In following code something is missing. Try to find out what should be inside parenthesis to make code working.  \n  Pay attention to the compiler error output - it may be useful to find the solution.**"
+                },
+                {
+                    "type": "code",
+                    "value": "pub fn add(a: i32, b: i32) i32 {\n      a + b;\n  }\n  \n  fn main(){\n  \n      println!(\"{}\", add(1,2));\n  \n  }"
+                }
+            ]
+        }
+    ]
+}

@@ -1,13 +1,15 @@
-import React, { useRef } from 'react'
+import React, { useRef, useContext } from 'react';
 import Editor from '@monaco-editor/react';
 import Button from 'react-bootstrap/Button';
 import "./CodeCell.css"
 import CodeExecutorService from '../../../services/CodeExecutorService';
 import OutputCell from '../OutputCell/OutputCell';
+import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
 
 
 const CodeCell = (props) => {
   const editorRef = useRef(null);
+  const {updateCell} = useContext(LessonContext);
 
   const handleEditorDidMount = (editor, monaco) => {
     editorRef.current = editor;
@@ -22,10 +24,10 @@ const CodeCell = (props) => {
     monaco.editor.setTheme('rustafariapp');
   }
 
-  const compile = async () => {
+  const compile = () => {
     let modifiedCell = props.cell;
     if (props.cell.test){
-      await CodeExecutorService.compileTestAndRun(editorRef.current.getValue(), props.cell.test)
+      CodeExecutorService.compileTestAndRun(editorRef.current.getValue(), props.cell.test)
       .then((res) => {
         modifiedCell.output = res.data;
         modifiedCell.output += "\n";
@@ -35,10 +37,10 @@ const CodeCell = (props) => {
       modifiedCell.output = "";
     }
 
-    await CodeExecutorService.compileAndRun(editorRef.current.getValue())
+    CodeExecutorService.compileAndRun(editorRef.current.getValue())
     .then((res) => {
       modifiedCell.output += res.data;
-      props.updateCell(modifiedCell, props.cellIdx);
+      updateCell(modifiedCell, props.cellIdx, props.currentPage);
     })
     .catch((err) => console.log(err));
   };

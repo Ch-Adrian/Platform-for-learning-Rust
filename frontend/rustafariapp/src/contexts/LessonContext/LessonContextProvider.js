@@ -22,7 +22,6 @@ const LessonContextProvider = (props) => {
     }, [lessonDefinition]);
 
     const updateCell = (newCell, idx, page) => {
-        console.log(newCell);
         let modifiedPage = {...lessonDefinition};
         modifiedPage.pages[page].cells[idx] = newCell;
         setLessonDefinition({

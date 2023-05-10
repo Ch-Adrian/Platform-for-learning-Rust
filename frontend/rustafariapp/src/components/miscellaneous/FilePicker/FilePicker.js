@@ -5,7 +5,7 @@ import "./FilePicker.css";
 const FilePicker = (props) => {
     const onDrop = file => {
         const read = new FileReader();
-        read.readAsBinaryString(file[0])
+        read.readAsText(file[0]);
         read.onloadend = () => {
             props.openLesson(JSON.parse(read.result), file[0].name)
         }

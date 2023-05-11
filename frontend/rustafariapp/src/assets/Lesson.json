@@ -45,6 +45,71 @@
                 {
                     "type": "code",
                     "value": "pub fn add(a: i32, b: i32) i32 {\n      a + b;\n  }\n  \n  fn main(){\n  \n      println!(\"{}\", add(1,2));\n  \n  }"
+                },
+                {
+                    "type": "empty",
+                    "value": ""
+                },
+                {
+                    "type": "text",
+                    "value": " # TESTY"
+                },
+                {
+                    "type": "code",
+                    "value": "fn main() {println!(\"TestTest!\");}\n fn testFunc() -> i8 {\n    return 5;\n}",
+                    "test": "#[test]\n  fn exploration() {\n      assert_eq!(testFunc(), 4);\n  }"
+                },
+                {
+                    "type": "empty",
+                    "value": ""
+                },
+                {
+                    "type": "text",
+                    "value": "# MISSING CODE TO IMPLEMENT"
+                },
+                {
+                    "type": "text",
+                    "value": "**In the code below, body of function `count_to_ten`, which sould print natural numbers from 1 to 10, is missing - try to implement it and run the code.**"
+                },
+                {
+                    "type": "code",
+                    "value": "pub fn count_to_ten() {\n    //TODO\n}\n\nfn main(){\n  count_to_ten();\n}"
+                },
+                {
+                    "type": "empty",
+                    "value": ""
+                },
+                {
+                    "type": "text",
+                    "value": "# MOŻLIWOŚĆI MARKDOWN"
+                },
+                {
+                    "type": "text",
+                    "value": "| żółć   | sd | sd |     |   |\n  |------|----|----|-----|---|\n  |      |    | dw |     |   |\n  | asdf |    |    |     |   |\n  |      |    |    | sdf |   |"
+                },
+                {
+                    "type": "code",
+                    "value": "pub fn add(a: i32, b: i32) i32 {\n      a + b;\n  }\n  \n  fn main(){\n  \n      println!(\"{}\", add(1,2));\n  \n  }"
+                },
+                {
+                    "type": "text",
+                    "value": "~~I love jamstack~~                 \n  https://www.thisbecomesalink.com\n  * [x] yet another\n  * [ ] to do"
+                },
+                {
+                    "type": "empty",
+                    "value": ""
+                },
+                {
+                    "type": "text",
+                    "value": "# MISSING CODE TO IMPLEMENT"
+                },
+                {
+                    "type": "text",
+                    "value": "**In following code something is missing. Try to find out what should be inside parenthesis to make code working.  \n  Pay attention to the compiler error output - it may be useful to find the solution.**"
+                },
+                {
+                    "type": "code",
+                    "value": "pub fn add(a: i32, b: i32) i32 {\n      a + b;\n  }\n  \n  fn main(){\n  \n      println!(\"{}\", add(1,2));\n  \n  }"
                 }
             ]
         }

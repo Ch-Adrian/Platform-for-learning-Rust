@@ -21,12 +21,12 @@ const LessonContextProvider = (props) => {
           }
     }, [lessonDefinition]);
 
-    const updateCell = (newCell, idx, page) => {
-        let modifiedPage = {...lessonDefinition};
-        modifiedPage.pages[page].cells[idx] = newCell;
+    const updateCell = (newCell, idx, page, section) => {
+        let modifiedLesson = {...lessonDefinition};
+        modifiedLesson.pages[page].sections[section].cells[idx] = newCell;
         setLessonDefinition({
             pages: lessonDefinition.pages.map((pageDef, iPage) => {
-                if (iPage === page) return {cells: modifiedPage.pages[page].cells}
+                if (iPage === page) return {sections: modifiedLesson.pages[page].section[section]}
                 else return {...pageDef}
 
             })

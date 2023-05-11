@@ -8,7 +8,7 @@ import "github-markdown-css"
 const OutputCell = (props) => {
   return (
     <ReactMarkdown className={'markdown-output markdown-body'} remarkPlugins={[remarkGfm]}>
-        {props.output}
+        {String(props.output)}
     </ReactMarkdown>
   )
 }

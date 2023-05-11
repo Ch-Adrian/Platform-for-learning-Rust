@@ -1,10 +1,8 @@
 import React, { useContext } from 'react'
-import TextCell from '../../Cells/TextCell/TextCell';
-import CodeCell from "../../Cells/CodeCell/CodeCell"
 import "./LessonPage.css"
 import { useParams } from 'react-router-dom'
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
-import EmptyCell from '../../Cells/EmptyCell/EmptyCell';
+import LessonSection from './LessonSection/LessonSection';
 
 
 const LessonPage = () => {
@@ -12,23 +10,12 @@ const LessonPage = () => {
     // const location = useLocation();
     const {lessonDefinition} = useContext(LessonContext);
 
+    console.log(lessonDefinition);
+
     return (
         <div className='page-container'>
-            {lessonDefinition && lessonDefinition.pages[page].cells.map((cell, idx) => {
-            if (cell.type === "text") {
-                return (
-                    <TextCell key={idx} text={cell.value} cell={cell} cellIdx={idx}></TextCell>
-                )
-            } else if (cell.type === "code") {
-                return (
-                    <CodeCell key={idx} text={cell.value} cell={cell} cellIdx={idx} currentPage={page}></CodeCell>
-                )
-            } else if (cell.type === "empty") {
-                return (
-                    <EmptyCell key={idx} text={cell.value} cell={cell} cellIdx={idx}></EmptyCell>
-                )
-            }
-            return null;
+            {lessonDefinition && lessonDefinition.pages[page].sections.map((section, idx) => {
+            return <LessonSection key={idx} section={section} sectionIdx={idx} page={page}></LessonSection>
         })}
         </div>
         

@@ -5,7 +5,7 @@ const CodeExecutorService = {
     compileAndRun: async (codeValue) => {
         const response = await axios
         .post(RUST_COMPILER_REST_API_URL + "code", {
-          item: codeValue
+        item: codeValue
         });
         if (response.status !== 200) {
             throw new Error(response.data);

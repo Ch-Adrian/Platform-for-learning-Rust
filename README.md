@@ -9,6 +9,8 @@ Maven Project
 
 ### Frontend:
 React\
+node.js\
+npm
 
 ### Operating system:
 Windows
@@ -24,9 +26,13 @@ inside backend directory run:\
 `.\mvnw clean` to clean project
 
 ### Frontend:
-To run frontend side of platform\
-You have to run `npm start` inside\
-frontend/rustafariapp directory.\
+You have to enter frontend/rustafariapp\
+directory. Then if You run project\
+for the first time please use command:\
+`npm install` to install packages\
+
+Now you can run platform with:\
+`npm start` command.\
 Afterwards open web browser and go to link:\
 http://localhost:3000
 

@@ -15,7 +15,10 @@ const LessonPage = () => {
     return (
         <div className='page-container'>
             {lessonDefinition && lessonDefinition.pages[page].sections.map((section, idx) => {
-            return <LessonSection key={idx} section={section} sectionIdx={idx} page={page}></LessonSection>
+            return (<React.Fragment key={idx}>
+            <LessonSection key={idx} section={section} sectionIdx={idx} page={page}></LessonSection>
+            <div key={idx+"addSection"}>Dodaj sekcję</div>
+            </React.Fragment>)
         })}
         </div>
         

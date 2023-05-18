@@ -33,8 +33,20 @@ const LessonContextProvider = (props) => {
         });
     }
 
+    const addCell = (newCell, idx, page, section) => {
+        let modifiedLesson = {...lessonDefinition};
+        modifiedLesson.pages[page].sections[section].cells.splice(idx+1, 0, newCell);    
+        setLessonDefinition({
+            pages: lessonDefinition.pages.map((pageDef, iPage) => {
+                if (iPage === page) return {sections: modifiedLesson.pages[page].section[section]}
+                else return {...pageDef}
+
+            })
+        });
+    }
+
     return (
-        <LessonContext.Provider value={{...value, updateCell}}>
+        <LessonContext.Provider value={{...value, updateCell, addCell}}>
             {props.children}
         </LessonContext.Provider>
     )

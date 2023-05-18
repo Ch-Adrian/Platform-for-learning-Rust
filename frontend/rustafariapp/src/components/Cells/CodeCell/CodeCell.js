@@ -68,14 +68,16 @@ const CodeCell = (props) => {
   const editorChangeHandler = () => {
     editorRef.current.layout({ width: containerRef.current.clientWidth, height: editorRef.current.getContentHeight() })
   }
-  
 
   return (
-    <div id="dupsko" ref={containerRef}>
+    <div ref={containerRef}>
       <Editor 
        options={{
         minimap: {
           enabled: false,
+        },
+        scrollbar: {
+          alwaysConsumeMouseWheel: false
         },
         fontSize: 14,
         wordWrap: "on",

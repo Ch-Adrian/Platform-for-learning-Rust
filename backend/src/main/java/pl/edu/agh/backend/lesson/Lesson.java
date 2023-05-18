@@ -1,4 +1,4 @@
-package pl.edu.agh.backend.models;
+package pl.edu.agh.backend.lesson;
 
 import lombok.Getter;
 import lombok.Setter;

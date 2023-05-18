@@ -1,8 +1,8 @@
-package pl.edu.agh.backend.models;
+package pl.edu.agh.backend.lesson;
 
 import lombok.Getter;
 import lombok.Setter;
-import pl.edu.agh.backend.models.cells.Cell;
+import pl.edu.agh.backend.lesson.cells.Cell;
 
 import java.util.ArrayList;
 import java.util.List;

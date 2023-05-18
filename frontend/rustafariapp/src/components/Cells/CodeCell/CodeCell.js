@@ -9,11 +9,14 @@ import { LessonContext } from '../../../contexts/LessonContext/LessonContextProv
 
 const CodeCell = (props) => {
   const editorRef = useRef(null);
+  const containerRef = useRef(null);
   const {updateCell} = useContext(LessonContext);
   const [isExecuting, setIsExecuting] = useState(false);
   const [isConnectionError, setIsConnectionError] = useState(false);
+  const [monaco, setMonaco] = useState(null);
 
   const handleEditorDidMount = (editor, monaco) => {
+    setMonaco(monaco);
     editorRef.current = editor;
     monaco.editor.defineTheme('rustafariapp', {
       base: 'vs-dark',
@@ -24,11 +27,18 @@ const CodeCell = (props) => {
       },
     });
     monaco.editor.setTheme('rustafariapp');
+    if (editorRef.current !== null) editorRef.current.layout({ width: containerRef.current.clientWidth, height: editorRef.current.getContentHeight() });
   }
 
   useEffect(() => {
     if (editorRef.current !== null) editorRef.current.getModel().setValue(props.text);
   }, [props.text]);
+
+  
+  useEffect(() => {
+    if (editorRef.current !== null) editorRef.current.layout({ width: containerRef.current.clientWidth, height: editorRef.current.getContentHeight() });
+  }, [editorRef.current]);
+
 
   const compile = async () => {
     setIsConnectionError(false);
@@ -54,24 +64,30 @@ const CodeCell = (props) => {
     });
     setIsExecuting(false);
   };
+
+  const editorChangeHandler = () => {
+    editorRef.current.layout({ width: containerRef.current.clientWidth, height: editorRef.current.getContentHeight() })
+  }
   
 
   return (
-    <div>
+    <div id="dupsko" ref={containerRef}>
       <Editor 
        options={{
         minimap: {
           enabled: false,
         },
-        fontSize: 18,
+        fontSize: 14,
         wordWrap: "on",
         lineNumbers: "off",
+        automaticLayout: true,
+        scrollBeyondLastLine: false
       }}
-       height="20vh" 
        width="100%"
        defaultLanguage="rust" 
        onMount={handleEditorDidMount} 
-       defaultValue={props.text} />
+       defaultValue={props.text} 
+       onChange={editorChangeHandler}/>
 
       <div className='editor-button-container'>
        <Button onClick={compile} className='editor-button' variant="success" disabled={isExecuting}>{!isExecuting ? 'Run code' : 'Running...'}</Button>{' '}

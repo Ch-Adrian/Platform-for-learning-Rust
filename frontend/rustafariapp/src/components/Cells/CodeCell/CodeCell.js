@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useState } from 'react';
+import React, { useRef, useContext, useState, useEffect } from 'react';
 import Editor from '@monaco-editor/react';
 import Button from 'react-bootstrap/Button';
 import "./CodeCell.css"
@@ -26,6 +26,10 @@ const CodeCell = (props) => {
     monaco.editor.setTheme('rustafariapp');
   }
 
+  useEffect(() => {
+    if (editorRef.current !== null) editorRef.current.getModel().setValue(props.text);
+  }, [props.text]);
+
   const compile = async () => {
     setIsConnectionError(false);
     setIsExecuting(true);
@@ -50,7 +54,7 @@ const CodeCell = (props) => {
     });
     setIsExecuting(false);
   };
-
+  
 
   return (
     <div>

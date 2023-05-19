@@ -28,7 +28,6 @@
 .dropdown-button {
     grid-area: 1 / 1 / 2 / 2;
     text-align: center;
-    
 }
 
 .dropdown-button-wrapper {
@@ -57,4 +56,18 @@
     width: 300px;
     height: 3px;
     background-color: #c9d1d9;
+}
+
+.section-button {
+    z-index: 200;
+    align-self: center;
+    justify-self: center;
+    background-color: #c9d1d9 !important; 
+    border-color: #c9d1d9 !important; 
+    color: #555555 !important;
+    min-width: 160px !important;
+}
+
+.section-button:hover {
+    background-color: #e9ecef !important;
 }

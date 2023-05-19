@@ -5,6 +5,7 @@ import "./CodeCell.css"
 import CodeExecutorService from '../../../services/CodeExecutorService';
 import OutputCell from '../OutputCell/OutputCell';
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
+import MonacoEditor from '../../Editor/MonacoEditor';
 
 
 const CodeCell = (props) => {
@@ -15,29 +16,33 @@ const CodeCell = (props) => {
   const [isConnectionError, setIsConnectionError] = useState(false);
   const [monaco, setMonaco] = useState(null);
 
-  const handleEditorDidMount = (editor, monaco) => {
-    setMonaco(monaco);
-    editorRef.current = editor;
-    monaco.editor.defineTheme('rustafariapp', {
-      base: 'vs-dark',
-      inherit: true,
-      rules: [],
-      colors: {
-        'editor.background': '#262335',
-      },
-    });
-    monaco.editor.setTheme('rustafariapp');
-    if (editorRef.current !== null) editorRef.current.layout({ width: containerRef.current.clientWidth, height: editorRef.current.getContentHeight() });
-  }
+  // const handleEditorDidMount = (editor, monaco) => {
+  //   setMonaco(monaco);
+  //   editorRef.current = editor;
+  //   monaco.editor.defineTheme('rustafariapp', {
+  //     base: 'vs-dark',
+  //     inherit: true,
+  //     rules: [],
+  //     colors: {
+  //       'editor.background': '#262335',
+  //     },
+  //   });
+  //   monaco.editor.setTheme('rustafariapp');
+  //   if (editorRef.current !== null) editorRef.current.layout({ width: containerRef.current.clientWidth, height: editorRef.current.getContentHeight() });
+  // }
 
-  useEffect(() => {
-    if (editorRef.current !== null) editorRef.current.getModel().setValue(props.text);
-  }, [props.text]);
+  // useEffect(() => {
+  //   if (editorRef.current !== null) editorRef.current.getModel().setValue(props.text);
+  // }, [props.text]);
 
   
-  useEffect(() => {
-    if (editorRef.current !== null) editorRef.current.layout({ width: containerRef.current.clientWidth, height: editorRef.current.getContentHeight() });
-  }, [editorRef.current]);
+  // useEffect(() => {
+  //   if (editorRef.current !== null) editorRef.current.layout({ width: containerRef.current.clientWidth, height: editorRef.current.getContentHeight() });
+  // }, [editorRef.current]);
+
+  // const editorChangeHandler = () => {
+  //   editorRef.current.layout({ width: containerRef.current.clientWidth, height: editorRef.current.getContentHeight() })
+  // }
 
 
   const compile = async () => {
@@ -65,13 +70,11 @@ const CodeCell = (props) => {
     setIsExecuting(false);
   };
 
-  const editorChangeHandler = () => {
-    editorRef.current.layout({ width: containerRef.current.clientWidth, height: editorRef.current.getContentHeight() })
-  }
+  
 
   return (
     <div ref={containerRef}>
-      <Editor 
+      {/* <Editor 
        options={{
         minimap: {
           enabled: false,
@@ -89,7 +92,8 @@ const CodeCell = (props) => {
        defaultLanguage="rust" 
        onMount={handleEditorDidMount} 
        defaultValue={props.text} 
-       onChange={editorChangeHandler}/>
+       onChange={editorChangeHandler}/> */}
+       <MonacoEditor containerRef={containerRef} editorRef={editorRef} {...props}></MonacoEditor>
 
       <div className='editor-button-container'>
        <Button onClick={compile} className='editor-button' variant="success" disabled={isExecuting}>{!isExecuting ? 'Run code' : 'Running...'}</Button>{' '}

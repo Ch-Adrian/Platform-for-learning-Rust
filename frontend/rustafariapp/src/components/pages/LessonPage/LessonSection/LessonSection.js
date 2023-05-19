@@ -1,18 +1,18 @@
-import React, { useState } from 'react'
+import React from 'react'
 import TextCell from '../../../Cells/TextCell/TextCell'
 import CodeCell from '../../../Cells/CodeCell/CodeCell'
 import EmptyCell from '../../../Cells/EmptyCell/EmptyCell'
 import "./LessonSection.css"
-import currentUser from '../../../miscellaneous/userConfig'
-import AddCellButton from '../../../miscellaneous/AddCellButton/AddCellButton'
+// import currentUser from '../../../miscellaneous/userConfig'
+import AddCellButton from '../../../miscellaneous/AddButtons/AddCellButton/AddCellButton'
+import UserType from '../../../models/UserType'
 
 const LessonSection = (props) => {
-    const [userType, setUserType] = useState(currentUser);
-
 
   return (
     <div className='section-container'>
-            {userType === "TEACHER" && props.section && props.section.cells.map((cell, idx) => {
+            {props.userType === UserType.teacher && <AddCellButton key={"-1addcell"+props.sectionIdx} cellIdx={-1} currentPage={props.page} sectionIdx={props.sectionIdx}/>}
+            {props.userType === UserType.teacher && props.section && props.section.cells.map((cell, idx) => {
             let cellToAdd;
             if (cell.type === "text") {
                 cellToAdd = 
@@ -37,7 +37,7 @@ const LessonSection = (props) => {
                 </React.Fragment>)
             } else return null;
         })}
-        {userType === "STUDENT" && props.section && props.section.cells.map((cell, idx) => {
+        {props.userType === "STUDENT" && props.section && props.section.cells.map((cell, idx) => {
             if (cell.type === "text") {
                 return (
                     <TextCell key={idx} text={cell.value} cell={cell} cellIdx={idx}></TextCell>

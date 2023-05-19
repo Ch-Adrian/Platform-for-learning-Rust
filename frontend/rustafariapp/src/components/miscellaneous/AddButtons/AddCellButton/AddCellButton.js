@@ -1,8 +1,8 @@
 import React, {useContext} from 'react'
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
-import "./AddCellButton.css";
+import { LessonContext } from '../../../../contexts/LessonContext/LessonContextProvider';
+import "../AddButton.css";
 
 const cellTypes = ["Tekst", "Kod"];
 

@@ -13,7 +13,8 @@ node.js\
 npm
 
 ### Operating system:
-Windows
+Windows\
+Linux
 
 ## Project set-up:
 
@@ -29,7 +30,7 @@ inside backend directory run:\
 You have to enter frontend/rustafariapp\
 directory. Then if You run project\
 for the first time please use command:\
-`npm install` to install packages\
+`npm install` to install packages
 
 Now you can run platform with:\
 `npm start` command.\

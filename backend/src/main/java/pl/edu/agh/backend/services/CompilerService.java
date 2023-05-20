@@ -9,9 +9,17 @@ import pl.edu.agh.backend.compiler.Status;
 import java.io.*;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class CompilerService {
+
+    private String exeEnding = ".exe";
+    public CompilerService(){
+        if (Objects.equals(System.getProperty("os.name"), "Linux")){
+            this.exeEnding = "";
+        }
+    }
 
     public CompilerResponse run(RustFile rustFile) {
         String path = Paths.get(rustFile.getDirectory()) + File.separator + rustFile.getFileName();
@@ -36,7 +44,7 @@ public class CompilerService {
             }
 
             process.waitFor();
-            File fileExecutable = new File(path.split("\\.")[0] + ".exe");
+            File fileExecutable = new File(path.split("\\.")[0] + exeEnding);
 
             if (!fileExecutable.exists()) {
                 FileUtils.cleanDirectory(new File(rustFile.getDirectory()));
@@ -52,7 +60,7 @@ public class CompilerService {
         }
 
         StringBuilder actualOutput = new StringBuilder();
-        processBuilder.command(path.split("\\.")[0] + ".exe");
+        processBuilder.command(path.split("\\.")[0] + exeEnding);
 
         try {
             Process process = processBuilder.start();
@@ -126,7 +134,7 @@ public class CompilerService {
 
     private void createFileGitKeep(String directory) {
         try {
-            File gitKeep = new File(directory + "\\" + ".gitkeep");
+            File gitKeep = new File(directory + File.separator + ".gitkeep");
             if (gitKeep.createNewFile()) {
                 System.out.println("File .gitkeep created.");
             }

@@ -1,5 +1,4 @@
-import React, { useRef, useContext, useState, useEffect } from 'react';
-import Editor from '@monaco-editor/react';
+import React, { useRef, useContext, useState, useCallback, memo } from 'react';
 import Button from 'react-bootstrap/Button';
 import "./CodeCell.css"
 import CodeExecutorService from '../../../services/CodeExecutorService';
@@ -8,13 +7,12 @@ import { LessonContext } from '../../../contexts/LessonContext/LessonContextProv
 import MonacoEditor from '../../Editor/MonacoEditor';
 
 
-const CodeCell = (props) => {
+const CodeCell = memo(function CodeCell(props) {
   const editorRef = useRef(null);
   const containerRef = useRef(null);
   const {updateCell} = useContext(LessonContext);
   const [isExecuting, setIsExecuting] = useState(false);
   const [isConnectionError, setIsConnectionError] = useState(false);
-  const [monaco, setMonaco] = useState(null);
 
   // const handleEditorDidMount = (editor, monaco) => {
   //   setMonaco(monaco);
@@ -70,7 +68,14 @@ const CodeCell = (props) => {
     setIsExecuting(false);
   };
 
-  
+  const updateEditorValueHandler = useCallback((value) => {
+    let modifiedCell = props.cell;
+    if (modifiedCell.value === value) return;
+    modifiedCell.value = value;
+    updateCell(modifiedCell, props.cellIdx, props.currentPage, props.sectionIdx);
+  }, [props.cell, props.cellIdx, props.currentPage, props.sectionIdx, updateCell])
+
+  // console.log(props);
 
   return (
     <div ref={containerRef}>
@@ -93,7 +98,7 @@ const CodeCell = (props) => {
        onMount={handleEditorDidMount} 
        defaultValue={props.text} 
        onChange={editorChangeHandler}/> */}
-       <MonacoEditor containerRef={containerRef} editorRef={editorRef} {...props}></MonacoEditor>
+       <MonacoEditor containerRef={containerRef} editorRef={editorRef} updateEditorValueHandler={updateEditorValueHandler} {...props}></MonacoEditor>
 
       <div className='editor-button-container'>
        <Button onClick={compile} className='editor-button' variant="success" disabled={isExecuting}>{!isExecuting ? 'Run code' : 'Running...'}</Button>{' '}
@@ -103,6 +108,6 @@ const CodeCell = (props) => {
       {props.cell.output && <div> Code output <OutputCell output={props.cell.output}></OutputCell></div>}
     </div>
   )
-}
+})
 
 export default CodeCell

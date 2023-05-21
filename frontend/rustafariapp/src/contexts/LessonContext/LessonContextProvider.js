@@ -1,4 +1,4 @@
-import React, { createContext, useMemo, useState, useEffect } from "react";
+import React, { createContext, useMemo, useState, useEffect, useCallback } from "react";
 
 export const LessonContext = createContext({});
 
@@ -21,17 +21,16 @@ const LessonContextProvider = (props) => {
           }
     }, [lessonDefinition]);
 
-    const updateCell = (newCell, idx, page, section) => {
+    const updateCell = useCallback((newCell, idx, page, section) => {
         let modifiedLesson = {...lessonDefinition};
         modifiedLesson.pages[page].sections[section].cells[idx] = newCell;
         setLessonDefinition({
             pages: lessonDefinition.pages.map((pageDef, iPage) => {
                 if (iPage === page) return {sections: modifiedLesson.pages[page].section[section]}
                 else return {...pageDef}
-
             })
         });
-    }
+    }, [lessonDefinition])
 
     const addCell = (newCell, idx, page, section) => {
         let modifiedLesson = {...lessonDefinition};

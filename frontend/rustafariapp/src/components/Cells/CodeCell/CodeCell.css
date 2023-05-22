@@ -1,10 +1,26 @@
 .editor-button-container {
     display: flex;
     flex-direction: row;
-    margin-top: 0.5em;
     gap: 1em;
 }
 
 .editor-button {
     padding: 0.5em !important;
+}
+
+.code-cell-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    align-items: flex-start;
+}
+
+.code-cell-container-teacher {
+    padding: 1em 0 1em 0;
+    transition: .2s background-color box-shadow;
+}
+
+.code-cell-container-teacher:hover {
+    background-color: #595454;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

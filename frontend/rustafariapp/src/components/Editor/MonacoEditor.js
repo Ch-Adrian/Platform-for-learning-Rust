@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react'; 
+import React, { useState, useEffect, memo } from 'react'; 
 import Editor from '@monaco-editor/react';
 
-const MonacoEditor = ({updateEditorValueHandler, ...props}) => {
+const MonacoEditor = memo(function MonacoEditor({updateEditorValueHandler, 
+  editorRef,
+  containerRef,
+  text}) {
     const [monaco, setMonaco] = useState(null);
-    const [editorValue, setEditorValue] = useState(props.text);
+    const [editorValue, setEditorValue] = useState(text);
 
     const handleEditorDidMount = (editor, monaco) => {
         setMonaco(monaco);
-        props.editorRef.current = editor;
+        editorRef.current = editor;
         monaco.editor.defineTheme('rustafariapp', {
           base: 'vs-dark',
           inherit: true,
@@ -17,36 +20,27 @@ const MonacoEditor = ({updateEditorValueHandler, ...props}) => {
           },
         });
         monaco.editor.setTheme('rustafariapp');
-        if (props.editorRef.current !== null) props.editorRef.current.layout({ width: props.containerRef.current.clientWidth, height: props.editorRef.current.getContentHeight() });
+        if (editorRef.current !== null) editorRef.current.layout({ width: containerRef.current.clientWidth, height: editorRef.current.getContentHeight() });
       }
     
     useEffect(() => {
-      // if (props.text.length !== 0 && props.text === props.editorRef.current?.getValue()) return;
-      if (props.text.length !== 0 && props.text === editorValue) return;
-      if (props.editorRef.current !== null) {props.editorRef.current.getModel().setValue(props.text);}
-    }, [props.text, props.editorRef.current]);
+      if (text.length !== 0 && text === editorValue) return;
+      if (editorRef.current !== null && editorRef.current?.getModel() !== null) {editorRef.current?.getModel().setValue(text);}
+    }, [text, editorRef.current]);
     
     useEffect(() => {
-      if (props.editorRef.current !== null) props.editorRef.current.layout({ width: props.containerRef.current.clientWidth, height: props.editorRef.current.getContentHeight() });
-    }, [props.editorRef.current, props.containerRef]);
+      if (editorRef.current !== null) editorRef.current.layout({ width: containerRef.current.clientWidth, height: editorRef.current.getContentHeight() });
+    }, [editorRef.current, containerRef]);
 
     useEffect(() => {
-      const timeOutId = setTimeout(() => {updateEditorValueHandler(editorValue)}, 500);
+      const timeOutId = setTimeout(() => {updateEditorValueHandler(editorValue)}, 650);
       return () => clearTimeout(timeOutId);
     }, [editorValue, updateEditorValueHandler])
 
-    // window.addEventListener("beforeunload", (event) => {
-    //   setEditorValue(null);
-    //   updateEditorValueHandler(props.editorRef.current.getValue());
-    // });
-    // window.addEventListener("unload", (event) => {
-    //   setEditorValue(null);
-    //   updateEditorValueHandler(props.editorRef.current.getValue());
-    // });
     
     const editorChangeHandler = (event) => {
       setEditorValue(event);
-      props.editorRef.current.layout({ width: props.containerRef.current.clientWidth, height: props.editorRef.current.getContentHeight() })
+      editorRef.current.layout({ width: containerRef.current.clientWidth, height: editorRef.current.getContentHeight() })
     }
 
     return (
@@ -67,10 +61,10 @@ const MonacoEditor = ({updateEditorValueHandler, ...props}) => {
         width="100%"
         defaultLanguage="rust" 
         onMount={handleEditorDidMount} 
-        defaultValue={props.text} 
+        defaultValue={text} 
         // value={editorValue}
         onChange={editorChangeHandler}/>
     )
-}
+})
 
 export default MonacoEditor

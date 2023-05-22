@@ -5,43 +5,17 @@ import CodeExecutorService from '../../../services/CodeExecutorService';
 import OutputCell from '../OutputCell/OutputCell';
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
 import MonacoEditor from '../../Editor/MonacoEditor';
+import UserType from '../../models/UserType';
 
 
 const CodeCell = memo(function CodeCell(props) {
   const editorRef = useRef(null);
+  const testEditorRef = useRef(null);
+  const referenceEditorRef = useRef(null);
   const containerRef = useRef(null);
   const {updateCell} = useContext(LessonContext);
   const [isExecuting, setIsExecuting] = useState(false);
   const [isConnectionError, setIsConnectionError] = useState(false);
-
-  // const handleEditorDidMount = (editor, monaco) => {
-  //   setMonaco(monaco);
-  //   editorRef.current = editor;
-  //   monaco.editor.defineTheme('rustafariapp', {
-  //     base: 'vs-dark',
-  //     inherit: true,
-  //     rules: [],
-  //     colors: {
-  //       'editor.background': '#262335',
-  //     },
-  //   });
-  //   monaco.editor.setTheme('rustafariapp');
-  //   if (editorRef.current !== null) editorRef.current.layout({ width: containerRef.current.clientWidth, height: editorRef.current.getContentHeight() });
-  // }
-
-  // useEffect(() => {
-  //   if (editorRef.current !== null) editorRef.current.getModel().setValue(props.text);
-  // }, [props.text]);
-
-  
-  // useEffect(() => {
-  //   if (editorRef.current !== null) editorRef.current.layout({ width: containerRef.current.clientWidth, height: editorRef.current.getContentHeight() });
-  // }, [editorRef.current]);
-
-  // const editorChangeHandler = () => {
-  //   editorRef.current.layout({ width: containerRef.current.clientWidth, height: editorRef.current.getContentHeight() })
-  // }
-
 
   const compile = async () => {
     setIsConnectionError(false);
@@ -75,37 +49,68 @@ const CodeCell = memo(function CodeCell(props) {
     updateCell(modifiedCell, props.cellIdx, props.currentPage, props.sectionIdx);
   }, [props.cell, props.cellIdx, props.currentPage, props.sectionIdx, updateCell])
 
-  // console.log(props);
+  const updateTestEditorValueHandler = useCallback((value) => {
+    let modifiedCell = props.cell;
+    if (modifiedCell.test === value) return;
+    modifiedCell.test = value;
+    updateCell(modifiedCell, props.cellIdx, props.currentPage, props.sectionIdx);
+  }, [props.cell, props.cellIdx, props.currentPage, props.sectionIdx, updateCell])
+
+  const updateReferenceEditorValueHandler = useCallback((value) => {
+    let modifiedCell = props.cell;
+    if (modifiedCell.reference === value) return;
+    modifiedCell.reference = value;
+    updateCell(modifiedCell, props.cellIdx, props.currentPage, props.sectionIdx);
+  }, [props.cell, props.cellIdx, props.currentPage, props.sectionIdx, updateCell])
+
+  const addEditor = (type) => {
+    let modifiedCell = props.cell;
+    modifiedCell[type] = "";
+    updateCell(modifiedCell, props.cellIdx, props.currentPage, props.sectionIdx);
+    console.log(props.cell)
+  }
+
+  const removeEditor = (type) => {
+    let modifiedCell = props.cell;
+    delete modifiedCell[type];
+    updateCell(modifiedCell, props.cellIdx, props.currentPage, props.sectionIdx);
+  }
 
   return (
-    <div ref={containerRef}>
-      {/* <Editor 
-       options={{
-        minimap: {
-          enabled: false,
-        },
-        scrollbar: {
-          alwaysConsumeMouseWheel: false
-        },
-        fontSize: 14,
-        wordWrap: "on",
-        lineNumbers: "off",
-        automaticLayout: true,
-        scrollBeyondLastLine: false
-      }}
-       width="100%"
-       defaultLanguage="rust" 
-       onMount={handleEditorDidMount} 
-       defaultValue={props.text} 
-       onChange={editorChangeHandler}/> */}
-       <MonacoEditor containerRef={containerRef} editorRef={editorRef} updateEditorValueHandler={updateEditorValueHandler} {...props}></MonacoEditor>
-
+    <div ref={containerRef} className={"code-cell-container " + (props.userType === UserType.teacher && "code-cell-container-teacher")} >
+      {props.userType === UserType.teacher ?
+      <React.Fragment>
+      <MonacoEditor containerRef={containerRef} editorRef={editorRef} updateEditorValueHandler={updateEditorValueHandler} text={props.text}></MonacoEditor>
+      <div className='editor-button-container'>
+       <Button onClick={compile} className='editor-button' variant="success" disabled={isExecuting}>{!isExecuting ? 'Run code' : 'Running...'}</Button>{' '}
+       {props.cell.test === undefined ? <Button onClick={() => {addEditor("test")}} className='editor-button' variant="success">{'Add tests'}</Button> : null}
+       {props.cell.reference === undefined ? <Button onClick={() => {addEditor("reference")}} className='editor-button' variant="success">{'Add reference code'}</Button> : null}
+      </div>  
+      {isConnectionError ? <div style={{color: 'red'}}>There was some error connecting to the compiler. Please check if all app components are running</div> : null}
+      {props.cell.outputTest && <div> Test Output <OutputCell output={props.cell.outputTest}></OutputCell></div>}
+      {props.cell.output && <div> Code output <OutputCell output={props.cell.output}></OutputCell></div>}
+      {props.cell.test !== undefined ? 
+      <div className={"code-cell-container"}> 
+        <MonacoEditor containerRef={containerRef} editorRef={testEditorRef} updateEditorValueHandler={updateTestEditorValueHandler} text={props.cell.test}></MonacoEditor>
+        <Button onClick={() => {removeEditor("test")}} className='editor-button' variant="danger">{'Remove tests'}</Button>
+      </div>: null}
+      {props.cell.reference !== undefined ? 
+      <div className={"code-cell-container"}> 
+        <MonacoEditor containerRef={containerRef} editorRef={referenceEditorRef} updateEditorValueHandler={updateReferenceEditorValueHandler} text={props.cell.reference}></MonacoEditor>
+        <Button onClick={() => {removeEditor("reference")}} className='editor-button' variant="danger">{'Remove reference code'}</Button>
+      </div>: null}
+      </React.Fragment> 
+      : 
+      <React.Fragment>
+      <MonacoEditor containerRef={containerRef} editorRef={editorRef} updateEditorValueHandler={updateEditorValueHandler} text={props.text}></MonacoEditor>
       <div className='editor-button-container'>
        <Button onClick={compile} className='editor-button' variant="success" disabled={isExecuting}>{!isExecuting ? 'Run code' : 'Running...'}</Button>{' '}
       </div>  
       {isConnectionError ? <div style={{color: 'red'}}>There was some error connecting to the compiler. Please check if all app components are running</div> : null}
       {props.cell.outputTest && <div> Test Output <OutputCell output={props.cell.outputTest}></OutputCell></div>}
       {props.cell.output && <div> Code output <OutputCell output={props.cell.output}></OutputCell></div>}
+      </React.Fragment>
+      }
     </div>
   )
 })

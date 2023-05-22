@@ -22,8 +22,24 @@ td {
     background-color: #524B4B !important;
 }
 
+.text-cell-container {
+    padding: 1em 0 1em 0;
+    transition: .2s background-color box-shadow;
+}
+
+.text-cell-container:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 @media (max-width: 767px) {
     .markdown-body {
         padding: 15px;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .wmde-markdown,
+    .wmde-markdown-var {
+        --color-canvas-default: #524b4b !important;
     }
 }

@@ -92,12 +92,16 @@ const CodeCell = memo(function CodeCell(props) {
       {props.cell.test !== undefined ? 
       <div className={"code-cell-container"}> 
         <MonacoEditor containerRef={containerRef} editorRef={testEditorRef} updateEditorValueHandler={updateTestEditorValueHandler} text={props.cell.test}></MonacoEditor>
-        <Button onClick={() => {removeEditor("test")}} className='editor-button' variant="danger">{'Remove tests'}</Button>
+        <div className='editor-button-container'>
+          <Button onClick={() => {removeEditor("test")}} className='editor-button' variant="danger">{'Remove tests'}</Button>
+        </div>  
       </div>: null}
       {props.cell.reference !== undefined ? 
       <div className={"code-cell-container"}> 
         <MonacoEditor containerRef={containerRef} editorRef={referenceEditorRef} updateEditorValueHandler={updateReferenceEditorValueHandler} text={props.cell.reference}></MonacoEditor>
-        <Button onClick={() => {removeEditor("reference")}} className='editor-button' variant="danger">{'Remove reference code'}</Button>
+        <div className='editor-button-container'>
+          <Button onClick={() => {removeEditor("reference")}} className='editor-button' variant="danger">{'Remove reference code'}</Button>
+        </div>  
       </div>: null}
       </React.Fragment> 
       : 

@@ -1,14 +1,12 @@
 import React, { useContext, useState } from 'react'
-import { useParams } from 'react-router-dom'
 import * as FaIcons from 'react-icons/fa';
-import * as AiIcons from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import './LessonPageContainer.css'
 import { IconContext } from 'react-icons';
 import LessonPage from '../LessonPage/LessonPage';
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
 
-const Navbar = () => {
+const LessonPageContainer = () => {
   const [sidebar, setSidebar] = useState(false);
 
   const showSidebar = () => setSidebar(!sidebar);
@@ -54,4 +52,4 @@ const Navbar = () => {
   );
 }
 
-export default Navbar;
+export default LessonPageContainer;

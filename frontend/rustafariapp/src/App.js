@@ -1,9 +1,9 @@
 import './App.css';
-import LessonPage from './components/pages/LessonPage/LessonPage';
 import HomePage from './components/pages/HomePage/HomePage';
 import Layout from './components/pages/Layout/Layout';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import  LessonContextProvider  from './contexts/LessonContext/LessonContextProvider';
+import LessonPageContainer from './components/pages/LessonPageContainer/LessonPageContainer';
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Layout />} >
             <Route index element={<HomePage />} />  
-            <Route path="lesson/:name/:page" element={<LessonPage />} />
+            <Route path="lesson/:name/:page" element={<LessonPageContainer />} />
             <Route path="*" element={<HomePage />} />
           </Route>
         </Routes>

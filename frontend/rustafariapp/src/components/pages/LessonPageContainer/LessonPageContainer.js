@@ -12,11 +12,14 @@ const LessonPageContainer = () => {
   const showSidebar = () => setSidebar(!sidebar);
 
   const {lessonDefinition} = useContext(LessonContext);
+
+  console.log(lessonDefinition)
   
   const url = new URL(window.location.href);
   let path = url.pathname.split("/");
   path.pop()
   url.pathname = path.join("/")
+  localStorage.setItem(lessonDefinition, lessonDefinition);
 
   return (
     <div className='sidebar'>
@@ -30,7 +33,7 @@ const LessonPageContainer = () => {
           <ul className='nav-menu-items' onClick={showSidebar}>
             <li className='navbar-toggle'>
             </li>
-            {lessonDefinition.pages.map((_, idx) => {
+            {lessonDefinition && lessonDefinition.pages.map((_, idx) => {
               return (
                 <li key={idx} className='nav-text'>
                   <Link to={url + "/" + idx}>

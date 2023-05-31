@@ -7,6 +7,7 @@ import MDEditor from '@uiw/react-md-editor'
 import UserType from '../../models/UserType'
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider'
 import {BsTrash3} from 'react-icons/bs';
+import {TbGridDots} from 'react-icons/tb';
 
 const TextCell = (props) => {
   const [value, setValue] = useState(props.text);
@@ -50,7 +51,10 @@ const TextCell = (props) => {
       tabIndex={1}
       onClick={focusHandler}
       onBlur={blurHandler}>
-      {props.userType === UserType.teacher && <button className='text-cell-delete-button' onClick={removeCellHandler}><BsTrash3/></button>}
+        <div className='cell-misc-buttons-container'>
+          {props.userType === UserType.teacher && <div className='text-cell-grab' {...props.handleDrag} ><TbGridDots/></div>}
+          {props.userType === UserType.teacher && <button className='text-cell-delete-button' onClick={removeCellHandler}><BsTrash3/></button>}
+        </div>
       {props.userType === UserType.teacher && focus ? 
       <MDEditor
       value={value}

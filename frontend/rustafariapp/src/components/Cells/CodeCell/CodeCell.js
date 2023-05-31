@@ -7,6 +7,7 @@ import { LessonContext } from '../../../contexts/LessonContext/LessonContextProv
 import MonacoEditor from '../../Editor/MonacoEditor';
 import UserType from '../../models/UserType';
 import {BsTrash3} from 'react-icons/bs';
+import {TbGridDots} from 'react-icons/tb';
 
 
 const CodeCell = memo(function CodeCell(props) {
@@ -83,7 +84,10 @@ const CodeCell = memo(function CodeCell(props) {
 
   return (
     <div ref={containerRef} className={"code-cell-container " + (props.userType === UserType.teacher && "code-cell-container-teacher")} >
-      {props.userType === UserType.teacher && <button className='code-cell-delete-button' onClick={removeCellHandler}><BsTrash3/></button>}
+      <div className='cell-misc-buttons-container'>
+        {props.userType === UserType.teacher && <div className='text-cell-grab' {...props.handleDrag} ><TbGridDots/></div>}
+        {props.userType === UserType.teacher && <button className='code-cell-delete-button' onClick={removeCellHandler}><BsTrash3/></button>}
+      </div>
       {props.userType === UserType.teacher ?
       // TEACHER VERSION
       <React.Fragment>

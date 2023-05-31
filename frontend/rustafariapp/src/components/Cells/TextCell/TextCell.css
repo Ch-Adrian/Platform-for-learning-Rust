@@ -23,12 +23,32 @@ td {
 }
 
 .text-cell-container {
+    display: flex;
+    flex-direction: column;
     padding: 1em 0 1em 0;
     transition: .2s background-color box-shadow;
 }
 
 .text-cell-container:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.text-cell-delete-button {
+    margin-left: auto;
+    padding: 0 1em 1em 1em;
+    color: grey;
+    opacity: 0.4;
+    background-color: transparent;
+    border: 0;
+}
+
+.text-cell-delete-button:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.text-cell-delete-button:active {
+    color: white;
 }
 
 @media (max-width: 767px) {

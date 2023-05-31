@@ -6,11 +6,12 @@ import "github-markdown-css"
 import MDEditor from '@uiw/react-md-editor'
 import UserType from '../../models/UserType'
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider'
+import {BsTrash3} from 'react-icons/bs';
 
 const TextCell = (props) => {
   const [value, setValue] = useState(props.text);
   const [focus, setFocus] = useState(false);
-  const {updateCell} = useContext(LessonContext);
+  const {updateCell, removeCell} = useContext(LessonContext);
   const prevTextRef = useRef(props.text);
 
   const blurHandler = (e) => {
@@ -19,6 +20,10 @@ const TextCell = (props) => {
 
   const focusHandler = (e) => {
     if (e.detail === 2) setFocus(true);
+  }
+
+  const removeCellHandler = () => {
+    removeCell(props.cellIdx, props.currentPage, props.sectionIdx);
   }
 
   useEffect(() => {
@@ -31,7 +36,6 @@ const TextCell = (props) => {
     return () => clearTimeout(timeOutId);
   }, [props.cell, props.cellIdx, props.currentPage, props.sectionIdx, updateCell, value])
 
-
   useEffect(() => {
     prevTextRef.current = value;
   }, [value])
@@ -41,15 +45,12 @@ const TextCell = (props) => {
     setValue(props.text);
   }, [props.text]);
 
-  
-
-
-
   return (
     <div className={props.userType === UserType.teacher ? 'text-cell-container' : null} 
       tabIndex={1}
       onClick={focusHandler}
       onBlur={blurHandler}>
+      {props.userType === UserType.teacher && <button className='text-cell-delete-button' onClick={removeCellHandler}><BsTrash3/></button>}
       {props.userType === UserType.teacher && focus ? 
       <MDEditor
       value={value}

@@ -45,11 +45,12 @@ const LessonPageContainer = () => {
             })}
           </ul>
         </nav>
-        <div className={sidebar ? 'page active' : 'page'}>
-          <LessonPage/>
-        </div>
-        
       </IconContext.Provider>
+      <div className={sidebar ? 'page active' : 'page'}>
+        <LessonPage/>
+      </div>
+        
+      
       
     </div>
   );

@@ -6,3 +6,21 @@
     background-color: #524B4B;
     gap: 2em;
 }
+
+.section-delete-button {
+    margin-left: auto;
+    padding: 0 1em 1em 1em;
+    color: grey;
+    opacity: 0.4;
+    background-color: transparent;
+    border: 0;
+}
+
+.section-delete-button:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.section-delete-button:active {
+    color: white;
+}

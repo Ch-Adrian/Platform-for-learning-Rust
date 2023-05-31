@@ -23,3 +23,21 @@
     background-color: #595454;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
+.code-cell-delete-button {
+    margin-left: auto;
+    padding: 0 1em 1em 1em;
+    color: grey;
+    opacity: 0.4;
+    background-color: transparent;
+    border: 0;
+}
+
+.code-cell-delete-button:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.code-cell-delete-button:active {
+    color: white;
+}

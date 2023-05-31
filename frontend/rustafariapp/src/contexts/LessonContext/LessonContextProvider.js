@@ -43,6 +43,18 @@ const LessonContextProvider = (props) => {
         });
     }
 
+    const removeCell = (idx, page, section) => {
+        let modifiedLesson = {...lessonDefinition};
+        modifiedLesson.pages[page].sections[section].cells.splice(idx, 1);
+        // modifiedLesson.pages[page].sections[section].cells = modifiedLesson.pages[page].sections[section].cells.splice(idx, 1);    
+        setLessonDefinition({
+            pages: lessonDefinition.pages.map((pageDef, iPage) => {
+                if (iPage === page) return {sections: modifiedLesson.pages[page].section[section]}
+                else return {...pageDef}
+            })
+        });
+    }
+
     const addSection = (newSection, page, section) => {
         let modifiedLesson = {...lessonDefinition};
         modifiedLesson.pages[page].sections.splice(section+1, 0, newSection);    
@@ -54,8 +66,20 @@ const LessonContextProvider = (props) => {
         });
     }
 
+    const removeSection = (page, section) => {
+        let modifiedLesson = {...lessonDefinition};
+        modifiedLesson.pages[page].sections.splice(section, 1);
+        // modifiedLesson.pages[page].sections[section].cells = modifiedLesson.pages[page].sections[section].cells.splice(idx, 1);    
+        setLessonDefinition({
+            pages: lessonDefinition.pages.map((pageDef, iPage) => {
+                if (iPage === page) return {sections: modifiedLesson.pages[page].section[section]}
+                else return {...pageDef}
+            })
+        });
+    }
+
     return (
-        <LessonContext.Provider value={{...value, updateCell, addCell, addSection}}>
+        <LessonContext.Provider value={{...value, updateCell, addCell, addSection, removeCell, removeSection}}>
             {props.children}
         </LessonContext.Provider>
     )

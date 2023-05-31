@@ -78,8 +78,14 @@ const LessonContextProvider = (props) => {
         });
     }
 
+    const updateLesson = (newLessonDefinition) => {
+        setLessonDefinition({
+            pages: newLessonDefinition.pages
+        })
+    }
+
     return (
-        <LessonContext.Provider value={{...value, updateCell, addCell, addSection, removeCell, removeSection}}>
+        <LessonContext.Provider value={{...value, updateCell, addCell, addSection, removeCell, removeSection, updateLesson}}>
             {props.children}
         </LessonContext.Provider>
     )

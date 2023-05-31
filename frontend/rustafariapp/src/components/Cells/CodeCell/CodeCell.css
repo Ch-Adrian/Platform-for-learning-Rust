@@ -24,20 +24,29 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.code-cell-delete-button {
+.cell-misc-buttons-container {
     margin-left: auto;
+    display: flex;
+    flex-direction: row;
     padding: 0 1em 1em 1em;
+}
+
+.cell-misc-buttons-container > * {
     color: grey;
     opacity: 0.4;
     background-color: transparent;
     border: 0;
 }
 
-.code-cell-delete-button:hover {
+.cell-misc-buttons-container > *:hover {
     opacity: 1;
     cursor: pointer;
 }
 
-.code-cell-delete-button:active {
+.cell-misc-buttons-container > *:active {
     color: white;
+}
+
+.text-cell-grab {
+    cursor: grab !important;
 }

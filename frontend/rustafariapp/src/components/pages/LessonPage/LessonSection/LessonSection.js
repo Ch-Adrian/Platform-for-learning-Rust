@@ -1,15 +1,23 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import TextCell from '../../../Cells/TextCell/TextCell'
 import CodeCell from '../../../Cells/CodeCell/CodeCell'
 import EmptyCell from '../../../Cells/EmptyCell/EmptyCell'
 import "./LessonSection.css"
-// import currentUser from '../../../miscellaneous/userConfig'
 import AddCellButton from '../../../miscellaneous/AddButtons/AddCellButton/AddCellButton'
 import UserType from '../../../models/UserType'
+import {BsTrash3} from 'react-icons/bs'
+import { LessonContext } from '../../../../contexts/LessonContext/LessonContextProvider'
 
 const LessonSection = (props) => {
+    const {removeSection} = useContext(LessonContext);
+
+    const removeSectionHandler = () => {
+        removeSection(props.page, props.sectionIdx);
+    }
+
     return (
         <div className='section-container'>
+            {props.userType === UserType.teacher && <button className='section-delete-button' onClick={removeSectionHandler}><BsTrash3/></button>}
             {props.userType === UserType.teacher && <AddCellButton key={"-1addcell" + props.sectionIdx} cellIdx={-1} currentPage={props.page} sectionIdx={props.sectionIdx} />}
             {props.userType === UserType.teacher && props.section?.cells.map((cell, idx) => {
                 let cellToAdd

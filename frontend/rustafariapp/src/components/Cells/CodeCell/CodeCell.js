@@ -6,6 +6,7 @@ import OutputCell from '../OutputCell/OutputCell';
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
 import MonacoEditor from '../../Editor/MonacoEditor';
 import UserType from '../../models/UserType';
+import {BsTrash3} from 'react-icons/bs';
 
 
 const CodeCell = memo(function CodeCell(props) {
@@ -13,7 +14,7 @@ const CodeCell = memo(function CodeCell(props) {
   const testEditorRef = useRef(null);
   const referenceEditorRef = useRef(null);
   const containerRef = useRef(null);
-  const {updateCell} = useContext(LessonContext);
+  const {updateCell, removeCell} = useContext(LessonContext);
   const [isExecuting, setIsExecuting] = useState(false);
   const [isConnectionError, setIsConnectionError] = useState(false);
 
@@ -76,9 +77,15 @@ const CodeCell = memo(function CodeCell(props) {
     updateCell(modifiedCell, props.cellIdx, props.currentPage, props.sectionIdx);
   }
 
+  const removeCellHandler = () => {
+    removeCell(props.cellIdx, props.currentPage, props.sectionIdx);
+  }
+
   return (
     <div ref={containerRef} className={"code-cell-container " + (props.userType === UserType.teacher && "code-cell-container-teacher")} >
+      {props.userType === UserType.teacher && <button className='code-cell-delete-button' onClick={removeCellHandler}><BsTrash3/></button>}
       {props.userType === UserType.teacher ?
+      // TEACHER VERSION
       <React.Fragment>
       <MonacoEditor containerRef={containerRef} editorRef={editorRef} updateEditorValueHandler={updateEditorValueHandler} text={props.text}></MonacoEditor>
       <div className='editor-button-container'>
@@ -105,6 +112,7 @@ const CodeCell = memo(function CodeCell(props) {
       </div>: null}
       </React.Fragment> 
       : 
+      // STUDENT VERSION
       <React.Fragment>
       <MonacoEditor containerRef={containerRef} editorRef={editorRef} updateEditorValueHandler={updateEditorValueHandler} text={props.text}></MonacoEditor>
       <div className='editor-button-container'>

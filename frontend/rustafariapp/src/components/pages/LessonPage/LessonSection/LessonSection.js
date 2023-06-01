@@ -7,22 +7,14 @@ import AddCellButton from '../../../miscellaneous/AddButtons/AddCellButton/AddCe
 import UserType from '../../../models/UserType'
 import {BsTrash3} from 'react-icons/bs'
 import { LessonContext } from '../../../../contexts/LessonContext/LessonContextProvider'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { Draggable } from 'react-beautiful-dnd'
 import StrictModeDroppable from '../../../miscellaneous/Droppable/StrictModeDroppable'
 
 const LessonSection = (props) => {
-    const {removeSection, lessonDefinition, updateLesson} = useContext(LessonContext);
+    const {removeSection } = useContext(LessonContext);
 
     const removeSectionHandler = () => {
         removeSection(props.page, props.sectionIdx);
-    }
-
-    const handleOnDragEnd = (result) => {
-        if (!result.destination) return;
-        let modifiedLesson = {...lessonDefinition};
-        const [reorderedCell] = modifiedLesson.pages[props.page].sections[props.sectionIdx].cells.splice(result.source.index, 1);
-        modifiedLesson.pages[props.page].sections[props.sectionIdx].cells.splice(result.destination.index, 0, reorderedCell);
-        updateLesson(modifiedLesson)
     }
 
     return (
@@ -30,7 +22,6 @@ const LessonSection = (props) => {
             {props.userType === UserType.teacher && <button className='section-delete-button' onClick={removeSectionHandler}><BsTrash3/></button>}
             {props.userType === UserType.teacher && <AddCellButton key={"-1addcell" + props.sectionIdx} cellIdx={-1} currentPage={props.page} sectionIdx={props.sectionIdx} />}
             {props.userType === UserType.teacher && 
-            <DragDropContext onDragEnd={handleOnDragEnd}>
                 <StrictModeDroppable droppableId={'section'+props.sectionIdx}>
                     {(provided) => {
                         return (<div className='cell-list-container' {...provided.droppableProps} ref={provided.innerRef}>
@@ -54,11 +45,9 @@ const LessonSection = (props) => {
                                 }
                                 if (cellToAdd) {
                                     return (
-                                        <Draggable key={idx} draggableId={""+idx} index={idx}>
+                                        <Draggable key={props.sectionIdx+"dragcell"+idx} draggableId={props.sectionIdx+"dragcell"+idx} index={idx}>
                                             {(provided) => {
-                                                // let cellToAdd = ;
                                                 return (<div {...provided.draggableProps}  ref={provided.innerRef}>
-                                                    
                                                     {React.cloneElement(cellToAdd, {handleDrag: provided.dragHandleProps})}
                                                     <div {...provided.dragHandleProps}></div>
                                                     <AddCellButton key={idx + "addcell" + props.sectionIdx} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} />
@@ -74,7 +63,6 @@ const LessonSection = (props) => {
                     }}
                     
                 </StrictModeDroppable>
-            </DragDropContext>
             }
             {props.userType === "STUDENT" && props.section?.cells.map((cell, idx) => {
                 if (cell.type === "text") {

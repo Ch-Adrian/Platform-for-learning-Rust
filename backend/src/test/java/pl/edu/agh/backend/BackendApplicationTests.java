@@ -25,7 +25,7 @@ class BackendApplicationTests {
 							.fileName("main.rs")
 							.directory("src/main/resources/rust")
 							.content(code)
-							.build()).getActualOutput();
+							.build()).getProgramOutput();
 
 		assertEquals("", "Hello, world!\n", actual); // There is always empty line in the end of an output.
 	}

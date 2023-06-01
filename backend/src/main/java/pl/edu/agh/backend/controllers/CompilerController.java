@@ -33,6 +33,6 @@ public class CompilerController {
                 .directory("src/main/resources/tests")
                 .content(studentInput.getItem())
                 .testContent(studentInput.getTestContent())
-                .build()).getTestsOutput();
+                .build()).getAll();
     }
 }

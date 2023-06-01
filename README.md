@@ -21,10 +21,12 @@ Linux
 ### Backend:
 To run project You can use IDEA environment\
 or use maven:\
-inside backend directory run:\
+inside backend directory run (for Windows):\
 `.\mvnw spring-boot:run` to start backend\
 `.\mvnw compile` to build\
 `.\mvnw clean` to clean project
+
+for linux You have to replace `mvnw` with `mvn`.
 
 ### Frontend:
 You have to enter frontend/rustafariapp\

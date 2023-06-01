@@ -9,6 +9,7 @@ import {BsTrash3} from 'react-icons/bs'
 import { LessonContext } from '../../../../contexts/LessonContext/LessonContextProvider'
 import { Draggable } from 'react-beautiful-dnd'
 import StrictModeDroppable from '../../../miscellaneous/Droppable/StrictModeDroppable'
+import {TbGridDots} from 'react-icons/tb';
 
 const LessonSection = (props) => {
     const {removeSection } = useContext(LessonContext);
@@ -19,7 +20,10 @@ const LessonSection = (props) => {
 
     return (
         <div className='section-container'>
-            {props.userType === UserType.teacher && <button className='section-delete-button' onClick={removeSectionHandler}><BsTrash3/></button>}
+            <div className='section-misc-buttons-container'>
+                {props.userType === UserType.teacher && <div className='section-grab' {...props.handleDrag} ><TbGridDots/></div>}
+                {props.userType === UserType.teacher && <button className='section-delete-button' onClick={removeSectionHandler}><BsTrash3/></button>}
+            </div>
             {props.userType === UserType.teacher && <AddCellButton key={"-1addcell" + props.sectionIdx} cellIdx={-1} currentPage={props.page} sectionIdx={props.sectionIdx} />}
             {props.userType === UserType.teacher && 
                 <StrictModeDroppable droppableId={'section'+props.sectionIdx}>

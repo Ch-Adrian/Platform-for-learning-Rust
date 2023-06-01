@@ -24,3 +24,30 @@
 .section-delete-button:active {
     color: white;
 }
+
+.section-misc-buttons-container {
+    margin-left: auto;
+    display: flex;
+    flex-direction: row;
+    padding: 0 0 1em 1em;
+}
+
+.section-misc-buttons-container > * {
+    color: grey;
+    opacity: 0.4;
+    background-color: transparent;
+    border: 0;
+}
+
+.section-misc-buttons-container > *:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.section-misc-buttons-container > *:active {
+    color: white;
+}
+
+.section-grab {
+    cursor: grab !important;
+}

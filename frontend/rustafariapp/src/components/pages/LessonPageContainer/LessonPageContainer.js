@@ -40,6 +40,20 @@ const LessonPageContainer = () => {
                     {/* {item.icon} */}
                     <span>{"PAGE " + idx}</span>
                   </Link>
+                    <ol>
+                    {
+                      lessonDefinition.pages[idx].sections.map( (content, sectionIdx) => {
+                        return (
+                          <Link to={url+"/"+idx}>
+                            <li>{
+                                <span>{content.title}</span>
+                            }
+                            </li>
+                          </Link>
+                        )
+                      })
+                    }
+                    </ol>
                 </li>
               );
             })}

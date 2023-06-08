@@ -10,6 +10,37 @@ import { LessonContext } from '../../../../contexts/LessonContext/LessonContextP
 import { Draggable } from 'react-beautiful-dnd'
 import StrictModeDroppable from '../../../miscellaneous/Droppable/StrictModeDroppable'
 import {TbGridDots} from 'react-icons/tb';
+import { useState } from 'react'
+
+function SectionHeader({title, page, sectionIdx}) {
+    const [header, setHeader ] = useState(title);
+    const {lessonDefinition, updateLesson} = useContext(LessonContext);
+
+    const changeTitle = (newTitle) => {
+        let modifiedLesson = {...lessonDefinition};
+        let newSections = modifiedLesson.pages[page].sections.map((content,idx) => {
+                if(idx === sectionIdx){
+                     return {...content, title: newTitle} 
+                } else return content;
+            });
+
+        updateLesson({
+            pages: lessonDefinition.pages.map((pageDef, iPage) => {
+                if (iPage === page) return {sections: newSections}
+                else return {...pageDef}
+            })
+        });
+    }
+
+    return (
+        <div>
+            <div contentEditable="true" className='section-header' onBlur={e => setHeader(e.currentTarget.textContent) } suppressContentEditableWarning={true}> 
+                {header}
+            </div>
+        </div>
+    );
+}
+
 
 const LessonSection = (props) => {
     const {removeSection } = useContext(LessonContext);
@@ -20,6 +51,7 @@ const LessonSection = (props) => {
 
     return (
         <div className='section-container'>
+            <SectionHeader title={props.section.title} page={props.page} sectionIdx={props.sectionIdx}/>
             <div className='section-misc-buttons-container'>
                 {props.userType === UserType.teacher && <div className='section-grab' {...props.handleDrag} ><TbGridDots/></div>}
                 {props.userType === UserType.teacher && <button className='section-delete-button' onClick={removeSectionHandler}><BsTrash3/></button>}

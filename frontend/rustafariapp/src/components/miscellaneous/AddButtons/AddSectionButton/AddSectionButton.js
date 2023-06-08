@@ -11,6 +11,7 @@ const AddSectionButton = (props) => {
             title: "Nowa sekcja",
             cells: []
         };
+        console.log(props.sectionIdx);
         addSection(newSection, props.page, props.sectionIdx);
     } 
 

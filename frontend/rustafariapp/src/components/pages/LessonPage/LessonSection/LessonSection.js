@@ -13,29 +13,16 @@ import {TbGridDots} from 'react-icons/tb';
 import { useState } from 'react'
 
 function SectionHeader({title, page, sectionIdx}) {
-    const [header, setHeader ] = useState(title);
-    const {lessonDefinition, updateLesson} = useContext(LessonContext);
+    const { getTitle, changeTitle } = useContext(LessonContext);
 
-    const changeTitle = (newTitle) => {
-        let modifiedLesson = {...lessonDefinition};
-        let newSections = modifiedLesson.pages[page].sections.map((content,idx) => {
-                if(idx === sectionIdx){
-                     return {...content, title: newTitle} 
-                } else return content;
-            });
-
-        updateLesson({
-            pages: lessonDefinition.pages.map((pageDef, iPage) => {
-                if (iPage === page) return {sections: newSections}
-                else return {...pageDef}
-            })
-        });
+    const changeTitleHandler = (newTitle) =>{
+        changeTitle(newTitle, page, sectionIdx);
     }
 
     return (
         <div>
-            <div contentEditable="true" className='section-header' onBlur={e => setHeader(e.currentTarget.textContent) } suppressContentEditableWarning={true}> 
-                {header}
+            <div contentEditable="true" className='section-header' onBlur={e => changeTitleHandler(e.currentTarget.textContent) } suppressContentEditableWarning={true}> 
+                {getTitle(page, sectionIdx)}
             </div>
         </div>
     );

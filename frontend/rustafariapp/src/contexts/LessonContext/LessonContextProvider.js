@@ -66,6 +66,31 @@ const LessonContextProvider = (props) => {
         });
     }
 
+    const changeTitle = (newTitle, page, sectionIdx) => {
+        let modifiedLesson = {...lessonDefinition};
+        let newSections = modifiedLesson.pages[page].sections.map((content,idx) => {
+                if(idx === sectionIdx){
+                     return {...content, title: newTitle} 
+                } else return content;
+            });
+
+        setLessonDefinition({
+            pages: lessonDefinition.pages.map((pageDef, iPage) => {
+                if (iPage === Number.parseInt(page)) {
+                    return {sections: newSections}
+                }
+                else {
+                    return {...pageDef}
+                }
+            })
+        });
+    }
+
+    const getTitle = (page, sectionIdx) => {
+        return lessonDefinition.pages[page].sections[sectionIdx].title;
+    }
+
+
     const removeSection = (page, section) => {
         let modifiedLesson = {...lessonDefinition};
         modifiedLesson.pages[page].sections.splice(section, 1);
@@ -85,7 +110,7 @@ const LessonContextProvider = (props) => {
     }
 
     return (
-        <LessonContext.Provider value={{...value, updateCell, addCell, addSection, removeCell, removeSection, updateLesson}}>
+        <LessonContext.Provider value={{...value, updateCell, addCell, addSection, removeCell, removeSection, updateLesson, changeTitle, getTitle}}>
             {props.children}
         </LessonContext.Provider>
     )

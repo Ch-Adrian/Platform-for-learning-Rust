@@ -44,7 +44,6 @@ const LessonPage = () => {
                     return (
                     <div className='section-list-container' {...provided.droppableProps} ref={provided.innerRef}>
                         {lessonDefinition.pages[page].sections.map((section, idx) => {
-                            console.log(idx);
                         return (
                         <React.Fragment key={idx}>
                             <Draggable key={page+"dragSection"+idx} draggableId={page+"dragsection"+idx} index={idx}>

@@ -9,8 +9,9 @@ import {BsTrash3} from 'react-icons/bs'
 import { LessonContext } from '../../../../contexts/LessonContext/LessonContextProvider'
 import { Draggable } from 'react-beautiful-dnd'
 import StrictModeDroppable from '../../../miscellaneous/Droppable/StrictModeDroppable'
-import {TbGridDots} from 'react-icons/tb';
+import {TbGridDots, TbArrowsMove } from 'react-icons/tb';
 import { useState } from 'react'
+import MovableMenuContext from '../../../miscellaneous/MenuContext/Movable/MovableMenuContext'
 
 function SectionHeader({title, page, sectionIdx}) {
     const { getTitle, changeTitle } = useContext(LessonContext);
@@ -42,6 +43,7 @@ const LessonSection = (props) => {
             <div className='section-misc-buttons-container'>
                 {props.userType === UserType.teacher && <div className='section-grab' {...props.handleDrag} ><TbGridDots/></div>}
                 {props.userType === UserType.teacher && <button className='section-delete-button' onClick={removeSectionHandler}><BsTrash3/></button>}
+                {props.userType === UserType.teacher && <div ><MovableMenuContext><TbArrowsMove /></MovableMenuContext></div> }
             </div>
             {props.userType === UserType.teacher && <AddCellButton key={"-1addcell" + props.sectionIdx} cellIdx={-1} currentPage={props.page} sectionIdx={props.sectionIdx} />}
             {props.userType === UserType.teacher && 

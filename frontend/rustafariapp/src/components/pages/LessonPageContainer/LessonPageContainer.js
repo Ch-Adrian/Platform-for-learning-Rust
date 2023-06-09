@@ -5,19 +5,37 @@ import './LessonPageContainer.css'
 import { IconContext } from 'react-icons';
 import LessonPage from '../LessonPage/LessonPage';
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
+import { HashLink } from 'react-router-hash-link';
 
 const LessonPageContainer = () => {
   const [sidebar, setSidebar] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const showSidebar = () => setSidebar(!sidebar);
 
+
   const {lessonDefinition} = useContext(LessonContext);
+
+  const regExpNum = new RegExp("[0-9]*");
 
   console.log(lessonDefinition)
   
   const url = new URL(window.location.href);
+  console.log(url);
   let path = url.pathname.split("/");
-  path.pop()
+  let currPg = 0; 
+
+  while(true){
+    let word = path.pop();
+    if(regExpNum.test(word)){
+      currPg = parseInt(word);
+    }
+    if(path.at(path.length-1).indexOf(".json") !== -1){
+      break;
+    }
+  }
+
+
   url.pathname = path.join("/")
   localStorage.setItem(lessonDefinition, lessonDefinition);
 
@@ -32,31 +50,37 @@ const LessonPageContainer = () => {
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
           <ul className='nav-menu-items' onClick={showSidebar}>
             <li className='navbar-toggle'>
+              Pages:
             </li>
             {lessonDefinition && lessonDefinition.pages.map((_, idx) => {
               return (
                 <li key={idx} className='nav-text'>
                   <Link to={url + "/" + idx}>
-                    {/* {item.icon} */}
-                    <span>{"PAGE " + idx}</span>
+                    <span >{"PAGE " + idx}</span>
                   </Link>
-                    <ol>
-                    {
-                      lessonDefinition.pages[idx].sections.map( (content, sectionIdx) => {
-                        return (
-                          <Link to={url+"/"+idx}>
-                            <li>{
-                                <span>{content.title}</span>
-                            }
-                            </li>
-                          </Link>
-                        )
-                      })
-                    }
-                    </ol>
                 </li>
               );
             })}
+          </ul>
+        </nav>
+        <nav className={sidebar ? 'nav-menu-inner active' : 'nav-menu-inner'}>
+          <ul className='nav-menu-items' onClick={showSidebar}>
+            <li className='navbar-toggle'>
+              Sections:
+            </li>
+              {
+                lessonDefinition.pages[currPg].sections.map( (content, sectionIdx) => {
+                  return (
+                    <HashLink key={currPg*10+sectionIdx} to={url+"/"+currPg+"/#section"+sectionIdx}>
+                      <li key={sectionIdx} className='nav-text-inner' >{
+                        <span>{content.title}</span>
+                      }
+                      </li>
+                    </HashLink>
+                  )
+                })
+              }
+
           </ul>
         </nav>
       </IconContext.Provider>

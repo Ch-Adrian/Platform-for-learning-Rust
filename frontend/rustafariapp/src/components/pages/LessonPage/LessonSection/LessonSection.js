@@ -37,7 +37,7 @@ const LessonSection = (props) => {
     }
 
     return (
-        <div className='section-container'>
+        <div className='section-container' id={"section"+props.sectionIdx} >
             <SectionHeader title={props.section.title} page={props.page} sectionIdx={props.sectionIdx}/>
             <div className='section-misc-buttons-container'>
                 {props.userType === UserType.teacher && <div className='section-grab' {...props.handleDrag} ><TbGridDots/></div>}

@@ -43,7 +43,7 @@ const LessonSection = (props) => {
             <div className='section-misc-buttons-container'>
                 {props.userType === UserType.teacher && <div className='section-grab' {...props.handleDrag} ><TbGridDots/></div>}
                 {props.userType === UserType.teacher && <button className='section-delete-button' onClick={removeSectionHandler}><BsTrash3/></button>}
-                {props.userType === UserType.teacher && <div ><MovableMenuContext><TbArrowsMove /></MovableMenuContext></div> }
+                {props.userType === UserType.teacher && <div ><MovableMenuContext pageID={props.page} sectionID={props.sectionIdx} ><TbArrowsMove /></MovableMenuContext></div> }
             </div>
             {props.userType === UserType.teacher && <AddCellButton key={"-1addcell" + props.sectionIdx} cellIdx={-1} currentPage={props.page} sectionIdx={props.sectionIdx} />}
             {props.userType === UserType.teacher && 

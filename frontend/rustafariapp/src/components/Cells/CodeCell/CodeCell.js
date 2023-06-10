@@ -7,7 +7,8 @@ import { LessonContext } from '../../../contexts/LessonContext/LessonContextProv
 import MonacoEditor from '../../Editor/MonacoEditor';
 import UserType from '../../models/UserType';
 import {BsTrash3} from 'react-icons/bs';
-import {TbGridDots} from 'react-icons/tb';
+import {TbGridDots, TbArrowsMove } from 'react-icons/tb';
+import MovableMenuContext from '../../miscellaneous/MenuContext/Movable/MovableMenuContext'
 
 
 const CodeCell = memo(function CodeCell(props) {
@@ -87,6 +88,7 @@ const CodeCell = memo(function CodeCell(props) {
       <div className='cell-misc-buttons-container'>
         {props.userType === UserType.teacher && <div className='text-cell-grab' {...props.handleDrag} ><TbGridDots/></div>}
         {props.userType === UserType.teacher && <button className='code-cell-delete-button' onClick={removeCellHandler}><BsTrash3/></button>}
+        {props.userType === UserType.teacher && <div ><MovableMenuContext pageID={props.currentPage} sectionID={props.sectionIdx} cellID={props.cellIdx} ><TbArrowsMove /></MovableMenuContext></div> }
       </div>
       {props.userType === UserType.teacher ?
       // TEACHER VERSION

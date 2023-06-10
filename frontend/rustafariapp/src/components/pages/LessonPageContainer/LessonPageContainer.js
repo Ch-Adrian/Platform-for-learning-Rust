@@ -64,10 +64,14 @@ const LessonPageContainer = () => {
           <FaIcons.FaBars className='hamburger' onClick={showSidebar} />
         </Link>
         <div className='general-buttons'>
-          <button className='general-button-item'>New lesson</button>
-          <button className='general-button-item'>Save lesson</button>
-          <button className='general-button-item' onClick={newPageEvent}>New page</button>
-          <button className='general-button-item' onClick={deletePageEvent}>Delete page</button>
+          <div>
+            <button className='general-button-item'>New lesson</button>
+            <button className='general-button-item'>Save lesson</button>
+          </div>
+          <div>
+            <button className='general-button-item' onClick={newPageEvent}>New page</button>
+            <button className='general-button-item' onClick={deletePageEvent}>Delete page</button>
+          </div>
         </div>
       </div>
       <IconContext.Provider value={{ color: '#fff' }}>

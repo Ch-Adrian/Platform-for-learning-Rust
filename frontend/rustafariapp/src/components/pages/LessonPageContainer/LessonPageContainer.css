@@ -24,11 +24,13 @@
   z-index: 100;
   width: 100%;
   display: flex;
-  justify-content: space-between;
 }
 
 .general-buttons {
    margin: 16px;
+   width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .general-button-item {

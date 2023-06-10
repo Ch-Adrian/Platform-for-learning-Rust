@@ -13,8 +13,7 @@ const LessonPageContainer = () => {
 
   const showSidebar = () => setSidebar(!sidebar);
 
-
-  const {lessonDefinition} = useContext(LessonContext);
+  const {lessonDefinition, updateLesson} = useContext(LessonContext);
 
   const regExpNum = new RegExp("[0-9]*");
 
@@ -35,6 +34,12 @@ const LessonPageContainer = () => {
     }
   }
 
+  const newPageEvent = () => {
+    let newLessonDefinition = {...lessonDefinition};
+    newLessonDefinition.pages.push({ sections: [] });
+    updateLesson(newLessonDefinition);
+  }
+
 
   url.pathname = path.join("/")
   localStorage.setItem(lessonDefinition, lessonDefinition);
@@ -45,6 +50,11 @@ const LessonPageContainer = () => {
         <Link to='#' className='menu-bars'>
           <FaIcons.FaBars className='hamburger' onClick={showSidebar} />
         </Link>
+        <div className='general-buttons'>
+          <button className='general-button-item'>New lesson</button>
+          <button className='general-button-item'>Save lesson</button>
+          <button className='general-button-item' onClick={newPageEvent}>New page</button>
+        </div>
       </div>
       <IconContext.Provider value={{ color: '#fff' }}>
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>

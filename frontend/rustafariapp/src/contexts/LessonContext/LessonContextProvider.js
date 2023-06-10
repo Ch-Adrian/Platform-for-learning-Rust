@@ -55,13 +55,10 @@ const LessonContextProvider = (props) => {
     }
 
     const addSection = (newSection, page, section) => {
-        let modifiedLesson = {...lessonDefinition};
-        modifiedLesson.pages[page].sections.splice(section+1, 0, newSection);    
+        page = parseInt(page);
+        lessonDefinition.pages[page].sections.splice(section+1, 0, newSection);    
         setLessonDefinition({
-            pages: lessonDefinition.pages.map((pageDef, iPage) => {
-                if (iPage === page) return {sections: modifiedLesson.pages[page]}
-                else return {...pageDef}
-            })
+            pages: lessonDefinition.pages
         });
     }
 
@@ -92,10 +89,11 @@ const LessonContextProvider = (props) => {
 
     const removeSection = (page, section) => {
         let modifiedLesson = {...lessonDefinition};
+        page = parseInt(page);
         modifiedLesson.pages[page].sections.splice(section, 1);
         setLessonDefinition({
             pages: lessonDefinition.pages.map((pageDef, iPage) => {
-                if (iPage === page) return {sections: modifiedLesson.pages[page].sections[section]}
+                if (iPage === page) return {sections: modifiedLesson.pages[page].sections}
                 else return {...pageDef}
             })
         });

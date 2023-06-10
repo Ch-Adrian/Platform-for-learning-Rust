@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react'
+import Button from 'react-bootstrap/esm/Button';
 import * as FaIcons from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import './LessonPageContainer.css'
@@ -9,6 +10,7 @@ import { HashLink } from 'react-router-hash-link';
 import { useNavigate } from "react-router-dom";
 
 const LessonPageContainer = () => {
+  
   const [sidebar, setSidebar] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const navigate = useNavigate();
@@ -65,12 +67,12 @@ const LessonPageContainer = () => {
         </Link>
         <div className='general-buttons'>
           <div>
-            <button className='general-button-item'>New lesson</button>
-            <button className='general-button-item'>Save lesson</button>
+            <Button className='general-button-item' variant='light'>New lesson</Button>
+            <Button className='general-button-item' variant='light'>Save lesson</Button>
           </div>
           <div>
-            <button className='general-button-item' onClick={newPageEvent}>New page</button>
-            <button className='general-button-item' onClick={deletePageEvent}>Delete page</button>
+            <Button className='general-button-item' variant='light' onClick={newPageEvent}>New page</Button>
+            <Button className='general-button-item' variant='light' onClick={deletePageEvent}>Delete page</Button>
           </div>
         </div>
       </div>
@@ -97,7 +99,7 @@ const LessonPageContainer = () => {
               Sections:
             </li>
               {
-                lessonDefinition.pages[currPg].sections.map( (content, sectionIdx) => {
+                lessonDefinition && lessonDefinition.pages[currPg].sections.map( (content, sectionIdx) => {
                   return (
                     <HashLink key={currPg*10+sectionIdx} to={url+"/"+currPg+"/#section"+sectionIdx}>
                       <li key={sectionIdx} className='nav-text-inner' >{

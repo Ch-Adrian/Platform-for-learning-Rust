@@ -15,8 +15,9 @@
 }
 
 .code-cell-container-teacher {
-    padding: 1em 0 1em 0;
+    padding: 1em 10px 1em 10px;
     transition: .2s background-color box-shadow;
+    border-radius: 20px;
 }
 
 .code-cell-container-teacher:hover {

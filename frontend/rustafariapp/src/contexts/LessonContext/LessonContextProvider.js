@@ -26,7 +26,7 @@ const LessonContextProvider = (props) => {
         modifiedLesson.pages[page].sections[section].cells[idx] = newCell;
         setLessonDefinition({
             pages: lessonDefinition.pages.map((pageDef, iPage) => {
-                if (iPage === page) return {sections: modifiedLesson.pages[page].section[section]}
+                if (iPage === page) return {sections: modifiedLesson.pages[page].sections[section]}
                 else return {...pageDef}
             })
         });
@@ -37,7 +37,7 @@ const LessonContextProvider = (props) => {
         modifiedLesson.pages[page].sections[section].cells.splice(idx+1, 0, newCell);    
         setLessonDefinition({
             pages: lessonDefinition.pages.map((pageDef, iPage) => {
-                if (iPage === page) return {sections: modifiedLesson.pages[page].section[section]}
+                if (iPage === page) return {sections: modifiedLesson.pages[page].sections[section]}
                 else return {...pageDef}
             })
         });
@@ -46,10 +46,9 @@ const LessonContextProvider = (props) => {
     const removeCell = (idx, page, section) => {
         let modifiedLesson = {...lessonDefinition};
         modifiedLesson.pages[page].sections[section].cells.splice(idx, 1);
-        // modifiedLesson.pages[page].sections[section].cells = modifiedLesson.pages[page].sections[section].cells.splice(idx, 1);    
         setLessonDefinition({
             pages: lessonDefinition.pages.map((pageDef, iPage) => {
-                if (iPage === page) return {sections: modifiedLesson.pages[page].section[section]}
+                if (iPage === page) return {sections: modifiedLesson.pages[page].sections[section]}
                 else return {...pageDef}
             })
         });
@@ -94,10 +93,9 @@ const LessonContextProvider = (props) => {
     const removeSection = (page, section) => {
         let modifiedLesson = {...lessonDefinition};
         modifiedLesson.pages[page].sections.splice(section, 1);
-        // modifiedLesson.pages[page].sections[section].cells = modifiedLesson.pages[page].sections[section].cells.splice(idx, 1);    
         setLessonDefinition({
             pages: lessonDefinition.pages.map((pageDef, iPage) => {
-                if (iPage === page) return {sections: modifiedLesson.pages[page].section[section]}
+                if (iPage === page) return {sections: modifiedLesson.pages[page].sections[section]}
                 else return {...pageDef}
             })
         });

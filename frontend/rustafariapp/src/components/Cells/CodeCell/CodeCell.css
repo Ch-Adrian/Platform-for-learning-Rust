@@ -1,3 +1,10 @@
+:root{
+  --background-cell-color: #524B4B;
+  --buttons-color: grey;
+  --buttons-color-active: white;
+  --background-buttons-color: transparent;
+}
+
 .editor-button-container {
     display: flex;
     flex-direction: row;
@@ -21,7 +28,7 @@
 }
 
 .code-cell-container-teacher:hover {
-    background-color: #595454;
+    background-color: var(--background-cell-color); 
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -33,9 +40,9 @@
 }
 
 .cell-misc-buttons-container > * {
-    color: grey;
+    color: var(--buttons-color); 
     opacity: 0.4;
-    background-color: transparent;
+    background-color: var(--background-buttons-color); 
     border: 0;
 }
 
@@ -45,7 +52,7 @@
 }
 
 .cell-misc-buttons-container > *:active {
-    color: white;
+    color: var(--buttons-color-active); 
 }
 
 .text-cell-grab {

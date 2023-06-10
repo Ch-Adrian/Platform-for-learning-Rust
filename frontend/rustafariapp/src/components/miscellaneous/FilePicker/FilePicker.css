@@ -1,3 +1,10 @@
+:root{
+  --backgroud-color: #524B4B;
+  --text-color: #bdbdbd;
+  --border-color: #333333;
+}
+
+
 .file-picker {
     max-width: 13em;
     height: 10em;
@@ -9,10 +16,10 @@
     padding: 10px;
     border-width: 4;
     border-radius: 2;
-    border-color: #333333;
+    border-color: var(--border-color);
     border-style: solid;
-    background-color: #524B4B;
-    color: #bdbdbd;
+    background-color: var(--backgroud-color); 
+    color: var(--text-color); 
     outline: none;
     transition: border .24s ease-in-out;
     cursor: pointer;

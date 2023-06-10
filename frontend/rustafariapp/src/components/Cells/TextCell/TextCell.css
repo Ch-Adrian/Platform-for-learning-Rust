@@ -1,25 +1,36 @@
+:root{
+  --background-cell-color: #524B4B;
+  --markdown-color: white;
+  --buttons-color: grey;
+  --buttons-color-active: white;
+  --background-buttons-color: transparent;
+  --top-border-color: #c6cbd1;
+  --code-color: #c9d1d9;
+  --border-color-td: #dfe2e5;
+}
+
 .markdown {
-    color: white;
+    color: var(--markdown-color); 
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 code {
-    color: #c9d1d9;
+    color: var(--code-color); 
 }
 
 tr {
-    border-top: 1px solid #c6cbd1;
+    border-top: 1px solid var(--top-border-color); 
   }
   
 th,
 td {
     padding: 6px 13px;
-    border: 1px solid #dfe2e5;
-    background-color: #524B4B !important;
+    border: 1px solid var(--border-color-td); 
+    background-color: var(--background-cell-color) !important;
 }
 
 .markdown-body {
-    background-color: #524B4B !important;
+    background-color: var(--background-cell-color) !important;
 }
 
 .text-cell-container {
@@ -42,9 +53,9 @@ td {
 }
 
 .cell-misc-buttons-container > * {
-    color: grey;
+    color: var(--buttons-color); 
     opacity: 0.4;
-    background-color: transparent;
+    background-color: var(--background-buttons-color); 
     border: 0;
 }
 
@@ -54,7 +65,7 @@ td {
 }
 
 .cell-misc-buttons-container > *:active {
-    color: white;
+    color: var(--buttons-color-active); 
 }
 
 .text-cell-grab {
@@ -70,6 +81,6 @@ td {
 @media (prefers-color-scheme: dark) {
     .wmde-markdown,
     .wmde-markdown-var {
-        --color-canvas-default: #524b4b !important;
+        --color-canvas-default: var(--background-cell-color) !important;
     }
 }

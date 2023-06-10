@@ -1,3 +1,8 @@
+:root{
+  --backgroud-layout-color: #222222;
+}
+
+
 .layout {
     display: flex;
     justify-content: center;
@@ -7,5 +12,5 @@
     min-height: 100vh;
     padding: 2em;
     padding-top: 0em;
-    background-color: #222222;
+    background-color: var(--backgroud-layout-color);
   }

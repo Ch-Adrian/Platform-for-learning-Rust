@@ -1,8 +1,12 @@
+:root {
+  --background-color: #222222;
+}
+
 .cell {
     -webkit-text-size-adjust: 100%;
     height: 4em;
     margin-left: -4em;
     margin-right: -4em;
-    background-color: #222222;
+    background-color: var(--background-color); 
     
 }

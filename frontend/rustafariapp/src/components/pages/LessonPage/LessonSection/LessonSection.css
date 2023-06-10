@@ -1,19 +1,28 @@
+:root{
+   /* --background-section-color: #232935; */
+  --background-section-color: #524B4B;
+  --accent-color: white;
+  --buttons-color: grey;
+  --buttons-color-active: white;
+  --background-buttons-color: transparent;
+  --title-color: white;
+}
 
 .section-container {
     display: flex;
     flex-direction: column;
     width: 100%;
     padding: 4em;
-    background-color: #524B4B;
+    background-color: var(--background-section-color);
     gap: 2em;
 }
 
 .section-delete-button {
     margin-left: auto;
     padding: 0 1em 1em 1em;
-    color: grey;
+    color: var(--buttons-color);
     opacity: 0.4;
-    background-color: transparent;
+    background-color: var(--background-buttons-color);
     border: 0;
 }
 
@@ -23,7 +32,7 @@
 }
 
 .section-delete-button:active {
-    color: white;
+    color: var(--buttons-color-active);
 }
 
 .section-misc-buttons-container {
@@ -34,9 +43,9 @@
 }
 
 .section-misc-buttons-container > * {
-    color: grey;
+    color: var(--buttons-color);
     opacity: 0.4;
-    background-color: transparent;
+    background-color: var(--background-buttons-color);
     border: 0;
 }
 
@@ -46,7 +55,7 @@
 }
 
 .section-misc-buttons-container > *:active {
-    color: white;
+    color: var(--buttons-color-active);
 }
 
 .section-grab {
@@ -54,7 +63,7 @@
 }
 
 .section-header{
-    color: white;
+    color: var(--title-color);
     font-size:xx-large;
     text-align: center;
     padding-left: 20px;
@@ -62,5 +71,5 @@
 
 .section-header-container {
   display: flex;
-  border-bottom: solid white 2px;
+  border-bottom: solid var(--accent-color) 2px;
 }

@@ -6,10 +6,12 @@ import { IconContext } from 'react-icons';
 import LessonPage from '../LessonPage/LessonPage';
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
 import { HashLink } from 'react-router-hash-link';
+import { useNavigate } from "react-router-dom";
 
 const LessonPageContainer = () => {
   const [sidebar, setSidebar] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const navigate = useNavigate();
 
   const showSidebar = () => setSidebar(!sidebar);
 
@@ -37,7 +39,18 @@ const LessonPageContainer = () => {
   const newPageEvent = () => {
     let newLessonDefinition = {...lessonDefinition};
     newLessonDefinition.pages.push({ sections: [] });
+
     updateLesson(newLessonDefinition);
+  }
+
+  const deletePageEvent = () => {
+    let newLessonDefinition = {...lessonDefinition};
+    newLessonDefinition.pages.splice(currPg, 1);
+
+    updateLesson(newLessonDefinition);
+
+    if(lessonDefinition.pages.length >= 1) navigate(url.pathname+'/0');
+    else navigate(url.pathname);
   }
 
 
@@ -54,6 +67,7 @@ const LessonPageContainer = () => {
           <button className='general-button-item'>New lesson</button>
           <button className='general-button-item'>Save lesson</button>
           <button className='general-button-item' onClick={newPageEvent}>New page</button>
+          <button className='general-button-item' onClick={deletePageEvent}>Delete page</button>
         </div>
       </div>
       <IconContext.Provider value={{ color: '#fff' }}>

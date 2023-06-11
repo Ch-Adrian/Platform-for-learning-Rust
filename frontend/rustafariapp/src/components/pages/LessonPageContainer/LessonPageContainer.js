@@ -8,6 +8,7 @@ import LessonPage from '../LessonPage/LessonPage';
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
 import { HashLink } from 'react-router-hash-link';
 import { useNavigate } from "react-router-dom";
+import LessonFileHandleService from '../../../services/LessonFileHandleService';
 
 const LessonPageContainer = () => {
   
@@ -17,7 +18,7 @@ const LessonPageContainer = () => {
 
   const showSidebar = () => setSidebar(!sidebar);
 
-  const {lessonDefinition, updateLesson} = useContext(LessonContext);
+  const {lessonDefinition, updateLesson, lessonLocalPath, setLessonLocalPath} = useContext(LessonContext);
 
   const regExpNum = new RegExp("[0-9]*");
 
@@ -55,6 +56,34 @@ const LessonPageContainer = () => {
     else navigate(url.pathname);
   }
 
+  const handleSaveAs = async () => {
+    LessonFileHandleService.getDirectory(window.localStorage.getItem('lastPickedLessonLocalPath'))
+    .then((res) => {
+      if (res.data === "") return;
+      const sliceIndex = res.data.lastIndexOf("\\");
+      const [filePath, fileName] = [res.data.slice(0, sliceIndex), res.data.slice(sliceIndex+1)]
+      if (!fileName.endsWith(".json")) {
+        alert("Your file must be in JSON format and filename must end with a \".json\" extension!");
+        return;
+      }
+      setLessonLocalPath(filePath);
+      window.localStorage.setItem('lessonFileName', fileName);
+
+      LessonFileHandleService.saveLesson(filePath+"\\"+fileName, lessonDefinition);
+    })
+    .catch((err) => console.log(err));;
+  }
+
+  const handleSave = async () => {
+    if (lessonLocalPath === undefined) {
+      handleSaveAs();
+    } else {
+      LessonFileHandleService.saveLesson(lessonLocalPath+"\\"+window.localStorage.getItem('lessonFileName'), lessonDefinition);
+    }
+  }
+
+
+
 
   url.pathname = path.join("/")
   localStorage.setItem(lessonDefinition, lessonDefinition);
@@ -68,7 +97,8 @@ const LessonPageContainer = () => {
         <div className='general-buttons'>
           <div>
             <Button className='general-button-item' variant='light'>New lesson</Button>
-            <Button className='general-button-item' variant='light'>Save lesson</Button>
+            <Button className='general-button-item' variant='light' onClick={handleSaveAs}>Save lesson as</Button>
+            <Button className='general-button-item' variant='light' onClick={handleSave}>Save lesson</Button>
           </div>
           <div>
             <Button className='general-button-item' variant='light' onClick={newPageEvent}>New page</Button>

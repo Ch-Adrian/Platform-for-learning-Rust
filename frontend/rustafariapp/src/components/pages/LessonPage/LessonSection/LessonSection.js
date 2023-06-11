@@ -10,7 +10,6 @@ import { LessonContext } from '../../../../contexts/LessonContext/LessonContextP
 import { Draggable } from 'react-beautiful-dnd'
 import StrictModeDroppable from '../../../miscellaneous/Droppable/StrictModeDroppable'
 import {TbGridDots, TbArrowsMove } from 'react-icons/tb';
-import { useState } from 'react'
 import MovableMenuContext from '../../../miscellaneous/MenuContext/Movable/MovableMenuContext'
 
 function SectionHeader({title, page, sectionIdx}) {

@@ -4,22 +4,31 @@ export const LessonContext = createContext({});
 
 const LessonContextProvider = (props) => {
     const [lessonDefinition, setLessonDefinition] = useState();
+    const [lessonLocalPath, setLessonLocalPath] = useState();
 
     // Those two functions below are for persisiting the lesson state on page refresh
     useEffect(() => {
         if (window.localStorage.getItem('lessonDefinition') !== 'undefined') setLessonDefinition(JSON.parse(window.localStorage.getItem('lessonDefinition')));
+        if (window.localStorage.getItem('lessonLocalPath') !== 'undefined') setLessonLocalPath(window.localStorage.getItem('lessonLocalPath'));
     }, []);
 
     useEffect(() => {
         window.localStorage.setItem('lessonDefinition', JSON.stringify(lessonDefinition));
     }, [lessonDefinition]);
 
+    useEffect(() => {
+        window.localStorage.setItem('lessonLocalPath', lessonLocalPath);
+        if (lessonLocalPath !== undefined) window.localStorage.setItem('lastPickedLessonLocalPath', lessonLocalPath);
+    }, [lessonLocalPath])
+
     const value = useMemo(() => {
         return {
             lessonDefinition, 
-            setLessonDefinition
+            setLessonDefinition,
+            lessonLocalPath,
+            setLessonLocalPath
           }
-    }, [lessonDefinition]);
+    }, [lessonDefinition, lessonLocalPath]);
 
     const updateCell = useCallback((newCell, idx, page, section) => {
         let modifiedLesson = {...lessonDefinition};

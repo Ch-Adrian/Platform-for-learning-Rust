@@ -5,7 +5,8 @@
 ### Backend:
 Java 17\
 Spring Boot 3.0.5\
-Maven Project
+Maven Project\
+Rust
 
 ### Frontend:
 React\
@@ -18,7 +19,15 @@ Linux
 
 ## Project set-up:
 
+### Requirements:
+To run platform locally You have to prepare\
+system to run technologies specified above.
+
+If You want to use docker You have to install\
+only docker and run relevant command.
+
 ### Backend:
+**To run locally:**\
 To run project You can use IDEA environment\
 or use maven:\
 inside backend directory run (for Windows):\
@@ -27,6 +36,13 @@ inside backend directory run (for Windows):\
 `.\mvnw clean` to clean project
 
 for linux You have to replace `mvnw` with `mvn`.
+
+**To run on docker:**\
+For windows:\
+`.\run-docker.cmd`
+
+For linux:\
+`bash .\run-docker.sh`
 
 ### Frontend:
 You have to enter frontend/rustafariapp\

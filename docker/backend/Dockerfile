@@ -1,19 +1,19 @@
 
-FROM openjdk:17
+FROM openjdk:17-ea-jdk-slim-buster
 
 RUN apt-get update
 RUN apt-get install -y \
     build-essential \
     curl
 
-RUN apt-get update
-
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
 WORKDIR /
 
-COPY ./backend/src .
+RUN mkdir src
+COPY ./backend/src/ ./src
 COPY ./backend/target/backend-0.0.1-SNAPSHOT.jar .
+ENV PATH="$PATH:/root/.cargo/bin"
 
 EXPOSE 8080
 

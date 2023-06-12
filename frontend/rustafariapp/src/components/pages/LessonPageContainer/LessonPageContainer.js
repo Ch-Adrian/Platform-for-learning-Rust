@@ -10,6 +10,8 @@ import { HashLink } from 'react-router-hash-link';
 import { useNavigate } from "react-router-dom";
 import LessonFileHandleService from '../../../services/LessonFileHandleService';
 
+const DEFAULT_LESSON = require('../../../assets/DefaultNewLesson.json');
+
 const LessonPageContainer = () => {
   
   const [sidebar, setSidebar] = useState(false);
@@ -18,7 +20,7 @@ const LessonPageContainer = () => {
 
   const showSidebar = () => setSidebar(!sidebar);
 
-  const {lessonDefinition, updateLesson, lessonLocalPath, setLessonLocalPath} = useContext(LessonContext);
+  const {lessonDefinition, setLessonDefinition, updateLesson, lessonLocalPath, setLessonLocalPath} = useContext(LessonContext);
 
   const regExpNum = new RegExp("[0-9]*");
 
@@ -81,9 +83,16 @@ const LessonPageContainer = () => {
       LessonFileHandleService.saveLesson(lessonLocalPath+"\\"+window.localStorage.getItem('lessonFileName'), lessonDefinition);
     }
   }
-
-
-
+  
+  const handleNewLesson = async () => {
+    if (lessonLocalPath !== undefined) {
+      await handleSave();
+    } 
+    setLessonLocalPath(undefined);
+    const newLessonDefinition = window.structuredClone(DEFAULT_LESSON);
+    setLessonDefinition(newLessonDefinition);
+    navigate(`/lesson/newLesson.json/0`, {state: {lessonFile: newLessonDefinition}});    
+  }
 
   url.pathname = path.join("/")
   localStorage.setItem(lessonDefinition, lessonDefinition);
@@ -96,9 +105,9 @@ const LessonPageContainer = () => {
         </Link>
         <div className='general-buttons'>
           <div>
-            <Button className='general-button-item' variant='light'>New lesson</Button>
+            <Button className='general-button-item' variant='light' onClick={handleNewLesson}>New lesson</Button>
             <Button className='general-button-item' variant='light' onClick={handleSaveAs}>Save lesson as</Button>
-            <Button className='general-button-item' variant='light' onClick={handleSave}>Save lesson</Button>
+            <Button className='general-button-item' variant='light' disabled={lessonLocalPath===undefined} onClick={handleSave}>Save lesson</Button>
           </div>
           <div>
             <Button className='general-button-item' variant='light' onClick={newPageEvent}>New page</Button>

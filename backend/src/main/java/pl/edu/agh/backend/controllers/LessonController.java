@@ -6,8 +6,10 @@ import pl.edu.agh.backend.compiler.StudentInput;
 import pl.edu.agh.backend.lesson.Lesson;
 import pl.edu.agh.backend.lesson.LessonFile;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.util.Optional;
 
 import javax.swing.*;
 
@@ -30,11 +32,11 @@ public class LessonController {
     @PostMapping("directory/pick")
     public String selectFile(@RequestBody StudentInput studentInput) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        JFileChooser f = studentInput.getItem().equals("undefined") ? new JFileChooser() : new JFileChooser(studentInput.getItem());
+        String defaultPath = Optional.ofNullable(studentInput.getItem()).orElseGet(() -> "undefined");
+        JFileChooser f = defaultPath.equals("undefined") ? new JFileChooser() : new JFileChooser(studentInput.getItem());
         f.setFileSelectionMode(JFileChooser.FILES_ONLY);
         f.showSaveDialog(null);
-        
-        if (f.getSelectedFile() == null) return "";
-        return f.getSelectedFile().toString();
+
+        return Optional.ofNullable(f.getSelectedFile()).map(File::toString).orElseGet(()->"");
     }
 }

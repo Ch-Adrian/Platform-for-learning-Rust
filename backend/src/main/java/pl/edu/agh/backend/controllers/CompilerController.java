@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.backend.compiler.RustTestsFile;
 import pl.edu.agh.backend.compiler.StudentInput;
 import pl.edu.agh.backend.compiler.RustFile;
+import pl.edu.agh.backend.configurations.OperatingSystemConfig;
 import pl.edu.agh.backend.services.CompilerService;
 
 @CrossOrigin(origins = "http://localhost:3000/")
@@ -11,9 +12,11 @@ import pl.edu.agh.backend.services.CompilerService;
 @RequestMapping("lesson/")
 public class CompilerController {
     private final CompilerService compilerService;
+    private final OperatingSystemConfig operatingSystemConfig;
 
-    CompilerController(CompilerService compilerService) {
+    CompilerController(CompilerService compilerService, OperatingSystemConfig operatingSystemConfig) {
         this.compilerService = compilerService;
+        this.operatingSystemConfig = operatingSystemConfig;
     }
 
     @PostMapping("code")
@@ -23,6 +26,7 @@ public class CompilerController {
                 .fileName("main.rs")
                 .directory("src/main/resources/rust")
                 .content(studentInput.getItem())
+                .operatingSystem(operatingSystemConfig.getOperatingSystem())
                 .build()).getAll();
     }
 
@@ -33,6 +37,7 @@ public class CompilerController {
                 .directory("src/main/resources/tests")
                 .content(studentInput.getItem())
                 .testContent(studentInput.getTestContent())
+                .operatingSystem(operatingSystemConfig.getOperatingSystem())
                 .build()).getAll();
     }
 }

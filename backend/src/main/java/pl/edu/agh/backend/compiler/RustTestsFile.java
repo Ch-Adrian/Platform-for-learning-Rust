@@ -12,7 +12,7 @@ public class RustTestsFile extends RustFile {
     private String testContent;
 
     @Override
-    public String[] getCommand() {
+    public String[] getCompilationCommand() {
         return new String[]{"rustc", super.getPath(), "--out-dir", this.directory, "--test"};
     }
 

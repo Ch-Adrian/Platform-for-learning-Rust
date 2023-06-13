@@ -7,7 +7,6 @@ import pl.edu.agh.backend.configurations.CompilerResponseConfig;
 import pl.edu.agh.backend.exceptions.CompilerErrorException;
 
 import java.io.*;
-import java.util.Objects;
 
 
 public class RustProgramProcess {
@@ -16,20 +15,16 @@ public class RustProgramProcess {
     private final RustFile rustFile;
     private final ProcessBuilder processBuilder;
     private final StringBuilder compilerMessage;
-    private String exeEnding = ".exe";
 
     public RustProgramProcess(RustFile rustFile) {
         this.compilerResponseConfig = new AnnotationConfigApplicationContext(CompilerConfiguration.class).getBean(CompilerResponseConfig.class);
-        if (Objects.equals(System.getProperty("os.name"), "Linux")) {
-            this.exeEnding = "";
-        }
         this.processBuilder = new ProcessBuilder();
         this.compilerMessage = new StringBuilder();
         this.rustFile = rustFile;
     }
 
     private void compileProgram() throws CompilerErrorException, IOException, InterruptedException {
-        processBuilder.command(rustFile.getCommand());
+        processBuilder.command(rustFile.getCompilationCommand());
 
         Process process = processBuilder.start();
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
@@ -42,7 +37,7 @@ public class RustProgramProcess {
         }
 
         process.waitFor();
-        File fileExecutable = new File(rustFile.getPath().split("\\.")[0] + exeEnding);
+        File fileExecutable = new File(rustFile.getExecutionCommand());
 
 
         if (!fileExecutable.exists()) {
@@ -52,7 +47,7 @@ public class RustProgramProcess {
     }
 
     private CompilationResponse runProgram() throws IOException, InterruptedException {
-        processBuilder.command(rustFile.getPath().split("\\.")[0] + exeEnding);
+        processBuilder.command(rustFile.getExecutionCommand());
 
         Process process = processBuilder.start();
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));

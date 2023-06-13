@@ -1,5 +1,8 @@
 package pl.edu.agh.backend.compiler;
 
+import lombok.Getter;
+
+@Getter
 public class StudentInput {
 
     private final String item;
@@ -18,13 +21,5 @@ public class StudentInput {
     public StudentInput(String item, String testContent) {
         this.item = item;
         this.testContent = testContent;
-    }
-
-    public String getItem() {
-        return item;
-    }
-
-    public String getTestContent() {
-        return testContent;
     }
 }

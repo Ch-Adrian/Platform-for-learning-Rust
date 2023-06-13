@@ -19,31 +19,32 @@ public class CompilationResponse {
 
     private String compilationError;
 
-    private String getError(){
-        if(this.compilationError != null && !this.compilationError.isEmpty())
+    private String getError() {
+        if (this.compilationError != null && !this.compilationError.isEmpty())
             return String.format("### **Compilation error:** \n%s\n", this.compilationError);
         return "";
     }
 
-    private String getOutput(){
+    private String getOutput() {
         StringBuilder stringBuilder = new StringBuilder();
-        if(this.compilerMessage != null && !this.compilerMessage.isEmpty())
-                stringBuilder.append(String.format(String.format("### **Compiler message:**\n%s\n", this.compilerMessage)));
-        if(this.programOutput != null && !this.programOutput.isEmpty())
+        if (this.compilerMessage != null && !this.compilerMessage.isEmpty()) {
+            stringBuilder.append(String.format(String.format("### **Compiler message:**\n%s\n", this.compilerMessage)));
+        }
+        if (this.programOutput != null && !this.programOutput.isEmpty()) {
             stringBuilder.append(String.format(String.format("\n### **Program output:**\n%s\n", this.programOutput)));
-        if(this.testsOutput != null && !this.testsOutput.isEmpty())
+        }
+        if (this.testsOutput != null && !this.testsOutput.isEmpty()) {
             stringBuilder.append(String.format(String.format("\n### **Tests output:**\n%s\n", this.testsOutput)));
-
+        }
         return stringBuilder.toString();
     }
 
-    public String getAll(){
-       if(this.status.equals(Status.ERROR)){
-           return this.getError();
-       }
-       else{
-           return this.getOutput();
-       }
+    public String getAll() {
+        if (this.status.equals(Status.ERROR)) {
+            return this.getError();
+        } else {
+            return this.getOutput();
+        }
     }
 
 }

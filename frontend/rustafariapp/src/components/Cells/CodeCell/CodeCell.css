@@ -15,6 +15,11 @@
     padding: 0.5em !important;
 }
 
+.clear-output-editor-button {
+    padding: 0.5em !important;
+    margin-left: auto;
+    display: "none";
+}
 .code-cell-container {
     display: flex;
     flex-direction: column;

@@ -26,12 +26,12 @@ public class CompilationResponse {
     }
 
     private String getOutput() {
-        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder("\n### **Compiled successfully**\n");
         if (this.compilerMessage != null && !this.compilerMessage.isEmpty()) {
             stringBuilder.append(String.format(String.format("### **Compiler message:**\n%s\n", this.compilerMessage)));
         }
         if (this.programOutput != null && !this.programOutput.isEmpty()) {
-            stringBuilder.append(String.format(String.format("\n### **Program output:**\n%s\n", this.programOutput)));
+            stringBuilder.append(this.programOutput);
         }
         if (this.testsOutput != null && !this.testsOutput.isEmpty()) {
             stringBuilder.append(String.format(String.format("\n### **Tests output:**\n%s\n", this.testsOutput)));

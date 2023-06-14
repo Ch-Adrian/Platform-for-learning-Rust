@@ -83,6 +83,12 @@ const CodeCell = memo(function CodeCell(props) {
     removeCell(props.cellIdx, props.currentPage, props.sectionIdx);
   }
 
+  const clearOutput = async () => {
+    let modifiedCell = props.cell;
+    modifiedCell.output = "";
+    updateCell(modifiedCell, props.cellIdx, props.currentPage, props.sectionIdx);
+  };
+
   return (
     <div ref={containerRef} className={"code-cell-container " + (props.userType === UserType.teacher && "code-cell-container-teacher")} >
       <div className='cell-misc-buttons-container'>
@@ -98,10 +104,11 @@ const CodeCell = memo(function CodeCell(props) {
        <Button onClick={compile} className='editor-button' variant="success" disabled={isExecuting}>{!isExecuting ? 'Run code' : 'Running...'}</Button>{' '}
        {props.cell.test === undefined ? <Button onClick={() => {addEditor("test")}} className='editor-button' variant="success">{'Add tests'}</Button> : null}
        {props.cell.reference === undefined ? <Button onClick={() => {addEditor("reference")}} className='editor-button' variant="success">{'Add reference code'}</Button> : null}
+       <Button onClick={clearOutput} className='clear-output-editor-button' variant="danger" style={{ display: !props.cell.output ? "none" : "inline"}}>Clear output</Button>{' '}
       </div>  
       {isConnectionError ? <div style={{color: 'red'}}>There was some error connecting to the compiler. Please check if all app components are running</div> : null}
       {props.cell.outputTest && <div> Test Output <OutputCell output={props.cell.outputTest}></OutputCell></div>}
-      {props.cell.output && <div> Code output <OutputCell output={props.cell.output}></OutputCell></div>}
+      {props.cell.output && <div><OutputCell output={props.cell.output}></OutputCell></div>}
       {props.cell.test !== undefined ? 
       <div className={"code-cell-container"}> 
         <MonacoEditor containerRef={containerRef} editorRef={testEditorRef} updateEditorValueHandler={updateTestEditorValueHandler} text={props.cell.test}></MonacoEditor>

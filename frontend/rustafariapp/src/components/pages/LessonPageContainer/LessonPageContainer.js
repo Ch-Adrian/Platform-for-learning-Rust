@@ -111,7 +111,7 @@ const LessonPageContainer = () => {
           </div>
           <div>
             <Button className='general-button-item' variant='light' onClick={newPageEvent}>New page</Button>
-            <Button className='general-button-item' variant='light' onClick={deletePageEvent}>Delete page</Button>
+            <Button className='general-button-item' variant='light' disabled={lessonDefinition && lessonDefinition.pages.length == 1} onClick={deletePageEvent}>Delete page</Button>
           </div>
         </div>
       </div>

@@ -20,17 +20,20 @@ public class LessonController {
     }
 
     @PostMapping("save")
-    public boolean save(@RequestBody LessonFile lessonFile) {
-        return lessonService.saveExistingLesson(lessonFile);
+    public void save(@RequestBody LessonFile lessonFile) {
+        lessonService.saveExistingLesson(lessonFile);
     }
+
     @PostMapping("create")
-    public boolean createNewLesson(@RequestBody LessonFile lessonFile) {
-        return lessonService.createNewLesson(lessonFile);
+    public void createNewLesson(@RequestBody LessonFile lessonFile) {
+        lessonService.createNewLesson(lessonFile);
     }
+
     @PostMapping("rename")
-    public boolean renameLesson(@RequestBody Map<String, String> json) {
-        return lessonService.renameLesson(json.get("oldName"), json.get("newName"));
+    public void renameLesson(@RequestBody Map<String, String> json) {
+        lessonService.renameLesson(json.get("oldName"), json.get("newName"));
     }
+
     @GetMapping("list")
     public List<String> getAllLessonsNames() {
         return lessonService.getAllLessonsNames();

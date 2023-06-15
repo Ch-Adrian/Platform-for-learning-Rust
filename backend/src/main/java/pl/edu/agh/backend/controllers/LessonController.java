@@ -1,28 +1,38 @@
 package pl.edu.agh.backend.controllers;
 
-import com.google.gson.Gson;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.backend.lesson.LessonFile;
+import pl.edu.agh.backend.services.LessonService;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import java.util.List;
+import java.util.Map;
 
 
 @CrossOrigin(origins = "http://localhost:3000/")
 @RestController
-@RequestMapping("lesson/")
+@RequestMapping("lessons/")
 public class LessonController {
 
-    @PostMapping("save")
-    public void getOutput(@RequestBody LessonFile lessonFile) {
-        try (PrintWriter out = new PrintWriter(new FileWriter("backend/lessons" + File.separator + lessonFile.getName()))) {
-            Gson gson = new Gson();
-            String jsonString = gson.toJson(lessonFile.getLesson());
-            out.write(jsonString);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private final LessonService lessonService;
+
+    public LessonController(LessonService lessonService) {
+        this.lessonService = lessonService;
     }
 
+    @PostMapping("save")
+    public boolean save(@RequestBody LessonFile lessonFile) {
+        return lessonService.saveExistingLesson(lessonFile);
+    }
+    @PostMapping("create")
+    public boolean createNewLesson(@RequestBody LessonFile lessonFile) {
+        return lessonService.createNewLesson(lessonFile);
+    }
+    @PostMapping("rename")
+    public boolean renameLesson(@RequestBody Map<String, String> json) {
+        return lessonService.renameLesson(json.get("oldName"), json.get("newName"));
+    }
+    @GetMapping("list")
+    public List<String> getAllLessonsNames() {
+        return lessonService.getAllLessonsNames();
+    }
 }

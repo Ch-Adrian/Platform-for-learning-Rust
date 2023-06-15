@@ -1,5 +1,5 @@
 import axios from 'axios'
-const RUST_COMPILER_REST_API_URL = "http://localhost:8080/lesson/"
+const RUST_COMPILER_REST_API_URL = "http://localhost:8080/lessons/"
 
 const LessonFileHandleService = {
     saveLesson: async (lessonBody, lessonName) => {

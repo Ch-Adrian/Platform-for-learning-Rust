@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import LessonFileHandleService from '../../../services/LessonFileHandleService';
 
 const DEFAULT_LESSON = require('../../../assets/DefaultNewLesson.json');
+const DEFAULT_LESSON_NAME = "Nowa lekcja";
 
 const LessonPageContainer = () => {
   
@@ -20,7 +21,7 @@ const LessonPageContainer = () => {
 
   const showSidebar = () => setSidebar(!sidebar);
 
-  const {lessonDefinition, setLessonDefinition, updateLesson, lessonLocalPath, setLessonLocalPath} = useContext(LessonContext);
+  const {lessonDefinition, setLessonDefinition, lessonName, setLessonName} = useContext(LessonContext);
 
   const regExpNum = new RegExp("[0-9]*");
 
@@ -45,53 +46,41 @@ const LessonPageContainer = () => {
     let newLessonDefinition = {...lessonDefinition};
     newLessonDefinition.pages.push({ sections: [] });
 
-    updateLesson(newLessonDefinition);
+    setLessonDefinition(newLessonDefinition);
   }
 
   const deletePageEvent = () => {
     let newLessonDefinition = {...lessonDefinition};
     newLessonDefinition.pages.splice(currPg, 1);
 
-    updateLesson(newLessonDefinition);
+    setLessonDefinition(newLessonDefinition);
 
     if(lessonDefinition.pages.length >= 1) navigate(url.pathname+'/0');
     else navigate(url.pathname);
   }
 
-  const handleSaveAs = async () => {
-    LessonFileHandleService.getDirectory(window.localStorage.getItem('lastPickedLessonLocalPath'))
-    .then((res) => {
-      if (res.data === "") return;
-      const sliceIndex = res.data.lastIndexOf("\\");
-      const [filePath, fileName] = [res.data.slice(0, sliceIndex), res.data.slice(sliceIndex+1)]
-      if (!fileName.endsWith(".json")) {
-        alert("Your file must be in JSON format and filename must end with a \".json\" extension!");
-        return;
-      }
-      setLessonLocalPath(filePath);
-      window.localStorage.setItem('lessonFileName', fileName);
-
-      LessonFileHandleService.saveLesson(filePath+"\\"+fileName, lessonDefinition);
-    })
-    .catch((err) => console.log(err));;
-  }
-
   const handleSave = async () => {
-    if (lessonLocalPath === undefined) {
-      handleSaveAs();
-    } else {
-      LessonFileHandleService.saveLesson(lessonLocalPath+"\\"+window.localStorage.getItem('lessonFileName'), lessonDefinition);
-    }
+    LessonFileHandleService.saveLesson(lessonDefinition, lessonName);
   }
   
   const handleNewLesson = async () => {
-    if (lessonLocalPath !== undefined) {
+    if (lessonName !== DEFAULT_LESSON_NAME) {
       await handleSave();
     } 
-    setLessonLocalPath(undefined);
+    setLessonName(DEFAULT_LESSON_NAME);
     const newLessonDefinition = window.structuredClone(DEFAULT_LESSON);
     setLessonDefinition(newLessonDefinition);
     navigate(`/lesson/newLesson.json/0`, {state: {lessonFile: newLessonDefinition}});    
+  }
+
+  const handleDownload = () => {
+    const link = document.createElement('a');
+    link.download = lessonName+'.json';
+
+    const file = new Blob([JSON.stringify(lessonDefinition)], { type: "text/plain" });
+    link.href = URL.createObjectURL(file);
+
+    link.click();
   }
 
   url.pathname = path.join("/")
@@ -105,13 +94,13 @@ const LessonPageContainer = () => {
         </Link>
         <div className='general-buttons'>
           <div>
-            <Button className='general-button-item' variant='light' onClick={handleNewLesson}>New lesson</Button>
-            <Button className='general-button-item' variant='light' onClick={handleSaveAs}>Save lesson as</Button>
-            <Button className='general-button-item' variant='light' disabled={lessonLocalPath===undefined} onClick={handleSave}>Save lesson</Button>
+            <Button className='general-button-item' variant='light' onClick={handleNewLesson}>Nowa</Button>
+            <Button className='general-button-item' variant='light' onClick={handleSave}>Zapisz</Button>
+            <Button className='general-button-item' variant='light' onClick={handleDownload}>Pobierz</Button>
           </div>
           <div>
-            <Button className='general-button-item' variant='light' onClick={newPageEvent}>New page</Button>
-            <Button className='general-button-item' variant='light' disabled={lessonDefinition && lessonDefinition.pages.length == 1} onClick={deletePageEvent}>Delete page</Button>
+            <Button className='general-button-item' variant='light' onClick={newPageEvent}>Nowa strona</Button>
+            <Button className='general-button-item' variant='light' disabled={lessonDefinition && lessonDefinition.pages.length == 1} onClick={deletePageEvent}>Usuń stronę</Button>
           </div>
         </div>
       </div>

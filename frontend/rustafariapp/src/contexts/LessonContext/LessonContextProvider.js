@@ -4,12 +4,12 @@ export const LessonContext = createContext({});
 
 const LessonContextProvider = (props) => {
     const [lessonDefinition, setLessonDefinition] = useState();
-    const [lessonLocalPath, setLessonLocalPath] = useState();
+    const [lessonName, setLessonName] = useState();
 
     // Those two functions below are for persisiting the lesson state on page refresh
     useEffect(() => {
         if (window.localStorage.getItem('lessonDefinition') !== 'undefined') setLessonDefinition(JSON.parse(window.localStorage.getItem('lessonDefinition')));
-        if (window.localStorage.getItem('lessonLocalPath') !== 'undefined') setLessonLocalPath(window.localStorage.getItem('lessonLocalPath'));
+        if (window.localStorage.getItem('lessonName') !== 'undefined') setLessonName(window.localStorage.getItem('lessonName'));
     }, []);
 
     useEffect(() => {
@@ -17,21 +17,21 @@ const LessonContextProvider = (props) => {
     }, [lessonDefinition]);
 
     useEffect(() => {
-        window.localStorage.setItem('lessonLocalPath', lessonLocalPath);
-        if (lessonLocalPath !== undefined) window.localStorage.setItem('lastPickedLessonLocalPath', lessonLocalPath);
-    }, [lessonLocalPath])
+        window.localStorage.setItem('lessonName', lessonName);
+        console.log(lessonName);
+    }, [lessonName])
 
     const value = useMemo(() => {
         return {
             lessonDefinition, 
             setLessonDefinition,
-            lessonLocalPath,
-            setLessonLocalPath
+            lessonName,
+            setLessonName
           }
-    }, [lessonDefinition, lessonLocalPath]);
+    }, [lessonDefinition, lessonName]);
 
     const updateCell = useCallback((newCell, idx, page, section) => {
-        let modifiedLesson = {...lessonDefinition};
+        let modifiedLesson = window.structuredClone(lessonDefinition);
         modifiedLesson.pages[page].sections[section].cells[idx] = newCell;
         setLessonDefinition({
             pages: lessonDefinition.pages.map((pageDef, iPage) => {
@@ -42,37 +42,35 @@ const LessonContextProvider = (props) => {
     }, [lessonDefinition])
 
     const addCell = (newCell, idx, page, section) => {
-        let modifiedLesson = {...lessonDefinition};
+        page = parseInt(page);
+        section = parseInt(section);
+        idx = parseInt(idx);
+        let modifiedLesson = window.structuredClone(lessonDefinition);
         modifiedLesson.pages[page].sections[section].cells.splice(idx+1, 0, newCell);    
-        setLessonDefinition({
-            pages: lessonDefinition.pages.map((pageDef, iPage) => {
-                if (iPage === page) return {sections: modifiedLesson.pages[page].sections[section]}
-                else return {...pageDef}
-            })
-        });
+        console.log("new lesson: ", modifiedLesson);
+        setLessonDefinition(modifiedLesson);
     }
 
     const removeCell = (idx, page, section) => {
-        let modifiedLesson = {...lessonDefinition};
+        page = parseInt(page);
+        section = parseInt(section);
+        let modifiedLesson = window.structuredClone(lessonDefinition);
         modifiedLesson.pages[page].sections[section].cells.splice(idx, 1);
-        setLessonDefinition({
-            pages: lessonDefinition.pages.map((pageDef, iPage) => {
-                if (iPage === page) return {sections: modifiedLesson.pages[page].sections[section]}
-                else return {...pageDef}
-            })
-        });
+        setLessonDefinition(modifiedLesson);
     }
 
     const addSection = (newSection, page, section) => {
         page = parseInt(page);
-        lessonDefinition.pages[page].sections.splice(section+1, 0, newSection);    
-        setLessonDefinition({
-            pages: lessonDefinition.pages
-        });
+        section = parseInt(section);
+        let modifiedLesson = window.structuredClone(lessonDefinition);
+        modifiedLesson.pages[page].sections.splice(section+1, 0, newSection);    
+        setLessonDefinition(modifiedLesson);
     }
 
     const changeTitle = (newTitle, page, sectionIdx) => {
-        let modifiedLesson = {...lessonDefinition};
+        page = parseInt(page);
+        sectionIdx = parseInt(sectionIdx);
+        let modifiedLesson = window.structuredClone(lessonDefinition);
         let newSections = modifiedLesson.pages[page].sections.map((content,idx) => {
                 if(idx === sectionIdx){
                      return {...content, title: newTitle} 
@@ -97,25 +95,15 @@ const LessonContextProvider = (props) => {
 
 
     const removeSection = (page, section) => {
-        let modifiedLesson = {...lessonDefinition};
+        let modifiedLesson = window.structuredClone(lessonDefinition);;
         page = parseInt(page);
+        section = parseInt(section);
         modifiedLesson.pages[page].sections.splice(section, 1);
-        setLessonDefinition({
-            pages: lessonDefinition.pages.map((pageDef, iPage) => {
-                if (iPage === page) return {sections: modifiedLesson.pages[page].sections}
-                else return {...pageDef}
-            })
-        });
-    }
-
-    const updateLesson = (newLessonDefinition) => {
-        setLessonDefinition({
-            pages: newLessonDefinition.pages
-        })
+        setLessonDefinition(modifiedLesson);
     }
 
     return (
-        <LessonContext.Provider value={{...value, updateCell, addCell, addSection, removeCell, removeSection, updateLesson, changeTitle, getTitle}}>
+        <LessonContext.Provider value={{...value, updateCell, addCell, addSection, removeCell, removeSection, changeTitle, getTitle}}>
             {props.children}
         </LessonContext.Provider>
     )

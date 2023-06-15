@@ -7,18 +7,13 @@ import { useEffect } from 'react';
 
 function HomePage() {
     const navigate = useNavigate();
-    const {setLessonDefinition, setLessonLocalPath} = useContext(LessonContext);
+    const {setLessonDefinition, setLessonName} = useContext(LessonContext);
 
     const loadPage = (lessonFile, lessonName) => {
         setLessonDefinition(lessonFile);
-        window.localStorage.setItem('lessonFileName', lessonName);
+        setLessonName(lessonName.split('.json')[0]);
         navigate(`/lesson/${lessonName}/0`, {state: {lessonFile: lessonFile}});
     }
-
-    useEffect(() => {
-        setLessonLocalPath(undefined);
-        window.localStorage.setItem('lessonFileName', undefined);
-    })
 
     return (
         <div className='file-picker-container'>

@@ -14,14 +14,14 @@ const LessonPage = () => {
     const [userType, setUserType] = useState(currentUser);
     const { page } = useParams();
     // const location = useLocation();
-    const {lessonDefinition, updateLesson} = useContext(LessonContext);
+    const {lessonDefinition, setLessonDefinition} = useContext(LessonContext);
 
     console.log(lessonDefinition);
 
     const handleOnDragEnd = (result) => {
         if (!result.destination) return;
 
-        let modifiedLesson = {...lessonDefinition};
+        let modifiedLesson = window.structuredClone(lessonDefinition);;
         if (result.draggableId.includes("cell")){
             const srcSectionIdx = result.source.droppableId.split("section")[1]
             const destSectionIdx = result.destination.droppableId.split("section")[1]
@@ -31,7 +31,7 @@ const LessonPage = () => {
             const [reorderedSection] = modifiedLesson.pages[page].sections.splice(result.source.index, 1);
             modifiedLesson.pages[page].sections.splice(result.destination.index, 0, reorderedSection);
         }
-        updateLesson(modifiedLesson);
+        setLessonDefinition(modifiedLesson);
     }
 
     return (

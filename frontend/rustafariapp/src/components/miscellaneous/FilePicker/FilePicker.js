@@ -14,7 +14,12 @@ const FilePicker = (props) => {
     const {getRootProps, 
         getInputProps, 
         isDragActive,
-        } = useDropzone({onDrop: onDrop, multiple: false})
+        } = useDropzone({
+            onDrop: onDrop, 
+            multiple: false,
+            accept: {
+                'application/json': ['.json']
+            }})
 
     
     return (

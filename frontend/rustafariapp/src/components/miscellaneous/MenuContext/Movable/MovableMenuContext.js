@@ -7,11 +7,11 @@ import { LessonContext } from '../../../../contexts/LessonContext/LessonContextP
 
 const MovableMenuContext = ({pageID, sectionID, cellID=null, children}) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const { lessonDefinition, updateLesson } = useContext(LessonContext);
+  const { lessonDefinition, setLessonDefinition } = useContext(LessonContext);
 
   const changeComponentPosition = (pageDst) => {
       
-    let modifiedLesson = {...lessonDefinition};
+    let modifiedLesson = window.structuredClone(lessonDefinition);;
     if (cellID === null){
       let section = {...modifiedLesson.pages[pageID].sections[sectionID]};
       modifiedLesson.pages[pageID].sections.splice(sectionID,1);
@@ -22,7 +22,7 @@ const MovableMenuContext = ({pageID, sectionID, cellID=null, children}) => {
       modifiedLesson.pages[pageID].sections[sectionID].cells.splice(cellID,1);
       modifiedLesson.pages[pageDst].sections[0].cells.splice(0, 0, cell);
     }
-    updateLesson(modifiedLesson);
+    setLessonDefinition(modifiedLesson);
 
   }
 

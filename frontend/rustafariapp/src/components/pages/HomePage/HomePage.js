@@ -3,15 +3,19 @@ import { useNavigate } from 'react-router-dom'
 import "./HomePage.css"
 import FilePicker from '../../miscellaneous/FilePicker/FilePicker';
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
-import { useEffect } from 'react';
+import LessonFileSaveService from '../../../services/LessonFileHandleService';
 
 function HomePage() {
     const navigate = useNavigate();
     const {setLessonDefinition, setLessonName} = useContext(LessonContext);
 
-    const loadPage = (lessonFile, lessonName) => {
+    const loadPage = async (lessonFile, lessonName) => {
         setLessonDefinition(lessonFile);
         setLessonName(lessonName.split('.json')[0]);
+        LessonFileSaveService.createLesson(lessonFile, lessonName)
+        .catch((e) => console.log(e));
+        
+        
         navigate(`/lesson/${lessonName}/0`, {state: {lessonFile: lessonFile}});
     }
 

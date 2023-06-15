@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useRef} from 'react'
 import TextCell from '../../../Cells/TextCell/TextCell'
 import CodeCell from '../../../Cells/CodeCell/CodeCell'
 import EmptyCell from '../../../Cells/EmptyCell/EmptyCell'
@@ -12,16 +12,23 @@ import StrictModeDroppable from '../../../miscellaneous/Droppable/StrictModeDrop
 import {TbGridDots, TbArrowsMove } from 'react-icons/tb';
 import MovableMenuContext from '../../../miscellaneous/MenuContext/Movable/MovableMenuContext'
 
-function SectionHeader({title, page, sectionIdx}) {
+const SectionHeader = ({title, page, sectionIdx}) => {
     const { getTitle, changeTitle } = useContext(LessonContext);
+    const headerInput = useRef(null);
 
     const changeTitleHandler = (newTitle) =>{
         changeTitle(newTitle, page, sectionIdx);
     }
 
+    const handleHeaderChange = (e) => {
+        if (e.key === 'Enter'){
+          headerInput.current.blur();
+        }
+    }
+
     return (
         <div>
-            <div contentEditable="true" className='section-header' onBlur={e => changeTitleHandler(e.currentTarget.textContent) } suppressContentEditableWarning={true}> 
+            <div ref={headerInput} contentEditable="true" className='section-header' onBlur={e => changeTitleHandler(e.currentTarget.textContent) } onKeyDown={handleHeaderChange} suppressContentEditableWarning={true} spellCheck="false"> 
                 {getTitle(page, sectionIdx)}
             </div>
         </div>

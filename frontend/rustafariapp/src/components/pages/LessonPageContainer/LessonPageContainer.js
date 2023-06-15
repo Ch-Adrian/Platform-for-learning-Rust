@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useRef } from 'react'
 import Button from 'react-bootstrap/esm/Button';
 import * as FaIcons from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -8,10 +8,35 @@ import LessonPage from '../LessonPage/LessonPage';
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
 import { HashLink } from 'react-router-hash-link';
 import { useNavigate } from "react-router-dom";
-import LessonFileHandleService from '../../../services/LessonFileHandleService';
+import LessonFileSaveService from '../../../services/LessonFileHandleService';
 
 const DEFAULT_LESSON = require('../../../assets/DefaultNewLesson.json');
 const DEFAULT_LESSON_NAME = "Nowa lekcja";
+
+const NameHeader = ({lessonName, setLessonName, lessonDefinition}) => {
+  const nameInput = useRef(null);
+  const handleNameSubmit = async (e) => {
+    const oldName = lessonName;
+    const newName = e.currentTarget.textContent;
+    setLessonName(newName);
+    try {
+      await LessonFileSaveService.renameLesson(oldName, newName);
+      await LessonFileSaveService.saveLesson(lessonDefinition, newName);
+    } catch(e) {console.log(e)}
+  } 
+
+  const handleNameChange = (e) => {
+    if (e.key === 'Enter'){
+      nameInput.current.blur();
+    }
+  }
+
+  return (
+    <div ref={nameInput} contentEditable="true" className='name-header general-button-item' onKeyDown={handleNameChange} onBlur={handleNameSubmit} suppressContentEditableWarning={true} spellCheck="false"> 
+      {lessonName}
+    </div>
+  );
+}
 
 const LessonPageContainer = () => {
   
@@ -60,7 +85,8 @@ const LessonPageContainer = () => {
   }
 
   const handleSave = async () => {
-    LessonFileHandleService.saveLesson(lessonDefinition, lessonName);
+    LessonFileSaveService.saveLesson(lessonDefinition, lessonName)
+    .catch((e) => console.log(e));
   }
   
   const handleNewLesson = async () => {
@@ -93,12 +119,13 @@ const LessonPageContainer = () => {
           <FaIcons.FaBars className='hamburger' onClick={showSidebar} />
         </Link>
         <div className='general-buttons'>
-          <div>
+          <div style={{display: 'flex'}}>
+            <NameHeader lessonName={lessonName} setLessonName={setLessonName} lessonDefinition={lessonDefinition}></NameHeader>
             <Button className='general-button-item' variant='light' onClick={handleNewLesson}>Nowa</Button>
             <Button className='general-button-item' variant='light' onClick={handleSave}>Zapisz</Button>
             <Button className='general-button-item' variant='light' onClick={handleDownload}>Pobierz</Button>
           </div>
-          <div>
+          <div style={{display: 'flex'}}>
             <Button className='general-button-item' variant='light' onClick={newPageEvent}>Nowa strona</Button>
             <Button className='general-button-item' variant='light' disabled={lessonDefinition && lessonDefinition.pages.length == 1} onClick={deletePageEvent}>Usuń stronę</Button>
           </div>

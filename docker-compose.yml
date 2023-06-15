@@ -5,6 +5,8 @@ services:
       context: .
       dockerfile: ./docker/backend/Dockerfile 
     container_name: platform_backend
+    volumes:
+      - ./backend/lessons:/platform/lessons
     ports:
       - "8080:8080"
     networks:

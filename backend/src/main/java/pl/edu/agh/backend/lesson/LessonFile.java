@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LessonFile {
-    private String path;
+    private String name;
     private Lesson lesson;
 }

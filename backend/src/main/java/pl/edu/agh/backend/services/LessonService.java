@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import org.springframework.stereotype.Service;
 import pl.edu.agh.backend.exceptions.LessonNotFoundException;
 import pl.edu.agh.backend.exceptions.LessonsNameConflictException;
+import pl.edu.agh.backend.lesson.Lesson;
 import pl.edu.agh.backend.lesson.LessonFile;
 
 import java.io.File;
@@ -41,14 +42,15 @@ public class LessonService {
 
     public void renameLesson(String oldName, String newName) {
         if (!this.existsLesson(oldName)) {
-            throw new LessonNotFoundException(oldName);
-        }
-        if (this.existsLesson(newName)) {
+            LessonFile lessonFile = new LessonFile(oldName, Lesson.getDefaultLesson());
+            this.saveLesson(lessonFile);
+        } else if (this.existsLesson(newName)) {
             throw new LessonsNameConflictException(newName);
+        } else {
+            File oldFile = new File(rootDir + File.separator + oldName);
+            File newFile = new File(rootDir + File.separator + newName);
+            oldFile.renameTo(newFile);
         }
-        File oldFile = new File(rootDir + File.separator + oldName);
-        File newFile = new File(rootDir + File.separator + newName);
-        oldFile.renameTo(newFile);
     }
 
     private boolean existsLesson(String name) {

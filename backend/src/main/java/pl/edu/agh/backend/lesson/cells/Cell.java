@@ -8,4 +8,6 @@ import lombok.Setter;
 public class Cell {
     private Type type;
     private String value;
+    private String test;
+    private String reference;
 }

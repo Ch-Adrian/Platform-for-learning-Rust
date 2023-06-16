@@ -12,7 +12,7 @@ function HomePage() {
     const loadPage = async (lessonFile, lessonName) => {
         setLessonDefinition(lessonFile);
         setLessonName(lessonName.split('.json')[0]);
-        LessonFileSaveService.createLesson(lessonFile, lessonName)
+        LessonFileSaveService.createLesson(lessonFile, lessonName.split('.json')[0])
         .catch((e) => console.log(e));
         
         

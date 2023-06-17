@@ -27,8 +27,10 @@ If You want to use docker You have to install\
 only docker and run relevant command.
 
 ### To run docker:
-For windows and linux:\
-`docker-compose up --build`
+For the first time under windows or linux run:\
+`docker-compose up --build`\
+next time You can just run:\
+`docker-compose up`
 
 Afterwards open web browser and go to link:\
 http://localhost:3000

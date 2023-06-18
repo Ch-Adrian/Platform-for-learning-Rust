@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import './LessonPageContainer.css'
 import { IconContext } from 'react-icons';
 import LessonPage from '../LessonPage/LessonPage';
+import UserType from '../../models/UserType';
+import currentUser from '../../miscellaneous/userConfig';
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
 import { HashLink } from 'react-router-hash-link';
 import { useNavigate } from "react-router-dom";
@@ -39,7 +41,7 @@ const NameHeader = ({lessonName, setLessonName, lessonDefinition}) => {
 }
 
 const LessonPageContainer = () => {
-  
+  const [userType, setUserType] = useState(currentUser);
   const [sidebar, setSidebar] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const navigate = useNavigate();
@@ -121,13 +123,13 @@ const LessonPageContainer = () => {
         <div className='general-buttons'>
           <div style={{display: 'flex'}}>
             <NameHeader lessonName={lessonName} setLessonName={setLessonName} lessonDefinition={lessonDefinition}></NameHeader>
-            <Button className='general-button-item' variant='light' onClick={handleNewLesson}>Nowa</Button>
+            {userType === UserType.teacher && <Button className='general-button-item' variant='light' onClick={handleNewLesson}>Nowa</Button>}
             <Button className='general-button-item' variant='light' onClick={handleSave}>Zapisz</Button>
             <Button className='general-button-item' variant='light' onClick={handleDownload}>Pobierz</Button>
           </div>
-          <div style={{display: 'flex'}}>
-            <Button className='general-button-item' variant='light' onClick={newPageEvent}>Nowa strona</Button>
-            <Button className='general-button-item' variant='light' disabled={lessonDefinition && lessonDefinition.pages.length == 1} onClick={deletePageEvent}>Usuń stronę</Button>
+          <div style={{display: 'flex', "margin-right": '1em'}}>
+            {userType === UserType.teacher && <Button className='general-button-item' variant='light' onClick={newPageEvent}>Nowa strona</Button>}
+            {userType === UserType.teacher && <Button className='general-button-item' variant='light' disabled={lessonDefinition && lessonDefinition.pages.length === 1} onClick={deletePageEvent}>Usuń stronę</Button>}
           </div>
         </div>
       </div>

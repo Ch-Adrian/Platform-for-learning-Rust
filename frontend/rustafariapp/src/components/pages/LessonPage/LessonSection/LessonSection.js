@@ -12,7 +12,7 @@ import StrictModeDroppable from '../../../miscellaneous/Droppable/StrictModeDrop
 import {TbGridDots, TbArrowsMove } from 'react-icons/tb';
 import MovableMenuContext from '../../../miscellaneous/MenuContext/Movable/MovableMenuContext'
 
-const SectionHeader = ({title, page, sectionIdx}) => {
+const SectionHeader = ({userType, page, sectionIdx}) => {
     const { getTitle, changeTitle } = useContext(LessonContext);
     const headerInput = useRef(null);
 
@@ -28,7 +28,7 @@ const SectionHeader = ({title, page, sectionIdx}) => {
 
     return (
         <div>
-            <div ref={headerInput} contentEditable="true" className='section-header' onBlur={e => changeTitleHandler(e.currentTarget.textContent) } onKeyDown={handleHeaderChange} suppressContentEditableWarning={true} spellCheck="false"> 
+            <div ref={headerInput} contentEditable={userType === UserType.teacher} className='section-header' onBlur={e => changeTitleHandler(e.currentTarget.textContent) } onKeyDown={handleHeaderChange} suppressContentEditableWarning={true} spellCheck="false"> 
                 {getTitle(page, sectionIdx)}
             </div>
         </div>
@@ -46,7 +46,7 @@ const LessonSection = (props) => {
     return (
         <div className='section-container' id={"section"+props.sectionIdx} >
             <div className='section-header-container'>
-              <SectionHeader title={props.section.title} page={props.page} sectionIdx={props.sectionIdx}/>
+              <SectionHeader userType={props.userType} page={props.page} sectionIdx={props.sectionIdx}/>
               <div className='section-misc-buttons-container'>
                   {props.userType === UserType.teacher && <div className='section-grab' {...props.handleDrag} ><TbGridDots/></div>}
                   {props.userType === UserType.teacher && <button className='section-delete-button' onClick={removeSectionHandler}><BsTrash3/></button>}

@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RustFileConfiguration {
     @Bean
-    public RustFileConfig getRustFileConfig(OperatingSystemConfig operatingSystemConfig) {
-        return new RustFileConfig(operatingSystemConfig);
+    public RustFileConfig getRustFileConfig(CommendsConfiguration commendsConfiguration) {
+        return new RustFileConfig(commendsConfiguration);
     }
 }

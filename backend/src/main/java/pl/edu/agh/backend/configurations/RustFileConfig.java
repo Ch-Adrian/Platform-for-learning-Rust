@@ -5,10 +5,10 @@ import pl.edu.agh.backend.compiler.RustTestsFile;
 
 public class RustFileConfig {
 
-    private final OperatingSystemConfig operatingSystemConfig;
+    private final CommendsConfiguration commendsConfiguration;
 
-    public RustFileConfig(OperatingSystemConfig operatingSystemConfig) {
-        this.operatingSystemConfig = operatingSystemConfig;
+    public RustFileConfig(CommendsConfiguration commendsConfiguration) {
+        this.commendsConfiguration = commendsConfiguration;
     }
 
     public RustFile createRustFile(String content) {
@@ -16,7 +16,7 @@ public class RustFileConfig {
                 .fileName("main.rs")
                 .directory("src/main/resources/rust")
                 .content(content)
-                .operatingSystem(operatingSystemConfig.getOperatingSystem())
+                .commandsFactory(commendsConfiguration.getOperatingSystem())
                 .build();
     }
 
@@ -26,7 +26,7 @@ public class RustFileConfig {
                 .directory("src/main/resources/tests")
                 .content(content)
                 .testContent(testContent)
-                .operatingSystem(operatingSystemConfig.getOperatingSystem())
+                .commandsFactory(commendsConfiguration.getOperatingSystem())
                 .build();
     }
 }

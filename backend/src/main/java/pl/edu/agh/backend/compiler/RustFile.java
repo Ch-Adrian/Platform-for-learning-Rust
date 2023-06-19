@@ -2,7 +2,7 @@ package pl.edu.agh.backend.compiler;
 
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
-import pl.edu.agh.backend.system.OperatingSystem;
+import pl.edu.agh.backend.factories.CommandsFactory;
 
 import java.io.File;
 import java.nio.file.Paths;
@@ -14,7 +14,7 @@ public class RustFile {
     protected String fileName;
     protected String directory;
     protected String content;
-    protected OperatingSystem operatingSystem;
+    protected CommandsFactory commandsFactory;
 
     public String[] getCompilationCommand() {
         return new String[]{"rustc", this.getPath(), "--out-dir", this.directory};
@@ -29,6 +29,6 @@ public class RustFile {
     }
 
     public String getExecutionCommand() {
-        return getPath().split("\\.")[0] + operatingSystem.getExecutionSuffix();
+        return getPath().split("\\.")[0] + commandsFactory.getExecutionSuffix();
     }
 }

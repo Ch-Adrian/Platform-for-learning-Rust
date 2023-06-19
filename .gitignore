@@ -1,1 +1,5 @@
 .vscode/settings.json
+
+package-lock.json
+package.json
+.idea

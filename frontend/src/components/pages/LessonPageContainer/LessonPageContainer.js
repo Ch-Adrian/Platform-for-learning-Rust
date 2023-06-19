@@ -111,6 +111,10 @@ const LessonPageContainer = () => {
     link.click();
   }
 
+  const handleOpen = () => {
+    navigate('/');
+  }
+
   url.pathname = path.join("/")
   localStorage.setItem(lessonDefinition, lessonDefinition);
 
@@ -124,6 +128,7 @@ const LessonPageContainer = () => {
           <div style={{display: 'flex'}}>
             <NameHeader lessonName={lessonName} setLessonName={setLessonName} lessonDefinition={lessonDefinition}></NameHeader>
             {userType === UserType.teacher && <Button className='general-button-item' variant='light' onClick={handleNewLesson}>Nowa</Button>}
+            <Button className='general-button-item' variant='light' onClick={handleOpen}>Otwórz</Button>
             <Button className='general-button-item' variant='light' onClick={handleSave}>Zapisz</Button>
             <Button className='general-button-item' variant='light' onClick={handleDownload}>Pobierz</Button>
           </div>

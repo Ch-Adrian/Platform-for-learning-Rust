@@ -1,13 +1,11 @@
-:root {
-  --background-color: #222222;
-}
 
 .markdown-output {
     color: rgb(178, 178, 178);
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     border: 2px solid rgb(109, 109, 109);
-    background-color: var(--background-color) !important;
-    margin: .5em 0 .5em 0;
+    background-color: #222222 !important;
+    margin: .5em .5em .5em .5em;
     padding: 0.2em;
     white-space: pre-wrap;
+    border-radius: 10px; 
 }

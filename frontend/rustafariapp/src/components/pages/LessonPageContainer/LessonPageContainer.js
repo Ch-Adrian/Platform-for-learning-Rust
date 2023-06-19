@@ -143,7 +143,7 @@ const LessonPageContainer = () => {
               return (
                 <li key={idx} className='nav-text'>
                   <Link to={url + "/" + idx}>
-                    <span >{"PAGE " + idx}</span>
+                    <span >{"PAGE " + (idx+1)}</span>
                   </Link>
                 </li>
               );

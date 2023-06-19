@@ -82,7 +82,7 @@ const LessonSection = (props) => {
                                             {(provided) => {
                                                 return (<div {...provided.draggableProps}  ref={provided.innerRef}>
                                                     {React.cloneElement(cellToAdd, {handleDrag: provided.dragHandleProps})}
-                                                    <div {...provided.dragHandleProps}></div>
+                                                   <div {...provided.dragHandleProps}></div>
                                                     <AddCellButton key={idx + "addcell" + props.sectionIdx} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} />
                                                 </div>)
                                             }}

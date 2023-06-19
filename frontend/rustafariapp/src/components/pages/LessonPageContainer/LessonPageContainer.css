@@ -93,6 +93,7 @@
   padding: 20px 0px 8px 10px;
   list-style: none;
   height: 60px;
+  margin-top: 10px;
 }
 
 .nav-text a {
@@ -105,11 +106,13 @@
   align-items: center;
   padding: 0 10px;
   border-radius: 4px;
+  margin-top: 10px;
 }
 
 .nav-text a:hover {
   background-color: var(--background-nav-hover-color); 
   color: var(--text-color);
+  margin-top: 10px;
 }
 
 .nav-menu-items {
@@ -132,16 +135,20 @@
 
 .nav-text-inner {
   display: flex;
-  justify-content: start;
-  padding: 18px 0px 8px 20px;
+  justify-content: left;
+  word-wrap: break-word;
+  padding: 0 0 0 10px;
+  width: 100%; 
   list-style: none;
   color: var(--text-color);
   font-size: 18px;
+  margin-top: 10px;
 }
 
 .nav-text-inner:hover {
   background-color: var(--background-nav-hover-color); 
   color: var(--text-color);
+  margin-top: 10px;
 }
 
 .name-header {

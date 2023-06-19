@@ -53,7 +53,7 @@ const MovableMenuContext = ({pageID, sectionID, cellID=null, children}) => {
               open={Boolean(anchorEl)}
           >
           {lessonDefinition.pages.map((content, idx) => {
-            return<MenuItem key={idx} onClick={handleClose(idx)}>{"Page "+idx+" Section: 1"}</MenuItem>;
+            return<MenuItem key={idx} onClick={handleClose(idx)}>{"Page "+(idx+1)+" Section: 1"}</MenuItem>;
           })}
           <MenuItem key={lessonDefinition.pages.length+1} onClick={justClose}>Close</MenuItem>
           </Menu>

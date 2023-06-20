@@ -35,8 +35,9 @@ next time You can just run:\
 Afterwards open web browser and go to link:\
 http://localhost:3000
 
-### Backend:
-**To run locally:**\
+### To run locally:
+
+#### Backend:
 To run project You can use IDEA environment\
 or use maven:\
 inside backend directory run (for Windows):\
@@ -46,14 +47,15 @@ inside backend directory run (for Windows):\
 
 for linux You have to replace `mvnw` with `mvn`.
 
-### Frontend:
-You have to enter frontend/rustafariapp\
+#### Frontend:
+You have to enter frontend\
 directory. Then if You run project\
 for the first time please use command:\
 `npm install` to install packages
 
 Now you can run platform with:\
-`npm start` command.\
+`npm start` command.
+
 Afterwards open web browser and go to link:\
 http://localhost:3000
 

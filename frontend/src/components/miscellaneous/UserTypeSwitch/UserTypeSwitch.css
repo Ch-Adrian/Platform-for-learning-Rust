@@ -1,0 +1,15 @@
+.user-type-switch-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-type-switch-label {
+    display: flex;
+    column-gap: .6em;
+    align-items: center;
+}
+
+.user-type-switch-label span {
+    color: white;
+}

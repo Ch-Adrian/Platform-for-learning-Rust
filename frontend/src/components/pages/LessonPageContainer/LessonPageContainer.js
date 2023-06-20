@@ -11,7 +11,9 @@ import { LessonContext } from '../../../contexts/LessonContext/LessonContextProv
 import { HashLink } from 'react-router-hash-link';
 import { useNavigate } from "react-router-dom";
 import LessonFileSaveService from '../../../services/LessonFileHandleService';
+import UserTypeSwitch from '../../miscellaneous/UserTypeSwitch/UserTypeSwitch';
 
+const DEFINED_USER_TYPE = currentUser;
 const DEFAULT_LESSON = require('../../../assets/DefaultNewLesson.json');
 const DEFAULT_LESSON_NAME = "Nowa lekcja";
 
@@ -65,6 +67,10 @@ const LessonPageContainer = () => {
     if(path.at(path.length-1).indexOf(".json") !== -1){
       break;
     }
+  }
+
+  const handleSwitchUserType= nextChecked => {
+    nextChecked ? setUserType(UserType.student) : setUserType(UserType.teacher);
   }
 
   const newPageEvent = () => {
@@ -125,14 +131,15 @@ const LessonPageContainer = () => {
         <div className='general-buttons'>
           <div style={{display: 'flex'}}>
             <NameHeader lessonName={lessonName} setLessonName={setLessonName} lessonDefinition={lessonDefinition}></NameHeader>
-            {userType === UserType.teacher && <Button className='general-button-item' variant='light' onClick={handleNewLesson}>Nowa</Button>}
+            {DEFINED_USER_TYPE === UserType.teacher && <Button className='general-button-item' variant='light' onClick={handleNewLesson}>Nowa</Button>}
             <Button className='general-button-item' variant='light' onClick={handleOpen}>Otwórz</Button>
             <Button className='general-button-item' variant='light' onClick={handleSave}>Zapisz</Button>
             <Button className='general-button-item' variant='light' onClick={handleDownload}>Pobierz</Button>
           </div>
           <div style={{display: 'flex', marginRight: '1em'}}>
-            {userType === UserType.teacher && <Button className='general-button-item' variant='light' onClick={newPageEvent}>Nowa strona</Button>}
-            {userType === UserType.teacher && <Button className='general-button-item' variant='light' disabled={lessonDefinition && lessonDefinition.pages.length === 1} onClick={deletePageEvent}>Usuń stronę</Button>}
+            {DEFINED_USER_TYPE === UserType.teacher && <UserTypeSwitch handleSwitchUserType={handleSwitchUserType}/>}
+            {DEFINED_USER_TYPE === UserType.teacher && <Button className='general-button-item' variant='light' onClick={newPageEvent}>Nowa strona</Button>}
+            {DEFINED_USER_TYPE === UserType.teacher && <Button className='general-button-item' variant='light' disabled={lessonDefinition && lessonDefinition.pages.length === 1} onClick={deletePageEvent}>Usuń stronę</Button>}
           </div>
         </div>
       </div>
@@ -175,11 +182,8 @@ const LessonPageContainer = () => {
         </nav>
       </IconContext.Provider>
       <div className={sidebar ? 'page active' : 'page'}>
-        <LessonPage/>
+        <LessonPage userType={userType} setUserType={setUserType}/>
       </div>
-        
-      
-      
     </div>
   );
 }

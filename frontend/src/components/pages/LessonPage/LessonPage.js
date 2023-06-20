@@ -10,8 +10,8 @@ import { DragDropContext, Draggable } from 'react-beautiful-dnd';
 import StrictModeDroppable from '../../miscellaneous/Droppable/StrictModeDroppable';
 
 
-const LessonPage = () => {
-    const [userType, setUserType] = useState(currentUser);
+const LessonPage = ({userType, setUserType}) => {
+    // const [userType, setUserType] = useState(currentUser);
     const { page } = useParams();
     // const location = useLocation();
     const {lessonDefinition, setLessonDefinition} = useContext(LessonContext);

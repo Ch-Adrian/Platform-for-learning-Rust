@@ -4,7 +4,7 @@ import "./TextCell.css"
 import remarkGfm from 'remark-gfm'
 import "github-markdown-css"
 import MDEditor from '@uiw/react-md-editor'
-import UserType from '../../models/UserType'
+import UserType from '../../../models/UserType'
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider'
 import {BsTrash3} from 'react-icons/bs';
 import {TbGridDots, TbArrowsMove } from 'react-icons/tb';

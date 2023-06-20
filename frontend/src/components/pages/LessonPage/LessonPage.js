@@ -3,8 +3,8 @@ import "./LessonPage.css"
 import { useParams } from 'react-router-dom'
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
 import LessonSection from './LessonSection/LessonSection';
-import currentUser from '../../miscellaneous/userConfig';
-import UserType from '../../models/UserType';
+import currentUser from '../../../config/userConfig';
+import UserType from '../../../models/UserType';
 import AddSectionButton from '../../miscellaneous/AddButtons/AddSectionButton/AddSectionButton';
 import { DragDropContext, Draggable } from 'react-beautiful-dnd';
 import StrictModeDroppable from '../../miscellaneous/Droppable/StrictModeDroppable';
@@ -15,8 +15,6 @@ const LessonPage = () => {
     const { page } = useParams();
     // const location = useLocation();
     const {lessonDefinition, setLessonDefinition} = useContext(LessonContext);
-
-    console.log(lessonDefinition);
 
     const handleOnDragEnd = (result) => {
         if (!result.destination) return;

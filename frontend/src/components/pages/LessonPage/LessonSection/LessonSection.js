@@ -4,7 +4,7 @@ import CodeCell from '../../../Cells/CodeCell/CodeCell'
 import EmptyCell from '../../../Cells/EmptyCell/EmptyCell'
 import "./LessonSection.css"
 import AddCellButton from '../../../miscellaneous/AddButtons/AddCellButton/AddCellButton'
-import UserType from '../../../models/UserType'
+import UserType from '../../../../models/UserType'
 import {BsTrash3} from 'react-icons/bs'
 import { LessonContext } from '../../../../contexts/LessonContext/LessonContextProvider'
 import { Draggable } from 'react-beautiful-dnd'

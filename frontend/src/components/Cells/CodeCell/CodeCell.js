@@ -5,7 +5,7 @@ import CodeExecutorService from '../../../services/CodeExecutorService';
 import OutputCell from '../OutputCell/OutputCell';
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
 import MonacoEditor from '../../Editor/MonacoEditor';
-import UserType from '../../models/UserType';
+import UserType from '../../../models/UserType';
 import {BsTrash3} from 'react-icons/bs';
 import {TbGridDots, TbArrowsMove } from 'react-icons/tb';
 import MovableMenuContext from '../../miscellaneous/MenuContext/Movable/MovableMenuContext'
@@ -70,7 +70,6 @@ const CodeCell = memo(function CodeCell(props) {
     let modifiedCell = props.cell;
     modifiedCell[type] = "";
     updateCell(modifiedCell, props.cellIdx, props.currentPage, props.sectionIdx);
-    console.log(props.cell)
   }
 
   const removeEditor = (type) => {

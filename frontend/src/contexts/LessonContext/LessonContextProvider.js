@@ -18,7 +18,6 @@ const LessonContextProvider = (props) => {
 
     useEffect(() => {
         window.localStorage.setItem('lessonName', lessonName);
-        console.log(lessonName);
     }, [lessonName])
 
     const value = useMemo(() => {
@@ -47,7 +46,6 @@ const LessonContextProvider = (props) => {
         idx = parseInt(idx);
         let modifiedLesson = window.structuredClone(lessonDefinition);
         modifiedLesson.pages[page].sections[section].cells.splice(idx+1, 0, newCell);    
-        console.log("new lesson: ", modifiedLesson);
         setLessonDefinition(modifiedLesson);
     }
 

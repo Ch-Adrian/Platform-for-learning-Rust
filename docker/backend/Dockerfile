@@ -9,6 +9,21 @@ RUN apt-get install -y \
     build-essential \
     curl
 
+RUN apt-get -y install locales # && locale-gen en_US.UTF-8
+
+RUN sed -i 's/# pl_PL.UTF-8 UTF-8/pl_PL.UTF-8 UTF-8/' /etc/locale.gen
+
+# generate chosen locale
+RUN locale-gen pl_PL.UTF-8
+
+# set system-wide locale settings
+ENV LANG pl_PL.UTF-8
+ENV LANGUAGE pl_PL
+ENV LC_ALL pl_PL.UTF-8
+
+# verify modified configuration
+RUN dpkg-reconfigure --frontend noninteractive locales
+
 # Installing Rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 

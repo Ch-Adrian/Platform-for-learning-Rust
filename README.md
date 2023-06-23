@@ -45,7 +45,7 @@ inside backend directory run (for Windows):\
 `.\mvnw compile` to build\
 `.\mvnw clean` to clean project
 
-for linux You have to replace `mvnw` with `mvn`.
+for linux You have to replace `.\mvnw` with `mvn`.
 
 #### Frontend:
 You have to enter frontend\

@@ -5,6 +5,7 @@ COPY ./frontend/package-lock.json ./
 COPY ./frontend/ ./ 
 
 RUN npm install -g npm@9.7.1
+RUN npm install
 
 EXPOSE 3000
 

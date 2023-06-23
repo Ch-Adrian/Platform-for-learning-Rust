@@ -1,8 +1,8 @@
 FROM node:20.3.0
 WORKDIR /app
-COPY ./frontend/rustafariapp/package.json ./ 
-COPY ./frontend/rustafariapp/package-lock.json ./ 
-COPY ./frontend/rustafariapp/ ./ 
+COPY ./frontend/package.json ./ 
+COPY ./frontend/package-lock.json ./ 
+COPY ./frontend/ ./ 
 
 RUN npm install -g npm@9.7.1
 

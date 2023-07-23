@@ -27,8 +27,8 @@ const FilePicker = (props) => {
             <input {...getInputProps()} />
             {
             isDragActive ?
-                <p>Uplode new lesson</p> :
-                <p>Uplode new lesson</p>
+                <p>Otwórz nową lekcję</p> :
+                <p>Otwórz nową lekcję</p>
             }
         </div>
     )

@@ -6,7 +6,7 @@
 
 
 .file-picker {
-    width: 10em;
+    width: auto;
     height: 5em;
     flex: 1;
     display: flex;
@@ -17,12 +17,16 @@
     border-width: 4;
     border-radius: 2;
     border-color: var(--border-color);
-    border-style: solid;
+    border-style: dashed;
     background-color: var(--backgroud-color); 
     color: var(--text-color); 
     outline: none;
     transition: border .24s ease-in-out;
     cursor: pointer;
+}
+
+.file-picker > p {
+    margin: auto;
 }
 
 .file-picker:hover {

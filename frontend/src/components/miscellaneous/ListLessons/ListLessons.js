@@ -12,9 +12,8 @@ const ListLessons = (props) => {
 
       console.log(lessonBody)
       console.log(lessonBody.data)
-      console.log(lessonBody.data)
 
-      props.openLesson(lessonBody && lessonBody.data[0], name)
+      props.openLesson(lessonBody.data, name)
     }
   
     useEffect(() => {

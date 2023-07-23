@@ -1,6 +1,7 @@
 package pl.edu.agh.backend.controllers;
 
 import org.springframework.web.bind.annotation.*;
+import pl.edu.agh.backend.lesson.Lesson;
 import pl.edu.agh.backend.lesson.LessonFile;
 import pl.edu.agh.backend.services.LessonService;
 
@@ -37,5 +38,11 @@ public class LessonController {
     @GetMapping("list")
     public List<String> getAllLessonsNames() {
         return lessonService.getAllLessonsNames();
+    }
+
+    @GetMapping("open/{name}")
+    public Lesson getLesson(@PathVariable String name) {
+        System.out.println(name);
+        return lessonService.getLesson(name);
     }
 }

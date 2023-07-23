@@ -7,10 +7,7 @@ import pl.edu.agh.backend.exceptions.LessonsNameConflictException;
 import pl.edu.agh.backend.lesson.Lesson;
 import pl.edu.agh.backend.lesson.LessonFile;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.FilenameFilter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -50,6 +47,20 @@ public class LessonService {
             File oldFile = new File(rootDir + File.separator + oldName);
             File newFile = new File(rootDir + File.separator + newName);
             oldFile.renameTo(newFile);
+        }
+    }
+
+    public Lesson getLesson(String name) throws LessonNotFoundException {
+        File lessonFile = new File(rootDir, name);
+        if (!lessonFile.exists()) {
+            throw new LessonNotFoundException(name);
+        }
+
+        try (BufferedReader br = new BufferedReader(new FileReader(lessonFile))) {
+            return new Gson().fromJson(br, Lesson.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

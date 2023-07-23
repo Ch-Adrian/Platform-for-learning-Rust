@@ -28,6 +28,23 @@ const LessonFileSaveService = {
         } else {
             return response;
         }
+    },
+    getAllLessons: async () => {
+        const response = await axios
+        .get(RUST_COMPILER_REST_API_URL + "list");
+        if (response.status !== 200) {
+            throw new Error(response.data);
+        } else {
+            return response;
+        }
+    },
+    getLesson: async (name) => {
+        const response = await axios.get(RUST_COMPILER_REST_API_URL + "open/" + name);
+        if (response.status !== 200) {
+            throw new Error(response.data);
+        } else {
+            return response;
+        }
     }
 
 }

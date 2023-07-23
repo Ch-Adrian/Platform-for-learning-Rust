@@ -4,6 +4,7 @@ import "./HomePage.css"
 import FilePicker from '../../miscellaneous/FilePicker/FilePicker';
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
 import LessonFileSaveService from '../../../services/LessonFileHandleService';
+import ListLessons from '../../miscellaneous/ListLessons/ListLessons';
 
 function HomePage() {
     const navigate = useNavigate();
@@ -20,9 +21,18 @@ function HomePage() {
     }
 
     return (
-        <div className='file-picker-container'>
-            <FilePicker openLesson={loadPage}/>
+        <div className='home-page'>
+            <div className='list-lesson-container'>
+                <h2 className='title'>Wybierz lekcję którą chcesz rozpocząć</h2>
+                <div className='list-lessons'>
+                    <ListLessons openLesson={loadPage}></ListLessons>
+                </div>
+            </div>
+            <div className='file-picker-container'>
+                <FilePicker openLesson={loadPage}/>
+            </div>
         </div>
+        
     )
 }
 

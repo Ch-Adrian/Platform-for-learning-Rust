@@ -23,10 +23,7 @@ function HomePage() {
     return (
         <div className='home-page'>
             <div className='list-lesson-container'>
-                <h2 className='title'>Wybierz lekcję którą chcesz rozpocząć</h2>
-                <div className='list-lessons'>
-                    <ListLessons openLesson={loadPage}></ListLessons>
-                </div>
+                <ListLessons openLesson={loadPage}/>
             </div>
             <div className='file-picker-container'>
                 <FilePicker openLesson={loadPage}/>

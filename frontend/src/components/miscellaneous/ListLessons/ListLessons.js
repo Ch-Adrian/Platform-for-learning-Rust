@@ -45,24 +45,30 @@ const ListLessons = (props) => {
 
   return (
     <div className='list-lessons'>
-      <ul>
-        <li className='lesson-header'>
-          <div className='lesson-name' onClick={() => handleHeaderClick('name')}>
-            Name
-            {sortBy.column === 'name' && (sortBy.order === 'asc' ? ' ▲' : ' ▼')}
-          </div>
-          <div className='lesson-date' onClick={() => handleHeaderClick('lastModified')}>
-            Last Modified
-            {sortBy.column === 'lastModified' && (sortBy.order === 'asc' ? ' ▲' : ' ▼')}
-          </div>
-        </li>
-        {sortedLessons.map((lesson, index) => (
-          <li key={index} className='lesson-item' onClick={() => openLesson(lesson.name)}>
-            <div className='lesson-name'>{lesson.name}</div>
-            <div className='lesson-date'>{DateService.formatLocalDateTime(lesson.lastModified)}</div>
+      {lessons.length === 0 ? (
+        <h2 className='title'>Witaj, Rozpocznij swoją przygodę z językiem Rust</h2>
+      ) : (
+      <>
+        <h2 className='title'>Wybierz lekcję którą chcesz rozpocząć</h2>
+        <ul className='lesson-table'>
+          <li className='lesson-header'>
+            <div className='lesson-name' onClick={() => handleHeaderClick('name')}>
+              Nazwa Lekcji
+              {sortBy.column === 'name' && (sortBy.order === 'asc' ? ' ▲' : ' ▼')}
+            </div>
+            <div className='lesson-date' onClick={() => handleHeaderClick('lastModified')}>
+              {sortBy.column === 'lastModified' && (sortBy.order === 'asc' ? '▲ ' : '▼ ')}
+              Ostatnio Zmodyfikowano
+            </div>
           </li>
-        ))}
-      </ul>
+          {sortedLessons.map((lesson, index) => (
+            <li key={index} className='lesson-item' onClick={() => openLesson(lesson.name)}>
+              <div className='lesson-name'>{lesson.name}</div>
+              <div className='lesson-date'>{DateService.formatLocalDateTime(lesson.lastModified)}</div>
+            </li>
+          ))}
+        </ul>
+      </>)}
     </div>
   );
 };

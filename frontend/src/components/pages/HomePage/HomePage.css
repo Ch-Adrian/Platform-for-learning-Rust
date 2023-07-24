@@ -8,24 +8,10 @@
 .list-lesson-container {
     position: relative;
     align-items: center;
-    top: 3vw;
     width: 60vw;
-}
-
-.title {
-    position: relative;
-    color: #bdbdbd;
-    text-align: center;
-}
-
-.list-lessons {
-    position: relative;
-    align-items: center;
-    margin-top: 3vw;
-    border-radius: 50px;
 }
 
 .file-picker-container {
     position: relative;
-    margin-top: 5vw;
+    top: 5vh;
 }

@@ -1,4 +1,5 @@
 .list-lessons ul {
+    position: relative;
     list-style: none;
     padding-left: 0;
     margin-left: 0;
@@ -29,7 +30,7 @@ li {
 
 .list-lessons ul::-webkit-scrollbar {
     width: 8px;
-  }
+}
   
 .lesson-item:active {
     background-color: #000000;
@@ -66,4 +67,17 @@ li {
 .lesson-date:hover {
     color: #FFFFFF;
     border-color: #555555;
+}
+
+.lesson-header {
+    font-weight: bold;
+}
+
+.title {
+    color: #bdbdbd;
+    text-align: center;
+}
+
+.lesson-table {
+    top: 3vh;
 }

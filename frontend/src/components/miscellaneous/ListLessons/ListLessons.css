@@ -8,7 +8,10 @@
     scrollbar-color: #333333 #888888;
 }
   
-.lesson-item {
+li {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     list-style: none;
     cursor: pointer;
     padding: 10px;
@@ -37,12 +40,30 @@
 .list-lessons ul::-webkit-scrollbar-thumb {
     background-color: #333333;
     border-radius: 8px;
-  }
+}
   
-  .list-lessons ul::-webkit-scrollbar-thumb:hover {
+.list-lessons ul::-webkit-scrollbar-thumb:hover {
     background-color: #555555;
-  }
+}
   
-  .list-lessons ul::-webkit-scrollbar-thumb:active {
+.list-lessons ul::-webkit-scrollbar-thumb:active {
     background-color: #000000;
-  }
+}
+
+.lesson-name {
+  margin-left: 1vw;
+}
+
+.lesson-date {
+  margin-right: 1vw;
+}
+
+.lesson-name:hover {
+    color: #FFFFFF;
+    border-color: #555555;
+}
+
+.lesson-date:hover {
+    color: #FFFFFF;
+    border-color: #555555;
+}

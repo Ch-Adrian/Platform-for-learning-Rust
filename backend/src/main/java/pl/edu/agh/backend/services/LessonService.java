@@ -6,21 +6,31 @@ import pl.edu.agh.backend.exceptions.LessonNotFoundException;
 import pl.edu.agh.backend.exceptions.LessonsNameConflictException;
 import pl.edu.agh.backend.lesson.Lesson;
 import pl.edu.agh.backend.lesson.LessonFile;
+import pl.edu.agh.backend.lesson.LessonInfo;
 
 import java.io.*;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.TimeZone;
 
 @Service
 public class LessonService {
 
     private static final String rootDir = "lessons";
 
-    public List<String> getAllLessonsNames() {
+    public List<LessonInfo> getAllLessonsNames() {
         File currentDir = new File(rootDir);
         FilenameFilter filter = (file, name) -> name.endsWith(".json");
-        return Arrays.stream(Objects.requireNonNull(currentDir.list(filter))).toList();
+
+        return Arrays
+                .stream(Objects.requireNonNull(currentDir.listFiles(filter)))
+                .map(file -> new LessonInfo(file.getName(),
+                        LocalDateTime.ofInstant(Instant.ofEpochMilli(file.lastModified()),
+                                TimeZone.getDefault().toZoneId())))
+                .toList();
     }
 
     public void saveExistingLesson(LessonFile lessonFile) {

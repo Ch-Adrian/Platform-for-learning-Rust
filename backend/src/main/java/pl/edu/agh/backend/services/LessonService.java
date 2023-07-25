@@ -50,16 +50,18 @@ public class LessonService {
     }
 
     public void renameLesson(String oldName, String newName) {
-        if (!this.existsLesson(oldName)) {
-            LessonFile lessonFile = new LessonFile(oldName, Lesson.getDefaultLesson());
-            this.saveLesson(lessonFile);
-        } else if (this.existsLesson(newName)) {
-            throw new LessonsNameConflictException(newName);
-        } else {
-            File oldFile = new File(rootDir + File.separator + oldName);
-            File newFile = new File(rootDir + File.separator + newName);
-            oldFile.renameTo(newFile);
+        if (oldName.equals(newName)) {
+            return;
         }
+        if (!this.existsLesson(oldName)) {
+            throw new LessonNotFoundException(oldName);
+        }
+        if (this.existsLesson(newName)) {
+            throw new LessonsNameConflictException(newName);
+        }
+        File oldFile = new File(rootDir + File.separator + oldName);
+        File newFile = new File(rootDir + File.separator + newName);
+        oldFile.renameTo(newFile);
     }
 
     public Lesson getLesson(String name) throws LessonNotFoundException {

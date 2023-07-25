@@ -1,3 +1,9 @@
+:root{
+    --backgroud-color: #524B4B;
+    --text-color: #bdbdbd;
+    --border-color: #333333;
+}
+
 .home-page {
     display: flex;
     flex-direction: column;
@@ -13,5 +19,77 @@
 
 .file-picker-container {
     position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 50vw;
     top: 5vh;
+}
+
+.default-lesson-button > p {
+    margin: auto;
+}
+
+.default-lesson-button:hover {
+    border-color: rgba(159, 255, 223, 0.559);
+}
+
+.default-lesson-button:active {
+    border-color: rgb(81, 255, 90);
+}
+
+.default-lesson-button {
+    width: auto;
+    height: 5em;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-width: 4;
+    border-radius: 2;
+    border-color: var(--border-color);
+    border-style: dashed;
+    background-color: var(--backgroud-color); 
+    color: var(--text-color); 
+    outline: none;
+    transition: border .24s ease-in-out;
+    cursor: pointer;
+    margin-left: 2vw;
+    margin-right: 2vw;
+}
+
+.file-picker-box {
+    width: auto;
+    height: 5em;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-width: 4;
+    border-radius: 2;
+    border-color: var(--border-color);
+    border-style: dashed;
+    background-color: var(--backgroud-color); 
+    color: var(--text-color); 
+    outline: none;
+    transition: border .24s ease-in-out;
+    cursor: pointer;
+    margin-left: 2vw;
+    margin-right: 2vw;
+}
+
+.file-picker-box > p {
+    margin: auto;
+}
+
+.file-picker-box:hover {
+    border-color: rgba(159, 255, 223, 0.559);
+}
+
+.file-picker-box:active {
+    border-color: rgb(81, 255, 90);
 }

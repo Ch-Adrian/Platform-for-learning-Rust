@@ -21,16 +21,18 @@ const FilePicker = (props) => {
                 'application/json': ['.json']
             }})
 
-    
     return (
-        <div {...getRootProps({className: "file-picker"})} style={{borderColor: isDragActive ? "rgb(217, 255, 81)" : ""}}>
-            <input {...getInputProps()} />
-            {
-            isDragActive ?
-                <p>Otwórz nową lekcję</p> :
-                <p>Otwórz nową lekcję</p>
-            }
+        <div className='file-picker-box'>
+            <div {...getRootProps({className: "file-picker"})} style={{borderColor: isDragActive ? "rgb(217, 255, 81)" : ""}}>
+                <input {...getInputProps()} />
+                {
+                isDragActive ?
+                    <div>Importuj lekcję z komputera</div> :
+                    <div>Importuj lekcję z komputera</div>
+                }
+            </div>
         </div>
+        
     )
   
 }

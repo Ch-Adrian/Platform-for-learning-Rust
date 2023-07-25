@@ -27,8 +27,8 @@ public class LessonController {
     }
 
     @PostMapping("create")
-    public void createNewLesson(@RequestBody LessonFile lessonFile) {
-        lessonService.createNewLesson(lessonFile);
+    public String createNewLesson(@RequestBody LessonFile lessonFile) {
+        return lessonService.createNewLesson(lessonFile);
     }
 
     @PostMapping("rename")
@@ -38,12 +38,16 @@ public class LessonController {
 
     @GetMapping("list")
     public List<LessonInfo> getAllLessonsNames() {
-        return lessonService.getAllLessonsNames();
+        return lessonService.getAllLessonsInfo();
     }
 
     @GetMapping("open/{name}")
     public Lesson getLesson(@PathVariable String name) {
-        System.out.println(name);
         return lessonService.getLesson(name);
+    }
+
+    @GetMapping("open/new")
+    public LessonFile getDefaultLesson() {
+        return lessonService.getDefaultLesson();
     }
 }

@@ -20,8 +20,9 @@ import java.util.TimeZone;
 public class LessonService {
 
     private static final String rootDir = "lessons";
+    private static final String newLessonName = "NewLesson";
 
-    public List<LessonInfo> getAllLessonsNames() {
+    public List<LessonInfo> getAllLessonsInfo() {
         File currentDir = new File(rootDir);
         FilenameFilter filter = (file, name) -> name.endsWith(".json");
 
@@ -40,11 +41,12 @@ public class LessonService {
         this.saveLesson(lessonFile);
     }
 
-    public void createNewLesson(LessonFile lessonFile) {
+    public String createNewLesson(LessonFile lessonFile) {
         if (this.existsLesson(lessonFile.getName())) {
-            throw new LessonsNameConflictException(lessonFile.getName());
+            lessonFile.setName(findAvailableName(lessonFile.getName().substring(0, lessonFile.getName().length() - 5)));
         }
         this.saveLesson(lessonFile);
+        return lessonFile.getName();
     }
 
     public void renameLesson(String oldName, String newName) {
@@ -65,13 +67,16 @@ public class LessonService {
         if (!lessonFile.exists()) {
             throw new LessonNotFoundException(name);
         }
-
         try (BufferedReader br = new BufferedReader(new FileReader(lessonFile))) {
             return new Gson().fromJson(br, Lesson.class);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public LessonFile getDefaultLesson() {
+        return new LessonFile(findAvailableName(newLessonName), Lesson.getDefaultLesson());
     }
 
     private boolean existsLesson(String name) {
@@ -87,7 +92,26 @@ public class LessonService {
             e.printStackTrace();
         }
     }
+
+    private List<String> getAllLessonsNames() {
+        File currentDir = new File(rootDir);
+        FilenameFilter filter = (file, name) -> name.endsWith(".json");
+        return Arrays.stream(Objects.requireNonNull(currentDir.list(filter))).toList();
+    }
+
+    private String findAvailableName(String wantedName) {
+        if (this.existsLesson(wantedName + ".json")) {
+            return this.findAvailableName(wantedName, 1);
+        } else {
+            return wantedName + ".json";
+        }
+    }
+
+    private String findAvailableName(String wantedName, int attempt) {
+        if (this.existsLesson(wantedName + "(" + attempt + ").json")) {
+            return findAvailableName(wantedName, attempt + 1);
+        } else {
+            return wantedName + "(" + attempt + ").json";
+        }
+    }
 }
-
-
-

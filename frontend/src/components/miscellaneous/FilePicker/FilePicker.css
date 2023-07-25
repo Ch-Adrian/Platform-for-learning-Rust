@@ -1,38 +1,6 @@
-:root{
-  --backgroud-color: #524B4B;
-  --text-color: #bdbdbd;
-  --border-color: #333333;
-}
-
-
 .file-picker {
-    width: auto;
-    height: 5em;
-    flex: 1;
+    /* position: relative; */
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    padding: 10px;
-    border-width: 4;
-    border-radius: 2;
-    border-color: var(--border-color);
-    border-style: dashed;
-    background-color: var(--backgroud-color); 
-    color: var(--text-color); 
-    outline: none;
-    transition: border .24s ease-in-out;
-    cursor: pointer;
-}
-
-.file-picker > p {
-    margin: auto;
-}
-
-.file-picker:hover {
-    border-color: rgba(159, 255, 223, 0.559);
-}
-
-.file-picker:active {
-    border-color: rgb(81, 255, 90);
+    align-items: center;
 }

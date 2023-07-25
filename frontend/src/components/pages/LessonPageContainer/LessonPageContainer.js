@@ -95,15 +95,15 @@ const LessonPageContainer = () => {
     .catch((e) => console.log(e));
   }
   
-  const handleNewLesson = async () => {
-    if (lessonName !== DEFAULT_LESSON_NAME) {
-      await handleSave();
-    } 
-    setLessonName(DEFAULT_LESSON_NAME);
-    const newLessonDefinition = window.structuredClone(DEFAULT_LESSON);
-    setLessonDefinition(newLessonDefinition);
-    navigate(`/lesson/newLesson.json/0`, {state: {lessonFile: newLessonDefinition}});    
-  }
+  // const handleNewLesson = async () => {
+  //   if (lessonName !== DEFAULT_LESSON_NAME) {
+  //     await handleSave();
+  //   } 
+  //   setLessonName(DEFAULT_LESSON_NAME);
+  //   const newLessonDefinition = window.structuredClone(DEFAULT_LESSON);
+  //   setLessonDefinition(newLessonDefinition);
+  //   navigate(`/lesson/newLesson.json/0`, {state: {lessonFile: newLessonDefinition}});    
+  // }
 
   const handleDownload = () => {
     const link = document.createElement('a');
@@ -131,7 +131,7 @@ const LessonPageContainer = () => {
         <div className='general-buttons'>
           <div style={{display: 'flex'}}>
             <NameHeader lessonName={lessonName} setLessonName={setLessonName} lessonDefinition={lessonDefinition}></NameHeader>
-            {DEFINED_USER_TYPE === UserType.teacher && <Button className='general-button-item' variant='light' onClick={handleNewLesson}>Nowa</Button>}
+            {/* {DEFINED_USER_TYPE === UserType.teacher && <Button className='general-button-item' variant='light' onClick={handleNewLesson}>Nowa</Button>} */}
             <Button className='general-button-item' variant='light' onClick={handleOpen}>Otwórz</Button>
             <Button className='general-button-item' variant='light' onClick={handleSave}>Zapisz</Button>
             <Button className='general-button-item' variant='light' onClick={handleDownload}>Pobierz</Button>

@@ -10,23 +10,39 @@ function HomePage() {
     const navigate = useNavigate();
     const {setLessonDefinition, setLessonName} = useContext(LessonContext);
 
-    const loadPage = async (lessonFile, lessonName) => {
+    const loadImportedLesson = async (lessonFile, lessonName) => {
+    
+        const newLessonName = await LessonFileSaveService.createLesson(lessonFile, lessonName.split('.json')[0])
+        .catch((e) => console.log(e));
+
+        const name = newLessonName.data;
+        setLessonName(name.split('.json')[0]);
+        setLessonDefinition(lessonFile);
+        
+        
+        navigate(`/lesson/${name}/0`, {state: {lessonFile: lessonFile}});
+    }
+
+    const loadNewLesson = async () => {
+        const lessonFile = await LessonFileSaveService.getDefaultLesson();
+        loadImportedLesson(lessonFile.data.lesson, lessonFile.data.name);
+    }
+
+    const loadLesson = async (lessonFile, lessonName) => {
         setLessonDefinition(lessonFile);
         setLessonName(lessonName.split('.json')[0]);
-        LessonFileSaveService.createLesson(lessonFile, lessonName.split('.json')[0])
-        .catch((e) => console.log(e));
-        
-        
+         
         navigate(`/lesson/${lessonName}/0`, {state: {lessonFile: lessonFile}});
     }
 
     return (
         <div className='home-page'>
             <div className='list-lesson-container'>
-                <ListLessons openLesson={loadPage}/>
+                <ListLessons openLesson={loadLesson}/>
             </div>
             <div className='file-picker-container'>
-                <FilePicker openLesson={loadPage}/>
+                <FilePicker openLesson={loadImportedLesson}/>
+                <div className='default-lesson-button' onClick={loadNewLesson}>Stwórz nową lekcję</div>
             </div>
         </div>
         

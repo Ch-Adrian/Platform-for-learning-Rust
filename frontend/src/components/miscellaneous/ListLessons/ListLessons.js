@@ -58,7 +58,7 @@ const ListLessons = (props) => {
             </div>
             <div className='lesson-date' onClick={() => handleHeaderClick('lastModified')}>
               {sortBy.column === 'lastModified' && (sortBy.order === 'asc' ? '▲ ' : '▼ ')}
-              Ostatnio Zmodyfikowano
+              Zmodyfikowano
             </div>
           </li>
           {sortedLessons.map((lesson, index) => (

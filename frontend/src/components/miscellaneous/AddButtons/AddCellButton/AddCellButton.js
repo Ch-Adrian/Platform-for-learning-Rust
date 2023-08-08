@@ -4,7 +4,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import { LessonContext } from '../../../../contexts/LessonContext/LessonContextProvider';
 import "../AddButton.css";
 
-const cellTypes = ["Tekst", "Kod"];
+const cellTypes = ["Tekst", "Kod", "Niemutowalny kod"];
 
 const AddCellButton = (props) => {
     const {addCell} = useContext(LessonContext);
@@ -17,6 +17,10 @@ const AddCellButton = (props) => {
         } else if (event.target.innerHTML === "Tekst"){
             newCell.type = "text";
             newCell.value = "Nowa komórka z tekstem";
+        } else if (event.target.innerHTML === "Niemutowalny kod"){
+            newCell.type = "immutableCode";
+            newCell.value = "fn main() {\r\n\t/*TO_FILL*/\r\n}";
+            newCell.reference = "fn main() {\r\n\t/*TO_FILL*/\r\n}";
         }
         addCell(newCell, props.cellIdx, props.currentPage, props.sectionIdx);
     } 

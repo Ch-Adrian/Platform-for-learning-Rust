@@ -11,6 +11,7 @@ import { Draggable } from 'react-beautiful-dnd'
 import StrictModeDroppable from '../../../miscellaneous/Droppable/StrictModeDroppable'
 import {TbGridDots, TbArrowsMove } from 'react-icons/tb';
 import MovableMenuContext from '../../../miscellaneous/MenuContext/Movable/MovableMenuContext'
+import ImmutableCodeCell from '../../../Cells/ImmutableCodeCell/ImmutableCodeCell'
 
 const SectionHeader = ({userType, page, sectionIdx}) => {
     const { getTitle, changeTitle } = useContext(LessonContext);
@@ -70,7 +71,13 @@ const LessonSection = (props) => {
                                         (
                                             <CodeCell key={idx + "code" + props.sectionIdx} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></CodeCell>
                                         )
-                                } else if (cell.type === "empty") {
+                                } else if (cell.type === "immutableCode") {
+                                    cellToAdd =
+                                        (
+                                            <ImmutableCodeCell key={idx + "code" + props.sectionIdx} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></ImmutableCodeCell>
+                                        )
+                                } 
+                                else if (cell.type === "empty") {
                                     cellToAdd =
                                         (
                                             <EmptyCell key={idx + "empty" + props.sectionIdx} text={cell.value} cell={cell} cellIdx={idx} userType={props.userType}></EmptyCell>
@@ -105,6 +112,10 @@ const LessonSection = (props) => {
                 } else if (cell.type === "code") {
                     return (
                         <CodeCell key={idx} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></CodeCell>
+                    )
+                }  else if (cell.type === "immutableCode") {
+                    return (
+                        <ImmutableCodeCell key={idx} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></ImmutableCodeCell>
                     )
                 } else if (cell.type === "empty") {
                     return (

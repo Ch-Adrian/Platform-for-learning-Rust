@@ -4,5 +4,6 @@ public enum Type {
     code,
     output,
     text,
+    immutableCode,
     empty
 }

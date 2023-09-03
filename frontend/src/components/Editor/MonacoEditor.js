@@ -1,12 +1,12 @@
-import React, { useState, useEffect, memo } from 'react'; 
+import React, { useState, useEffect, memo, forwardRef, useRef } from 'react'; 
 import Editor from '@monaco-editor/react';
 
-const MonacoEditor = memo(function MonacoEditor({updateEditorValueHandler, 
-  editorRef,
-  containerRef,
-  text}) {
+const MonacoEditor = memo(forwardRef(function MonacoEditor(props, ref) {
+    const {editorRef, containerRef} = ref;
+    const {updateEditorValueHandler, text} = props;
     const [monaco, setMonaco] = useState(null);
     const [editorValue, setEditorValue] = useState(text);
+    const prevEditorValue = useRef(text);
 
     const handleEditorDidMount = (editor, monaco) => {
         setMonaco(monaco);
@@ -22,24 +22,35 @@ const MonacoEditor = memo(function MonacoEditor({updateEditorValueHandler,
         monaco.editor.setTheme('rustafariapp');
         if (editorRef.current !== null) editorRef.current.layout({ width: containerRef.current.clientWidth, height: editorRef.current.getContentHeight() });
       }
-    
+      
     useEffect(() => {
-      if (text !== null){
-        if (text.length !== 0 && text === editorValue) return;
-        if (editorRef.current !== null && editorRef.current?.getModel() !== null) editorRef.current?.getModel().setValue(text);  
+      prevEditorValue.current = editorValue;
+    }, [editorValue])
+
+    useEffect(() => {
+      const syncEditorValues = () => {
+        if (text !== null){
+          if (text.length !== 0 && text === prevEditorValue.current) return;
+          if (editorRef.current !== null && editorRef.current?.getModel() !== null) editorRef.current?.getModel().setValue(text);  
+        }
       }
-          }, [text, editorRef.current]);
-    
+
+      syncEditorValues();
+    }, [text, editorRef]);
+
     useEffect(() => {
-      if (editorRef.current !== null) editorRef.current.layout({ width: containerRef.current.clientWidth, height: editorRef.current.getContentHeight() });
-    }, [editorRef.current, containerRef]);
+      const updateEditorSize = () => {
+        if (editorRef.current !== null) editorRef.current.layout({ width: containerRef.current.clientWidth, height: editorRef.current.getContentHeight() });
+      }
+
+      updateEditorSize();
+    })
 
     useEffect(() => {
       const timeOutId = setTimeout(() => {updateEditorValueHandler(editorValue)}, 650);
       return () => clearTimeout(timeOutId);
     }, [editorValue, updateEditorValueHandler])
 
-    
     const editorChangeHandler = (event) => {
       setEditorValue(event);
       editorRef.current.layout({ width: containerRef.current.clientWidth, height: editorRef.current.getContentHeight() })
@@ -67,6 +78,6 @@ const MonacoEditor = memo(function MonacoEditor({updateEditorValueHandler,
         // value={editorValue}
         onChange={editorChangeHandler}/>
     )
-})
+}))
 
 export default MonacoEditor

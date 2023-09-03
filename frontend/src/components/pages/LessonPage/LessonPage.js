@@ -11,9 +11,7 @@ import StrictModeDroppable from '../../miscellaneous/Droppable/StrictModeDroppab
 
 
 const LessonPage = ({userType, setUserType}) => {
-    // const [userType, setUserType] = useState(currentUser);
     const { page } = useParams();
-    // const location = useLocation();
     const {lessonDefinition, setLessonDefinition} = useContext(LessonContext);
 
     const handleOnDragEnd = (result) => {

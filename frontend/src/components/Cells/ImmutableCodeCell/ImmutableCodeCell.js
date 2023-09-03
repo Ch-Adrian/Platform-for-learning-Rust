@@ -10,7 +10,19 @@ import {BsTrash3} from 'react-icons/bs';
 import {TbGridDots, TbArrowsMove } from 'react-icons/tb';
 import MovableMenuContext from '../../miscellaneous/MenuContext/Movable/MovableMenuContext'
 
-const SEPARATOR_STRING = "/*TO_FILL*/"
+const SEPARATOR_STRING = "/*TO_FILL*/";
+
+const createValidationRegex = (immutablePhrases) => {
+  immutablePhrases = immutablePhrases.map(phrase => escapeRegExp(phrase.trim()));
+  let reg = "^.*?(";
+  reg += immutablePhrases.join(").*?(");
+  reg += ").*";
+  return new RegExp(reg, "gs");
+}
+
+const escapeRegExp = (string) => {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
 
 const ImmutableCodeCell = memo(function ImmutableCodeCell(props) {
     const editorRef = useRef(null);
@@ -20,18 +32,6 @@ const ImmutableCodeCell = memo(function ImmutableCodeCell(props) {
     const {updateCell, removeCell} = useContext(LessonContext);
     const [isExecuting, setIsExecuting] = useState(false);
     const [isConnectionError, setIsConnectionError] = useState(false);
-
-    const escapeRegExp = (string) => {
-      return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
-    }
-
-    const createValidationRegex = (immutablePhrases) => {
-      immutablePhrases = immutablePhrases.map(phrase => escapeRegExp(phrase.trim()));
-      let reg = "^.*?(";
-      reg += immutablePhrases.join(").*?(");
-      reg += ").*";
-      return new RegExp(reg, "gs");
-    }
   
     const compile = async () => {
       setIsConnectionError(false);
@@ -74,7 +74,7 @@ const ImmutableCodeCell = memo(function ImmutableCodeCell(props) {
       if (modifiedCell.value === value) return;
       modifiedCell.value = value;
       updateCell(modifiedCell, props.cellIdx, props.currentPage, props.sectionIdx);
-    }, [props.cell, props.cellIdx, props.currentPage, props.sectionIdx, updateCell, editorRef, createValidationRegex])
+    }, [props.cell, props.cellIdx, props.currentPage, props.sectionIdx, updateCell, editorRef])
   
     const updateTestEditorValueHandler = useCallback((value) => {
       let modifiedCell = props.cell;
@@ -122,7 +122,7 @@ const ImmutableCodeCell = memo(function ImmutableCodeCell(props) {
         {props.userType === UserType.teacher ?
         // TEACHER VERSION
         <React.Fragment>
-        <MonacoEditor containerRef={containerRef} editorRef={editorRef} updateEditorValueHandler={updateEditorValueHandler} text={props.text}></MonacoEditor>
+        <MonacoEditor ref={{containerRef: containerRef, editorRef: editorRef}} updateEditorValueHandler={updateEditorValueHandler} text={props.text}></MonacoEditor>
         <div className='editor-button-container'>
          <Button onClick={compile} className='editor-button' variant="success" disabled={isExecuting}>{!isExecuting ? 'Run code' : 'Running...'}</Button>{' '}
          {props.cell.test === undefined ? <Button onClick={() => {addEditor("test")}} className='editor-button' variant="success">{'Add tests'}</Button> : null}
@@ -133,20 +133,20 @@ const ImmutableCodeCell = memo(function ImmutableCodeCell(props) {
         {props.cell.output && <div><OutputCell output={props.cell.output}></OutputCell></div>}
         {props.cell.test !== undefined ? 
         <div className={"code-cell-container"}> 
-          <MonacoEditor containerRef={containerRef} editorRef={testEditorRef} updateEditorValueHandler={updateTestEditorValueHandler} text={props.cell.test}></MonacoEditor>
+          <MonacoEditor ref={{containerRef: containerRef, editorRef: testEditorRef}} updateEditorValueHandler={updateTestEditorValueHandler} text={props.cell.test}></MonacoEditor>
           <div className='editor-button-container'>
             <Button onClick={() => {removeEditor("test")}} className='editor-button' variant="danger">{'Remove tests'}</Button>
           </div>  
         </div>: null}
         {props.cell.reference !== undefined ? 
         <div className={"code-cell-container"}> 
-          <MonacoEditor containerRef={containerRef} editorRef={referenceEditorRef} updateEditorValueHandler={updateReferenceEditorValueHandler} text={props.cell.reference}></MonacoEditor>
+          <MonacoEditor ref={{containerRef: containerRef, editorRef: referenceEditorRef}} updateEditorValueHandler={updateReferenceEditorValueHandler} text={props.cell.reference}></MonacoEditor>
         </div>: null}
         </React.Fragment> 
         : 
         // STUDENT VERSION
         <React.Fragment>
-        <MonacoEditor containerRef={containerRef} editorRef={editorRef} updateEditorValueHandler={updateEditorValueHandler} text={props.text}></MonacoEditor>
+        <MonacoEditor ref={{containerRef: containerRef, editorRef: editorRef}} updateEditorValueHandler={updateEditorValueHandler} text={props.text}></MonacoEditor>
         <div className='editor-button-container'>
          <Button onClick={compile} className='editor-button' variant="success" disabled={isExecuting}>{!isExecuting ? 'Run code' : 'Running...'}</Button>{' '}
         </div>  

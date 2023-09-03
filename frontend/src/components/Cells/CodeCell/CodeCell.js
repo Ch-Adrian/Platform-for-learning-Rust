@@ -32,7 +32,6 @@ const CodeCell = memo(function CodeCell(props) {
       })
       .catch((err) => setIsConnectionError(true));
     }
-    
 
     await CodeExecutorService.compileAndRun(editorRef.current.getValue())
     .then((res) => {
@@ -98,7 +97,7 @@ const CodeCell = memo(function CodeCell(props) {
       {props.userType === UserType.teacher ?
       // TEACHER VERSION
       <React.Fragment>
-      <MonacoEditor containerRef={containerRef} editorRef={editorRef} updateEditorValueHandler={updateEditorValueHandler} text={props.text}></MonacoEditor>
+      <MonacoEditor ref={{containerRef: containerRef, editorRef: editorRef}} updateEditorValueHandler={updateEditorValueHandler} text={props.text}></MonacoEditor>
       <div className='editor-button-container'>
        <Button onClick={compile} className='editor-button' variant="success" disabled={isExecuting}>{!isExecuting ? 'Run code' : 'Running...'}</Button>{' '}
        {props.cell.test === undefined ? <Button onClick={() => {addEditor("test")}} className='editor-button' variant="success">{'Add tests'}</Button> : null}
@@ -106,18 +105,18 @@ const CodeCell = memo(function CodeCell(props) {
        <Button onClick={clearOutput} className='clear-output-editor-button' variant="danger" style={{ display: !props.cell.output ? "none" : "inline"}}>Clear output</Button>{' '}
       </div>  
       {isConnectionError ? <div style={{color: 'red'}}>There was some error connecting to the compiler. Please check if all app components are running</div> : null}
-      {props.cell.outputTest && <div> Test Output <OutputCell output={props.cell.outputTest}></OutputCell></div>}
-      {props.cell.output && <div><OutputCell output={props.cell.output}></OutputCell></div>}
+      {props.cell.outputTest ? <div> Test Output <OutputCell output={props.cell.outputTest}></OutputCell></div> : null}
+      {props.cell.output ? <div><OutputCell output={props.cell.output}></OutputCell></div> : null}
       {props.cell.test !== undefined ? 
       <div className={"code-cell-container"}> 
-        <MonacoEditor containerRef={containerRef} editorRef={testEditorRef} updateEditorValueHandler={updateTestEditorValueHandler} text={props.cell.test}></MonacoEditor>
+        <MonacoEditor ref={{containerRef: containerRef, editorRef: testEditorRef}} updateEditorValueHandler={updateTestEditorValueHandler} text={props.cell.test}></MonacoEditor>
         <div className='editor-button-container'>
           <Button onClick={() => {removeEditor("test")}} className='editor-button' variant="danger">{'Remove tests'}</Button>
         </div>  
       </div>: null}
       {props.cell.reference !== undefined ? 
       <div className={"code-cell-container"}> 
-        <MonacoEditor containerRef={containerRef} editorRef={referenceEditorRef} updateEditorValueHandler={updateReferenceEditorValueHandler} text={props.cell.reference}></MonacoEditor>
+        <MonacoEditor ref={{containerRef: containerRef, editorRef: referenceEditorRef}} updateEditorValueHandler={updateReferenceEditorValueHandler} text={props.cell.reference}></MonacoEditor>
         <div className='editor-button-container'>
           <Button onClick={() => {removeEditor("reference")}} className='editor-button' variant="danger">{'Remove reference code'}</Button>
         </div>  
@@ -126,7 +125,7 @@ const CodeCell = memo(function CodeCell(props) {
       : 
       // STUDENT VERSION
       <React.Fragment>
-      <MonacoEditor containerRef={containerRef} editorRef={editorRef} updateEditorValueHandler={updateEditorValueHandler} text={props.text}></MonacoEditor>
+      <MonacoEditor ref={{containerRef: containerRef, editorRef: editorRef}} updateEditorValueHandler={updateEditorValueHandler} text={props.text}></MonacoEditor>
       <div className='editor-button-container'>
        <Button onClick={compile} className='editor-button' variant="success" disabled={isExecuting}>{!isExecuting ? 'Run code' : 'Running...'}</Button>{' '}
       </div>  

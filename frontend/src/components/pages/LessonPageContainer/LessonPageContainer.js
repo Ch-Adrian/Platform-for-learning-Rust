@@ -14,8 +14,8 @@ import LessonFileSaveService from '../../../services/LessonFileHandleService';
 import UserTypeSwitch from '../../miscellaneous/UserTypeSwitch/UserTypeSwitch';
 
 const DEFINED_USER_TYPE = currentUser;
-const DEFAULT_LESSON = require('../../../assets/DefaultNewLesson.json');
-const DEFAULT_LESSON_NAME = "Nowa lekcja";
+// const DEFAULT_LESSON = require('../../../assets/DefaultNewLesson.json');
+// const DEFAULT_LESSON_NAME = "Nowa lekcja";
 
 const NameHeader = ({lessonName, setLessonName, lessonDefinition}) => {
   const nameInput = useRef(null);
@@ -45,16 +45,14 @@ const NameHeader = ({lessonName, setLessonName, lessonDefinition}) => {
 const LessonPageContainer = () => {
   const [userType, setUserType] = useState(currentUser);
   const [sidebar, setSidebar] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
   const navigate = useNavigate();
 
   const showSidebar = () => setSidebar(!sidebar);
 
-  const {lessonDefinition, setLessonDefinition, lessonName, setLessonName} = useContext(LessonContext);
+  const {lessonDefinition, lessonName, setLessonName, addPage, removePage} = useContext(LessonContext);
 
   const regExpNum = new RegExp("[0-9]*");
 
-  
   const url = new URL(window.location.href);
   let path = url.pathname.split("/");
   let currPg = 0; 
@@ -74,18 +72,11 @@ const LessonPageContainer = () => {
   }
 
   const newPageEvent = () => {
-    let newLessonDefinition = {...lessonDefinition};
-    newLessonDefinition.pages.push({ sections: [] });
-
-    setLessonDefinition(newLessonDefinition);
+    addPage();
   }
 
   const deletePageEvent = () => {
-    let newLessonDefinition = {...lessonDefinition};
-    newLessonDefinition.pages.splice(currPg, 1);
-
-    setLessonDefinition(newLessonDefinition);
-
+    removePage(currPg);
     if(lessonDefinition.pages.length >= 1) navigate(url.pathname+'/0');
     else navigate(url.pathname);
   }
@@ -131,7 +122,6 @@ const LessonPageContainer = () => {
         <div className='general-buttons'>
           <div style={{display: 'flex'}}>
             <NameHeader lessonName={lessonName} setLessonName={setLessonName} lessonDefinition={lessonDefinition}></NameHeader>
-            {/* {DEFINED_USER_TYPE === UserType.teacher && <Button className='general-button-item' variant='light' onClick={handleNewLesson}>Nowa</Button>} */}
             <Button className='general-button-item' variant='light' onClick={handleOpen}>Otwórz</Button>
             <Button className='general-button-item' variant='light' onClick={handleSave}>Zapisz</Button>
             <Button className='general-button-item' variant='light' onClick={handleDownload}>Pobierz</Button>
@@ -149,7 +139,7 @@ const LessonPageContainer = () => {
             <li className='navbar-toggle'>
               Pages:
             </li>
-            {lessonDefinition && lessonDefinition.pages.map((_, idx) => {
+            {lessonDefinition ? lessonDefinition.pages.map((_, idx) => {
               return (
                 <li key={idx} className='nav-text'>
                   <Link to={url + "/" + idx}>
@@ -157,7 +147,7 @@ const LessonPageContainer = () => {
                   </Link>
                 </li>
               );
-            })}
+            }) : null}
           </ul>
         </nav>
         <nav className={sidebar ? 'nav-menu-inner active' : 'nav-menu-inner'}>
@@ -166,7 +156,7 @@ const LessonPageContainer = () => {
               Sections:
             </li>
               {
-                lessonDefinition && lessonDefinition.pages[currPg].sections.map( (content, sectionIdx) => {
+                lessonDefinition ? lessonDefinition.pages[currPg].sections.map( (content, sectionIdx) => {
                   return (
                     <HashLink key={currPg*10+sectionIdx} to={url+"/"+currPg+"/#section"+sectionIdx}>
                       <li key={sectionIdx} className='nav-text-inner' >{
@@ -176,8 +166,8 @@ const LessonPageContainer = () => {
                     </HashLink>
                   )
                 })
+                : null
               }
-
           </ul>
         </nav>
       </IconContext.Provider>

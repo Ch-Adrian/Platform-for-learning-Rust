@@ -22,8 +22,8 @@ const FilePicker = (props) => {
             }})
 
     return (
-        <div className='file-picker-box'>
-            <div {...getRootProps({className: "file-picker"})} style={{borderColor: isDragActive ? "rgb(217, 255, 81)" : ""}}>
+        <div className='file-picker-box' {...getRootProps({className: "file-picker-box"})}>
+            <div  style={{borderColor: isDragActive ? "rgb(217, 255, 81)" : ""}}>
                 <input {...getInputProps()} />
                 {
                 isDragActive ?

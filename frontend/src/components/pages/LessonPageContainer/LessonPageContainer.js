@@ -159,9 +159,9 @@ const LessonPageContainer = () => {
               lessonDefinition ? lessonDefinition.pages[currPg].sections.map( (content, sectionIdx) => {
                 return (
                   <li key={currPg*10+sectionIdx} className='nav-text-inner'>
-                  <Link to={url+"/"+currPg+"/#section"+sectionIdx}>
+                  <HashLink to={url+"/"+currPg+"/#section"+sectionIdx}>
                     <span >{content.title}</span>
-                  </Link>
+                  </HashLink>
                 </li>
                 )
               })

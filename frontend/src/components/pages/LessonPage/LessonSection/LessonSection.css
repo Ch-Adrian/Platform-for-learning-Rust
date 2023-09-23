@@ -73,4 +73,5 @@
 .section-header-container {
   display: flex;
   border-bottom: solid var(--accent-color) 2px;
+  padding-top: 10px;
 }

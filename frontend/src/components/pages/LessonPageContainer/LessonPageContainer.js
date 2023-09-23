@@ -134,42 +134,41 @@ const LessonPageContainer = () => {
         </div>
       </div>
       <IconContext.Provider value={{ color: '#fff' }}>
-        <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-          <ul className='nav-menu-items' onClick={showSidebar}>
-            <li className='navbar-toggle'>
-              Pages:
-            </li>
-            {lessonDefinition ? lessonDefinition.pages.map((_, idx) => {
-              return (
-                <li key={idx} className='nav-text'>
-                  <Link to={url + "/" + idx}>
-                    <span >{"PAGE " + (idx+1)}</span>
+      <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
+        <ul className='nav-menu-items' onClick={showSidebar}>
+          <li className='navbar-toggle'>
+            Pages:
+          </li>
+          {lessonDefinition ? lessonDefinition.pages.map((_, idx) => {
+            return (
+              <li key={idx} className='nav-text'>
+                <Link to={url + "/" + idx}>
+                  <span >{"PAGE " + (idx+1)}</span>
+                </Link>
+              </li>
+            );
+          }) : null}
+        </ul>
+      </nav>
+      <nav className={sidebar ? 'nav-menu-inner active' : 'nav-menu-inner'}>
+        <ul className='nav-menu-items' onClick={showSidebar}>
+          <li className='navbar-toggle-2'>
+            Sections:
+          </li>
+            {
+              lessonDefinition ? lessonDefinition.pages[currPg].sections.map( (content, sectionIdx) => {
+                return (
+                  <li key={currPg*10+sectionIdx} className='nav-text-inner'>
+                  <Link to={url+"/"+currPg+"/#section"+sectionIdx}>
+                    <span >{content.title}</span>
                   </Link>
                 </li>
-              );
-            }) : null}
-          </ul>
-        </nav>
-        <nav className={sidebar ? 'nav-menu-inner active' : 'nav-menu-inner'}>
-          <ul className='nav-menu-items' onClick={showSidebar}>
-            <li className='navbar-toggle'>
-              Sections:
-            </li>
-              {
-                lessonDefinition ? lessonDefinition.pages[currPg].sections.map( (content, sectionIdx) => {
-                  return (
-                    <HashLink key={currPg*10+sectionIdx} to={url+"/"+currPg+"/#section"+sectionIdx}>
-                      <li key={sectionIdx} className='nav-text-inner' >{
-                        <span>{content.title}</span>
-                      }
-                      </li>
-                    </HashLink>
-                  )
-                })
-                : null
-              }
-          </ul>
-        </nav>
+                )
+              })
+              : null
+            }
+        </ul>
+      </nav>
       </IconContext.Provider>
       <div className={sidebar ? 'page active' : 'page'}>
         <LessonPage userType={userType} setUserType={setUserType}/>

@@ -10,4 +10,5 @@ public class Cell {
     private String value;
     private String test;
     private String reference;
+    private String mutableString;
 }

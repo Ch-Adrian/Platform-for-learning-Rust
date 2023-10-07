@@ -1,0 +1,19 @@
+.mutable-string-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.mutable-string-container p {
+    color: white;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.mutable-string-container input[type="text"] {
+    background-color: #262335;
+    border: none;
+    border-radius: 3px;
+    color: white;
+}

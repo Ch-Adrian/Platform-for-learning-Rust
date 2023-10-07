@@ -21,7 +21,9 @@ const AddCellButton = (props) => {
             newCell.type = "immutableCode";
             newCell.value = "fn main() {\r\n\t/*TO_FILL*/\r\n}";
             newCell.reference = "fn main() {\r\n\t/*TO_FILL*/\r\n}";
+            newCell.mutableString = "/*TO_FILL*/";
         }
+        console.log(newCell);
         addCell(newCell, props.cellIdx, props.currentPage, props.sectionIdx);
     } 
 

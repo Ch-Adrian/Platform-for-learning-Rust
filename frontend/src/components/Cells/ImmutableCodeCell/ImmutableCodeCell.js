@@ -9,8 +9,7 @@ import UserType from '../../../models/UserType';
 import {BsTrash3} from 'react-icons/bs';
 import {TbGridDots, TbArrowsMove } from 'react-icons/tb';
 import MovableMenuContext from '../../miscellaneous/MenuContext/Movable/MovableMenuContext'
-
-const SEPARATOR_STRING = "/*TO_FILL*/";
+import MutableStringPicker from './MutableStringPicker/MutableStringPicker';
 
 const createValidationRegex = (immutablePhrases) => {
   immutablePhrases = immutablePhrases.map(phrase => escapeRegExp(phrase.trim()));
@@ -60,7 +59,8 @@ const ImmutableCodeCell = memo(function ImmutableCodeCell(props) {
   
     const updateEditorValueHandler = useCallback((value) => {
       let modifiedCell = props.cell;
-      const immutablePhrases = props.cell.reference.split(SEPARATOR_STRING);
+      if (modifiedCell.value === value) return;
+      const immutablePhrases = props.cell.reference.split(props.cell.mutableString);
       const regExp = createValidationRegex(immutablePhrases);
       if (regExp.exec(value) === null){
         const oldValue = props.cell.value;
@@ -71,7 +71,6 @@ const ImmutableCodeCell = memo(function ImmutableCodeCell(props) {
         return;
       }
 
-      if (modifiedCell.value === value) return;
       modifiedCell.value = value;
       updateCell(modifiedCell, props.cellIdx, props.currentPage, props.sectionIdx);
     }, [props.cell, props.cellIdx, props.currentPage, props.sectionIdx, updateCell, editorRef])
@@ -87,6 +86,13 @@ const ImmutableCodeCell = memo(function ImmutableCodeCell(props) {
       let modifiedCell = props.cell;
       if (modifiedCell.reference === value) return;
       modifiedCell.reference = value;
+      updateCell(modifiedCell, props.cellIdx, props.currentPage, props.sectionIdx);
+    }, [props.cell, props.cellIdx, props.currentPage, props.sectionIdx, updateCell])
+
+    const updateMutableStringHandler = useCallback((value) => {
+      let modifiedCell = props.cell;
+      if (modifiedCell.mutableString === value) return;
+      modifiedCell.mutableString = value;
       updateCell(modifiedCell, props.cellIdx, props.currentPage, props.sectionIdx);
     }, [props.cell, props.cellIdx, props.currentPage, props.sectionIdx, updateCell])
   
@@ -119,6 +125,7 @@ const ImmutableCodeCell = memo(function ImmutableCodeCell(props) {
           {props.userType === UserType.teacher && <button className='code-cell-delete-button' onClick={removeCellHandler}><BsTrash3/></button>}
           {props.userType === UserType.teacher && <div ><MovableMenuContext pageID={props.currentPage} sectionID={props.sectionIdx} cellID={props.cellIdx} ><TbArrowsMove /></MovableMenuContext></div> }
         </div>
+        <p style={{color: "white"}}>Możesz modyfikować tylko część kodu oznaczoną tekstem "{props.cell.mutableString}". Pozostałe zmiany w kodzie zostaną cofnięte</p>
         {props.userType === UserType.teacher ?
         // TEACHER VERSION
         <React.Fragment>
@@ -142,6 +149,7 @@ const ImmutableCodeCell = memo(function ImmutableCodeCell(props) {
         <div className={"code-cell-container"}> 
           <MonacoEditor ref={{containerRef: containerRef, editorRef: referenceEditorRef}} updateEditorValueHandler={updateReferenceEditorValueHandler} text={props.cell.reference}></MonacoEditor>
         </div>: null}
+        <MutableStringPicker initialMutableString={props.cell.mutableString} updateMutableStringHandler={updateMutableStringHandler}></MutableStringPicker>
         </React.Fragment> 
         : 
         // STUDENT VERSION

@@ -1,9 +1,8 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import "./LessonPage.css"
 import { useParams } from 'react-router-dom'
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
 import LessonSection from './LessonSection/LessonSection';
-import currentUser from '../../../config/userConfig';
 import UserType from '../../../models/UserType';
 import AddSectionButton from '../../miscellaneous/AddButtons/AddSectionButton/AddSectionButton';
 import { DragDropContext, Draggable } from 'react-beautiful-dnd';

@@ -1,0 +1,23 @@
+.background {
+    width: 97%;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.text-field {
+    margin: 10px;
+}
+
+.management {
+    display: flex;
+    flex-direction: row;
+    width: 200px;
+}
+
+.checkbox {
+    padding-right: 30px;
+}
+

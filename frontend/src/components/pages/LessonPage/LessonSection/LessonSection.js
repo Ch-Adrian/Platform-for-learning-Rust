@@ -31,7 +31,14 @@ const SectionHeader = ({userType, page, sectionIdx}) => {
 
     return (
         <div>
-            <div data-cy="section-name" ref={headerInput} contentEditable={userType === UserType.teacher} className='section-header' onBlur={e => changeTitleHandler(e.currentTarget.textContent) } onKeyDown={handleHeaderChange} suppressContentEditableWarning={true} spellCheck="false"> 
+            <div data-cy="section-name"
+             ref={headerInput}
+              contentEditable={userType === UserType.teacher} 
+              className='section-header' 
+              onBlur={e => changeTitleHandler(e.currentTarget.textContent) } 
+              onKeyDown={handleHeaderChange} 
+              suppressContentEditableWarning={true} 
+              spellCheck="false"> 
                 {getTitle(page, sectionIdx)}
             </div>
         </div>
@@ -87,7 +94,7 @@ const LessonSection = (props) => {
                                 } else if (cell.type === "quiz") {
                                     cellToAdd =
                                         (
-                                            <QuizCell key={idx + "code" + props.sectionIdx} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></QuizCell>
+                                            <QuizCell key={idx + "quiz" + props.sectionIdx} userType={props.userType} content={cell.options} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></QuizCell>
                                         )
                                 } 
                                 else if (cell.type === "Empty") {

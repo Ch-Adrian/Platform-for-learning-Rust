@@ -3,6 +3,7 @@ const RUST_COMPILER_REST_API_URL = "http://localhost:8080/lessons/"
 
 const LessonFileSaveService = {
     saveLesson: async (lessonBody, lessonName) => {
+        console.log("lessonBody");
         console.log(lessonBody)
         console.log(lessonName)
         const response = await axios

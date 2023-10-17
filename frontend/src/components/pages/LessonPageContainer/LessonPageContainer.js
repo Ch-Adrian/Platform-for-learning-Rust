@@ -41,7 +41,7 @@ const NameHeader = ({lessonName, setLessonName, lessonDefinition}) => {
       await LessonFileSaveService.renameLesson(oldName, newName);
       await LessonFileSaveService.saveLesson(lessonDefinition, newName);
     } catch(e) {console.log(e)}
-  } 
+  }
 
   const handleNameChange = (e) => {
     if (e.key === 'Enter'){

@@ -25,9 +25,7 @@ const OptionText = (props) => {
             
             let newOption = props.cell.options[findId];
             newOption.text = newOptionText;
-            // console.log(newOption);
             props.cell.options[findId] = newOption;
-            // console.log(props.cell);
             updateCell(props.cell, props.cellIdx, props.currentPage, props.sectionIdx);
         }
     }
@@ -81,16 +79,14 @@ const QuizOption = (props) => {
         }
       };
 
-    const handleClick = () => {
+    const handleClickOnDelete = () => {
         let id = props.option.id;
         let cell = props.cell;
         let optionsList = props.options;
-        // console.log("delete");
-        // console.log(props.option.id);
         console.log(optionsList);
 
         let findId = -1;
-        for(let i = 0; i<optionsList.length; i++){
+        for(let i = 0; i < optionsList.length; i++){
             if (optionsList[i].id === id ) {
                 findId = i;
                 break;
@@ -98,7 +94,6 @@ const QuizOption = (props) => {
         }
 
         if(findId !== -1){
-            optionsList.splice(findId, 1);
             cell.options.splice(findId, 1);
             updateCell(cell, props.cellIdx, props.currentPage, props.sectionIdx);
         }
@@ -114,7 +109,7 @@ const QuizOption = (props) => {
             {/* <input type="text" className='text-field' name='option'/> */}
             <div className='management'>
                 <div className='checkbox'><Checkbox checked={checked} onChange={handleChange} ></Checkbox>poprawna</div>
-                <Button onClick={handleClick} className='button-x'>X</Button>
+                <Button onClick={handleClickOnDelete} className='button-x'>X</Button>
                 </div>
         </div>
     );

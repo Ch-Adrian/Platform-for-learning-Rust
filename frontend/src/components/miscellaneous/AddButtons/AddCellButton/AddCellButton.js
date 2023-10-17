@@ -30,6 +30,7 @@ const AddCellButton = (props) => {
             newCell.type = "quiz";
             newCell.options = [];
         }
+        console.log(newCell);
 
         addCell(newCell, props.cellIdx, props.currentPage, props.sectionIdx);
     } 

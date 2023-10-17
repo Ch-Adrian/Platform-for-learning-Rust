@@ -8,7 +8,6 @@ import AddSectionButton from '../../miscellaneous/AddButtons/AddSectionButton/Ad
 import { DragDropContext, Draggable } from 'react-beautiful-dnd';
 import StrictModeDroppable from '../../miscellaneous/Droppable/StrictModeDroppable';
 
-
 const LessonPage = ({userType, setUserType}) => {
     const { page } = useParams();
     const {lessonDefinition, setLessonDefinition} = useContext(LessonContext);

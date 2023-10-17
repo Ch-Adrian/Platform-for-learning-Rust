@@ -16,7 +16,11 @@ const QuizCell = memo(function QuizCell(props) {
     const [options, setOptions] = useState(props.cell.options);
 
     const addOption = async () => {
-      let newOption = {'id': options.length, 'text': '-- TO EDIT', 'valid': false};
+      let newId = 0;
+      if(options.length > 0){
+          newId = options[options.length-1].id + 1;
+      }
+      let newOption = {'id': newId, 'text': '-- TO EDIT', 'valid': false};
       setOptions([...options, newOption]);
       console.log(options);
       updateOptionsHandler(newOption);

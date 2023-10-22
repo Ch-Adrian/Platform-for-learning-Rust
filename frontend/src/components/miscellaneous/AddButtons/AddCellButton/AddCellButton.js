@@ -28,6 +28,7 @@ const AddCellButton = (props) => {
         } else if (event.target.innerHTML === "Quiz"){
             newCell.profileType = "pl.edu.agh.backend.lesson.cells.ImmutableCodeCell"
             newCell.type = "quiz";
+            newCell.text = "";
             newCell.options = [];
         }
         console.log(newCell);
@@ -48,4 +49,4 @@ const AddCellButton = (props) => {
     )
 }
 
-export default AddCellButton
+export default AddCellButton;

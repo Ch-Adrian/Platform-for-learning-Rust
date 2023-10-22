@@ -94,7 +94,11 @@ const QuizOption = (props) => {
         }
 
         if(findId !== -1){
-            cell.options.splice(findId, 1);
+            let cell_options_size = cell.options.length;
+            optionsList.splice(findId, 1);
+            if (cell_options_size == cell.options.length){
+                cell.options.splice(findId, 1);
+            }
             updateCell(cell, props.cellIdx, props.currentPage, props.sectionIdx);
         }
 
@@ -103,16 +107,20 @@ const QuizOption = (props) => {
     return (
         <div className='background'>
             <div className='option-text'>
-            {console.log(props.option)}
-            <OptionText cell={props.cell} options={props.options} option={props.option} userType={props.userType} currentPage={props.currentPage} page={props.page} sectionIdx={props.sectionIdx}/>
+                {
+                    console.log(props.option)
+                }
+                <OptionText cell={props.cell} options={props.options} option={props.option} userType={props.userType} currentPage={props.currentPage} page={props.page} sectionIdx={props.sectionIdx}/>
             </div>
             {/* <input type="text" className='text-field' name='option'/> */}
             <div className='management'>
-                <div className='checkbox'><Checkbox checked={checked} onChange={handleChange} ></Checkbox>poprawna</div>
-                <Button onClick={handleClickOnDelete} className='button-x'>X</Button>
+                <div className='checkbox'>
+                    <Checkbox checked={checked} onChange={handleChange}></Checkbox>poprawna</div>
+                    { props.userType == UserType.teacher ? <React.Fragment><Button onClick={handleClickOnDelete} className='button-x'>X</Button></React.Fragment>:
+                    <React.Fragment></React.Fragment>}
                 </div>
         </div>
     );
 }
 
-export default QuizOption
+export default QuizOption;

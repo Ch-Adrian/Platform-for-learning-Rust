@@ -60,4 +60,4 @@ const TextCell = (props) => {
   )
 }
 
-export default TextCell
+export default TextCell;

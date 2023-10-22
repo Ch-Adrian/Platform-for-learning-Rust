@@ -94,7 +94,7 @@ const LessonSection = (props) => {
                                 } else if (cell.type === "quiz") {
                                     cellToAdd =
                                         (
-                                            <QuizCell key={idx + "quiz" + props.sectionIdx} userType={props.userType} content={cell.options} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></QuizCell>
+                                            <QuizCell key={idx + "quiz" + props.sectionIdx} text={cell.text} content={cell.options} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></QuizCell>
                                         )
                                 } 
                                 else if (cell.type === "Empty") {

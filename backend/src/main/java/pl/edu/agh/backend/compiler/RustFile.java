@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @SuperBuilder
 public class RustFile {
-    protected String fileName;
+    protected String codeFileName;
     protected String directory;
     protected String content;
     protected CommandsFactory commandsFactory;
@@ -23,11 +23,11 @@ public class RustFile {
         return List.of(this.content);
     }
 
-    public String getPath() { return Paths.get(this.directory) + File.separator + "src" + File.separator + this.fileName; }
+    public String getPath() { return Paths.get(this.directory) + File.separator + "src" + File.separator + this.codeFileName; }
 
-    public String[] getExecutionCommand() { return new String[]{Paths.get(this.directory) + File.separator + "target" + File.separator + "debug" + File.separator + this.fileName.split("\\.")[0] + commandsFactory.getExecutionSuffix()}; }
+    public String[] getExecutionCommand() { return new String[]{Paths.get(this.directory) + File.separator + "target" + File.separator + "debug" + File.separator + this.codeFileName.split("\\.")[0] + commandsFactory.getExecutionSuffix()}; }
 
-    public String getExecutablePath() { return Paths.get(this.directory) + File.separator + "target" + File.separator + "debug" + File.separator + this.fileName.split("\\.")[0] + commandsFactory.getExecutionSuffix(); }
+    public String getExecutablePath() { return Paths.get(this.directory) + File.separator + "target" + File.separator + "debug" + File.separator + this.codeFileName.split("\\.")[0] + commandsFactory.getExecutionSuffix(); }
 
 
 }

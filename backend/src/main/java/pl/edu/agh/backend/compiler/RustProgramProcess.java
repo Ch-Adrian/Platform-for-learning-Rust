@@ -23,7 +23,7 @@ public class RustProgramProcess {
         this.rustFile = rustFile;
     }
 
-    private void compileProgram() throws CompilerErrorException, IOException, InterruptedException {
+    private CompilationResponse compileProgram() throws CompilerErrorException, IOException, InterruptedException {
         processBuilder.command(rustFile.getCompilationCommand());
 
         Process process = processBuilder.start();
@@ -42,9 +42,10 @@ public class RustProgramProcess {
 
 
         if (process.exitValue() != 0) {
-            throw new CompilerErrorException(rustFile.getFileName(), compilerMessage.toString());
+            throw new CompilerErrorException(rustFile.getCodeFileName(), compilerMessage.toString());
         }
 
+        return compilerResponseConfig.createResponse(compilerMessage.toString(), "", rustFile);
     }
 
     private CompilationResponse runProgram() throws CompilerErrorException, IOException, InterruptedException {
@@ -84,6 +85,22 @@ public class RustProgramProcess {
         }
     }
 
+    public CompilationResponse buildConfig() {
+        try {
+            this.writeContentToFile(rustFile);
+            this.cleanCodeFile();
+            return this.compileProgram();
+        } catch (CompilerErrorException ex) {
+            System.err.println(ex.getMessage());
+            return compilerResponseConfig.createError(ex.getMessage());
+        } catch (IOException | InterruptedException ex) {
+            ex.printStackTrace();
+            return compilerResponseConfig.createError("Exception occurred during compilation in Java environment.");
+        } finally {
+            this.cleanExecutable();
+        }
+    }
+
     private void writeContentToFile(RustFile rustFile) throws IOException {
         FileWriter fileWriter = new FileWriter(rustFile.getPath());
         for (String batch : rustFile.getContentToWrite()) {
@@ -99,6 +116,19 @@ public class RustProgramProcess {
             e.printStackTrace();
         }
         this.createFileGitKeep(rustFile.getDirectory());
+    }
+
+    private void cleanCodeFile() throws IOException {
+        String path = rustFile.getDirectory() + File.separator + "src" + File.separator + rustFile.getCodeFileName();
+        String defaultCode = """
+                fn main() {
+                  //YOUR CODE HERE
+                }
+                """;
+        FileWriter fileWriter = new FileWriter(path);
+        fileWriter.write(defaultCode);
+        fileWriter.close();
+
     }
 
 

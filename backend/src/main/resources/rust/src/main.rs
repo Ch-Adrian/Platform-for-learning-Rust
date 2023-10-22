@@ -18,6 +18,5 @@ fn main() {
 }
 
 fn dupa() -> u8 {
-  let sd = 23;
     return 23;
 }

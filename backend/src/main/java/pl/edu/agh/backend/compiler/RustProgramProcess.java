@@ -31,22 +31,23 @@ public class RustProgramProcess {
         String line;
 
         while ((line = reader.readLine()) != null) {
+            line = line.trim();
             System.out.println(line);
-            this.compilerMessage.append(line);
-            this.compilerMessage.append("\n");
+            if (line.startsWith("Compiling") || line.startsWith("Finished") || line.startsWith("Executable unittests")) continue;
+            compilerMessage.append(line);
+            compilerMessage.append("\n");
         }
 
         process.waitFor();
-        File fileExecutable = new File(rustFile.getExecutionCommand());
 
 
-        if (!fileExecutable.exists()) {
-            throw new CompilerErrorException(rustFile.getFileName(), this.compilerMessage.toString());
+        if (process.exitValue() != 0) {
+            throw new CompilerErrorException(rustFile.getFileName(), compilerMessage.toString());
         }
 
     }
 
-    private CompilationResponse runProgram() throws IOException, InterruptedException {
+    private CompilationResponse runProgram() throws CompilerErrorException, IOException, InterruptedException {
         processBuilder.command(rustFile.getExecutionCommand());
 
         Process process = processBuilder.start();
@@ -60,8 +61,9 @@ public class RustProgramProcess {
         }
 
         process.waitFor();
-        FileUtils.cleanDirectory(new File(rustFile.getDirectory()));
+        new File(rustFile.getExecutablePath()).delete();
         createFileGitKeep(rustFile.getDirectory());
+
 
         return compilerResponseConfig.createResponse(compilerMessage.toString(), programOutput.toString(), rustFile);
     }
@@ -78,7 +80,7 @@ public class RustProgramProcess {
             ex.printStackTrace();
             return compilerResponseConfig.createError("Exception occurred during compilation in Java environment.");
         } finally {
-            this.cleanWorkingDir();
+            this.cleanExecutable();
         }
     }
 
@@ -90,9 +92,9 @@ public class RustProgramProcess {
         fileWriter.close();
     }
 
-    private void cleanWorkingDir() {
+    private void cleanExecutable() {
         try {
-            FileUtils.cleanDirectory(new File(rustFile.getDirectory()));
+            FileUtils.delete(new File(rustFile.getExecutablePath()));
         } catch (IOException | IllegalArgumentException e) {
             e.printStackTrace();
         }

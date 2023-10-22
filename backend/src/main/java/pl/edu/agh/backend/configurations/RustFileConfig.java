@@ -22,8 +22,8 @@ public class RustFileConfig {
 
     public RustTestsFile createRustTestsFile(String content, String testContent) {
         return RustTestsFile.builder()
-                .fileName("test.rs")
-                .directory("src/main/resources/tests")
+                .fileName("main.rs")
+                .directory("src/main/resources/rust")
                 .content(content)
                 .testContent(testContent)
                 .commandsFactory(commendsConfiguration.getOperatingSystem())

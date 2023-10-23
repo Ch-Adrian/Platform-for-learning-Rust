@@ -31,7 +31,7 @@ class BackendApplicationTests {
 				""";
 
 		String actual = compilerService.run(RustFile.builder()
-							.fileName("main.rs")
+							.codeFileName("main.rs")
 							.directory("src/main/resources/rust")
 							.content(code)
 							.commandsFactory(commandsFactory)
@@ -51,7 +51,7 @@ class BackendApplicationTests {
 				""";
 
 		Status actual = compilerService.run(RustFile.builder()
-							.fileName("main.rs")
+							.codeFileName("main.rs")
 							.directory("src/main/resources/rust")
 							.content(code)
 							.commandsFactory(commandsFactory)

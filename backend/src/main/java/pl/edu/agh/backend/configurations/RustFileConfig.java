@@ -1,5 +1,6 @@
 package pl.edu.agh.backend.configurations;
 
+import pl.edu.agh.backend.compiler.RustConfigFile;
 import pl.edu.agh.backend.compiler.RustFile;
 import pl.edu.agh.backend.compiler.RustTestsFile;
 
@@ -13,7 +14,7 @@ public class RustFileConfig {
 
     public RustFile createRustFile(String content) {
         return RustFile.builder()
-                .fileName("main.rs")
+                .codeFileName("main.rs")
                 .directory("src/main/resources/rust")
                 .content(content)
                 .commandsFactory(commendsConfiguration.getOperatingSystem())
@@ -22,10 +23,20 @@ public class RustFileConfig {
 
     public RustTestsFile createRustTestsFile(String content, String testContent) {
         return RustTestsFile.builder()
-                .fileName("test.rs")
-                .directory("src/main/resources/tests")
+                .codeFileName("main.rs")
+                .directory("src/main/resources/rust")
                 .content(content)
                 .testContent(testContent)
+                .commandsFactory(commendsConfiguration.getOperatingSystem())
+                .build();
+    }
+
+    public RustConfigFile createRustConfigFile(String configContent) {
+        return RustConfigFile.builder()
+                .codeFileName("main.rs")
+                .configFileName("Cargo.toml")
+                .directory("src/main/resources/rust")
+                .configContent(configContent)
                 .commandsFactory(commendsConfiguration.getOperatingSystem())
                 .build();
     }

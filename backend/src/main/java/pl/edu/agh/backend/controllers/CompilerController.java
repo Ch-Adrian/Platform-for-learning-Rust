@@ -28,4 +28,9 @@ public class CompilerController {
         return compilerService.run(rustFileConfig.createRustTestsFile(studentInput.getItem(),
                 studentInput.getTestContent())).getAll();
     }
+
+    @PutMapping("config")
+    public String save(@RequestBody StudentInput studentInput) {
+        return compilerService.configure(rustFileConfig.createRustConfigFile(studentInput.getItem())).getAll();
+    }
 }

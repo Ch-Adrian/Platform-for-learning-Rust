@@ -23,6 +23,7 @@ public class LessonController {
 
     @PostMapping("save")
     public void save(@RequestBody LessonFile lessonFile) {
+        System.out.println("ZAPIS");
         lessonService.saveExistingLesson(lessonFile);
     }
 

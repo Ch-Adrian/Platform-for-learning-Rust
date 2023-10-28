@@ -5,14 +5,13 @@ import lombok.Setter;
 import pl.edu.agh.backend.lesson.cells.records.Answer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Getter
 @Setter
-public class QuizCell extends AbstractCell {
+public class QuizCell extends Cell {
     private final List<Answer> answers = new ArrayList<>();
+
     public void addAnswer(Answer answer) {
         this.answers.add(answer);
     }

@@ -1,12 +1,11 @@
 package pl.edu.agh.backend.lesson.cells;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class CodeCell extends AbstractCell {
+public class CodeCell extends Cell {
     String tests;
     String reference;
 
@@ -14,10 +13,10 @@ public class CodeCell extends AbstractCell {
         CodeCell codeCell = new CodeCell();
         codeCell.setValue(
                 """
-                // To jest komórka z kodem. Możesz dodać kod, dodatkowy edytor do pisania testów, oraz \r
-                // edytor w którym zapiszesz swoje modelowe rozwiązanie, do którego tylko nauczyciel \r
-                // będzie miał dostęp
-                """);
+                        // To jest komórka z kodem. Możesz dodać kod, dodatkowy edytor do pisania testów, oraz \r
+                        // edytor w którym zapiszesz swoje modelowe rozwiązanie, do którego tylko nauczyciel \r
+                        // będzie miał dostęp
+                        """);
         return codeCell;
     }
 }

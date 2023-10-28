@@ -3,14 +3,16 @@ package pl.edu.agh.backend.lesson.cells;
 import lombok.Getter;
 import lombok.Setter;
 import pl.edu.agh.backend.lesson.cells.records.Tile;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
-public class TilesCell extends AbstractCell {
+public class TilesCell extends Cell {
     private String tileMark;
     private final List<Tile> tiles = new ArrayList<>();
+
     public void addTile(Tile tile) {
         this.tiles.add(tile);
     }

@@ -61,23 +61,23 @@ const LessonSection = (props) => {
                         return (<div className='cell-list-container' {...provided.droppableProps} ref={provided.innerRef}>
                             {props.section?.cells.map((cell, idx) => {
                                 let cellToAdd
-                                if (cell.type === "text") {
+                                if (cell.type === "TextCell") {
                                     cellToAdd =
                                         (
                                             <TextCell key={idx + "text" + props.sectionIdx} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></TextCell>
                                         )
-                                } else if (cell.type === "code") {
+                                } else if (cell.type === "CodeCell") {
                                     cellToAdd =
                                         (
                                             <CodeCell key={idx + "code" + props.sectionIdx} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></CodeCell>
                                         )
-                                } else if (cell.type === "immutableCode") {
+                                } else if (cell.type === "ImmutableCodeCell") {
                                     cellToAdd =
                                         (
                                             <ImmutableCodeCell key={idx + "code" + props.sectionIdx} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></ImmutableCodeCell>
                                         )
                                 } 
-                                else if (cell.type === "empty") {
+                                else if (cell.type === "Empty") {
                                     cellToAdd =
                                         (
                                             <EmptyCell key={idx + "empty" + props.sectionIdx} text={cell.value} cell={cell} cellIdx={idx} userType={props.userType}></EmptyCell>
@@ -105,19 +105,19 @@ const LessonSection = (props) => {
                 </StrictModeDroppable>
             }
             {props.userType === "STUDENT" && props.section?.cells.map((cell, idx) => {
-                if (cell.type === "text") {
+                if (cell.type === "TextCell") {
                     return (
                         <TextCell key={idx} text={cell.value} cell={cell} cellIdx={idx} userType={props.userType}></TextCell>
                     )
-                } else if (cell.type === "code") {
+                } else if (cell.type === "CodeCell") {
                     return (
                         <CodeCell key={idx} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></CodeCell>
                     )
-                }  else if (cell.type === "immutableCode") {
+                }  else if (cell.type === "ImmutableCodeCell") {
                     return (
                         <ImmutableCodeCell key={idx} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></ImmutableCodeCell>
                     )
-                } else if (cell.type === "empty") {
+                } else if (cell.type === "Empty") {
                     return (
                         <EmptyCell key={idx} text={cell.value} cell={cell} cellIdx={idx} userType={props.userType}></EmptyCell>
                     )

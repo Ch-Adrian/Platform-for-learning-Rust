@@ -64,23 +64,23 @@ const LessonSection = (props) => {
                                 if (cell.type === "TextCell") {
                                     cellToAdd =
                                         (
-                                            <TextCell key={idx + "text" + props.sectionIdx} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></TextCell>
+                                            <TextCell key={idx + "text" + props.sectionIdx} profileType={cell.profileType} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></TextCell>
                                         )
                                 } else if (cell.type === "CodeCell") {
                                     cellToAdd =
                                         (
-                                            <CodeCell key={idx + "code" + props.sectionIdx} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></CodeCell>
+                                            <CodeCell key={idx + "code" + props.sectionIdx} profileType={cell.profileType} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></CodeCell>
                                         )
                                 } else if (cell.type === "ImmutableCodeCell") {
                                     cellToAdd =
                                         (
-                                            <ImmutableCodeCell key={idx + "code" + props.sectionIdx} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></ImmutableCodeCell>
+                                            <ImmutableCodeCell key={idx + "code" + props.sectionIdx} profileType={cell.profileType} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></ImmutableCodeCell>
                                         )
                                 } 
                                 else if (cell.type === "Empty") {
                                     cellToAdd =
                                         (
-                                            <EmptyCell key={idx + "empty" + props.sectionIdx} text={cell.value} cell={cell} cellIdx={idx} userType={props.userType}></EmptyCell>
+                                            <EmptyCell key={idx + "empty" + props.sectionIdx} profileType={cell.profileType} text={cell.value} cell={cell} cellIdx={idx} userType={props.userType}></EmptyCell>
                                         )
                                 }
                                 if (cellToAdd) {
@@ -107,19 +107,19 @@ const LessonSection = (props) => {
             {props.userType === "STUDENT" && props.section?.cells.map((cell, idx) => {
                 if (cell.type === "TextCell") {
                     return (
-                        <TextCell key={idx} text={cell.value} cell={cell} cellIdx={idx} userType={props.userType}></TextCell>
+                        <TextCell profileType={cell.profileType} key={idx} text={cell.value} cell={cell} cellIdx={idx} userType={props.userType}></TextCell>
                     )
                 } else if (cell.type === "CodeCell") {
                     return (
-                        <CodeCell key={idx} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></CodeCell>
+                        <CodeCell key={idx} profileType={cell.profileType} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></CodeCell>
                     )
                 }  else if (cell.type === "ImmutableCodeCell") {
                     return (
-                        <ImmutableCodeCell key={idx} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></ImmutableCodeCell>
+                        <ImmutableCodeCell profileType={cell.profileType} key={idx} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></ImmutableCodeCell>
                     )
                 } else if (cell.type === "Empty") {
                     return (
-                        <EmptyCell key={idx} text={cell.value} cell={cell} cellIdx={idx} userType={props.userType}></EmptyCell>
+                        <EmptyCell key={idx} profileType={cell.profileType} text={cell.value} cell={cell} cellIdx={idx} userType={props.userType}></EmptyCell>
                     )
                 }
                 else

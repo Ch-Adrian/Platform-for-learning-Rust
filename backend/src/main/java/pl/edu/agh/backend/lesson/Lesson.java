@@ -10,6 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 public class Lesson {
+    private String cargoToml;
     private final List<Page> pages = new ArrayList<>();
     public void addPage(Page page) {
         this.pages.add(page);
@@ -36,6 +37,16 @@ public class Lesson {
         page.addSection(section);
 
         Lesson lesson = new Lesson();
+        lesson.setCargoToml("""
+                [package]
+                name = "main"
+                version = "0.1.0"
+                edition = "2021"
+                                
+                # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+                                
+                [dependencies]""");
+
         lesson.addPage(page);
 
         return lesson;

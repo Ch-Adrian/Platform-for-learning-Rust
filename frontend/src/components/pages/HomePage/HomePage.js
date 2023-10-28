@@ -5,10 +5,19 @@ import FilePicker from '../../miscellaneous/FilePicker/FilePicker';
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
 import LessonFileSaveService from '../../../services/LessonFileHandleService';
 import ListLessons from '../../miscellaneous/ListLessons/ListLessons';
+import defaultCargoToml from '../../../config/cargoToml';
 
 function HomePage() {
     const navigate = useNavigate();
     const {setLessonDefinition, setLessonName} = useContext(LessonContext);
+
+    const handleConfigEmpty = (lessonDefinition) => {
+        if (lessonDefinition.cargoToml === null ||
+            lessonDefinition.cargoToml === undefined ||
+            lessonDefinition.cargoToml.trim() === ""){
+                lessonDefinition.cargoToml = defaultCargoToml;
+            }
+    }
 
     const loadImportedLesson = async (lessonFile, lessonName) => {
     
@@ -17,6 +26,7 @@ function HomePage() {
 
         const name = newLessonName.data;
         setLessonName(name.split('.json')[0]);
+        handleConfigEmpty(lessonFile);
         setLessonDefinition(lessonFile);
         
         
@@ -31,6 +41,7 @@ function HomePage() {
     const loadLesson = async (lessonFile, lessonName) => {
         setLessonDefinition(lessonFile);
         setLessonName(lessonName.split('.json')[0]);
+        handleConfigEmpty(lessonFile);
          
         navigate(`/lesson/${lessonName}/0`, {state: {lessonFile: lessonFile}});
     }

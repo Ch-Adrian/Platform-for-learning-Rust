@@ -38,6 +38,8 @@
 
 .general-button-item {
   margin-left: 1rem; 
+  background-color: inherit !important;
+  color: var(--text-color) !important;
 }
 
 .hamburger {
@@ -177,11 +179,13 @@
 
 .name-header {
   margin: 0;
-  padding: 0;
-  font-size: 24px;
+  padding: auto;
+  font-size: 1.5rem;
   color: white;
   text-align: center;
-  display: inline-block;
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
 }
 
 li {
@@ -190,4 +194,17 @@ li {
 
 span {
   text-decoration: none
+}
+
+.cargo-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1rem;
+}
+
+.cargo-info > p {
+  margin-top: auto;
+  margin-bottom: auto;
+  color: rgba(255, 255, 255, 0.4);
 }

@@ -1,0 +1,15 @@
+textarea {
+    min-height: 70vh;
+    resize: none;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.button-container Button {
+    background-color: #292525 !important;
+    color: var(--text-color) !important;
+}

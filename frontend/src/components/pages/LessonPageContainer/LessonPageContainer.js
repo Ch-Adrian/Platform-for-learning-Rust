@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from 'react'
+import React, { useContext, useState, useRef, useEffect, useCallback } from 'react'
 import Button from 'react-bootstrap/esm/Button';
 import * as FaIcons from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -12,6 +12,8 @@ import { HashLink } from 'react-router-hash-link';
 import { useNavigate } from "react-router-dom";
 import LessonFileSaveService from '../../../services/LessonFileHandleService';
 import UserTypeSwitch from '../../miscellaneous/UserTypeSwitch/UserTypeSwitch';
+import ConfigModal from '../../Modals/ConfigModal/ConfigModal';
+import CodeExecutorService from '../../../services/CodeExecutorService';
 
 const DEFINED_USER_TYPE = currentUser;
 // const DEFAULT_LESSON = require('../../../assets/DefaultNewLesson.json');
@@ -45,12 +47,15 @@ const NameHeader = ({lessonName, setLessonName, lessonDefinition}) => {
 const LessonPageContainer = () => {
   const [userType, setUserType] = useState(currentUser);
   const [sidebar, setSidebar] = useState(false);
+  const [configModalOpen, setConfigModalOpen] = useState(false);
+  const [isCargoCompiled, setIsCargoCompiled] = useState(true);
+  const [isCargoError, setIsCargoError] = useState(false);
+  const [hasLoaded, setHasLoaded] = useState(false);
   const navigate = useNavigate();
 
   const showSidebar = () => setSidebar(!sidebar);
 
-  const {lessonDefinition, lessonName, setLessonName, addPage, removePage} = useContext(LessonContext);
-
+  const {lessonDefinition, lessonName, setLessonName, addPage, removePage, updateCargoToml} = useContext(LessonContext);
   const regExpNum = new RegExp("[0-9]*");
 
   const url = new URL(window.location.href);
@@ -85,16 +90,6 @@ const LessonPageContainer = () => {
     LessonFileSaveService.saveLesson(lessonDefinition, lessonName)
     .catch((e) => console.log(e));
   }
-  
-  // const handleNewLesson = async () => {
-  //   if (lessonName !== DEFAULT_LESSON_NAME) {
-  //     await handleSave();
-  //   } 
-  //   setLessonName(DEFAULT_LESSON_NAME);
-  //   const newLessonDefinition = window.structuredClone(DEFAULT_LESSON);
-  //   setLessonDefinition(newLessonDefinition);
-  //   navigate(`/lesson/newLesson.json/0`, {state: {lessonFile: newLessonDefinition}});    
-  // }
 
   const handleDownload = () => {
     const link = document.createElement('a');
@@ -109,6 +104,41 @@ const LessonPageContainer = () => {
   const handleOpen = () => {
     navigate('/');
   }
+
+  const handleConfigModalOpen = () => {
+    setConfigModalOpen(true);
+  }
+
+  const handleConfigModalClose = () => {
+    setConfigModalOpen(false);
+  }
+
+  const handleSaveConfig =  useCallback( async (configContent) => {
+    setConfigModalOpen(false);
+    setIsCargoCompiled(false);
+    setIsCargoError(false);
+    
+    await CodeExecutorService.buildCargo(configContent)
+    .then((res) => {
+      updateCargoToml(configContent);
+    })
+    .catch((err) => {
+      setIsCargoError(true);
+      console.log(err);
+    });
+    setIsCargoCompiled(true);
+  }, [updateCargoToml])
+
+  const onLoadBuild = useCallback(() => {
+    if (!hasLoaded && lessonDefinition) {
+      handleSaveConfig(lessonDefinition.cargoToml);
+      setHasLoaded(true);
+    }
+  }, [hasLoaded, lessonDefinition, handleSaveConfig])
+
+  useEffect(() => {
+    onLoadBuild()
+  }, [onLoadBuild, hasLoaded])
 
   url.pathname = path.join("/")
   localStorage.setItem(lessonDefinition, lessonDefinition);
@@ -125,11 +155,17 @@ const LessonPageContainer = () => {
             <Button className='general-button-item' variant='light' onClick={handleOpen}>Otwórz</Button>
             <Button className='general-button-item' variant='light' onClick={handleSave}>Zapisz</Button>
             <Button className='general-button-item' variant='light' onClick={handleDownload}>Pobierz</Button>
+            <div className='cargo-info'>
+              {isCargoError ? <p>Error building project! Check cargo file</p> : null}
+              {!isCargoCompiled ? <p>Budowanie projektu...</p> : null}
+              {isCargoCompiled && !isCargoError ? <p>Gotowe</p> : null}
+            </div>
           </div>
           <div style={{display: 'flex', marginRight: '1em'}}>
             {DEFINED_USER_TYPE === UserType.teacher && <UserTypeSwitch handleSwitchUserType={handleSwitchUserType}/>}
             {DEFINED_USER_TYPE === UserType.teacher && <Button className='general-button-item' variant='light' onClick={newPageEvent}>Nowa strona</Button>}
             {DEFINED_USER_TYPE === UserType.teacher && <Button className='general-button-item' variant='light' disabled={lessonDefinition && lessonDefinition.pages.length === 1} onClick={deletePageEvent}>Usuń stronę</Button>}
+            <Button className='general-button-item' variant='light' onClick={handleConfigModalOpen}>Konfiguracja</Button>
           </div>
         </div>
       </div>
@@ -173,6 +209,7 @@ const LessonPageContainer = () => {
       <div className={sidebar ? 'page active' : 'page'}>
         <LessonPage userType={userType} setUserType={setUserType}/>
       </div>
+      {lessonDefinition ? <ConfigModal open={configModalOpen} configFileContent={lessonDefinition.cargoToml} handleCloseModal={handleConfigModalClose} handleSaveConfig={handleSaveConfig}/> : null}
     </div>
   );
 }

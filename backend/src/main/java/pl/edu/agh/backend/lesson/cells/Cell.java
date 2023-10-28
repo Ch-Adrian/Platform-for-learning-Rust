@@ -1,14 +1,18 @@
 package pl.edu.agh.backend.lesson.cells;
 
+import com.google.gson.annotations.SerializedName;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class Cell {
-    private Type type;
+public abstract class AbstractCell {
+    @SerializedName("type")
+    private String type;
     private String value;
-    private String test;
-    private String reference;
-    private String mutableString;
+
+    public AbstractCell() {
+        type = this.getClass().getSimpleName();
+    }
 }

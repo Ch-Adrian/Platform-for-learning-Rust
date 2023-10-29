@@ -10,7 +10,14 @@ import java.util.List;
 @Setter
 public class Page {
     private final List<Section> sections = new ArrayList<>();
+
     public void addSection(Section section) {
         this.sections.add(section);
+    }
+
+    public static Page getDefaultPage() {
+        Page page = new Page();
+        page.addSection(Section.getDefaultSection());
+        return page;
     }
 }

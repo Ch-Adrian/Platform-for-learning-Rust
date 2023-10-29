@@ -48,4 +48,9 @@ public class LessonController {
     public LessonFile getDefaultLesson() {
         return lessonService.getDefaultLesson();
     }
+
+    @DeleteMapping("delete")
+    public void deleteLesson(@RequestBody List<String> lessonsToDelete) {
+        lessonService.deleteLesson(lessonsToDelete);
+    }
 }

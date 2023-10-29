@@ -6,6 +6,7 @@ import "./ListLessons.css";
 const ListLessons = (props) => {
   const [lessons, setLessons] = useState([]);
   const [sortBy, setSortBy] = useState({ column: '', order: 'asc' });
+  const [selectedLessons, setSelectedLessons] = useState([]);
 
   const openLesson = async (name) => {
     const lessonBody = await LessonFileSaveService.getLesson(name);
@@ -17,6 +18,20 @@ const ListLessons = (props) => {
       column,
       order: prevSortBy.column === column && prevSortBy.order === 'asc' ? 'desc' : 'asc',
     }));
+  };
+
+  const toggleLessonSelection = (lessonName) => {
+    if (selectedLessons.includes(lessonName)) {
+      setSelectedLessons(selectedLessons.filter((name) => name !== lessonName));
+    } else {
+      setSelectedLessons([...selectedLessons, lessonName]);
+    }
+  };
+
+  const handleDeleteSelectedLessons = async () => {
+    const selectedLessonNames = selectedLessons.map((lessonName) => lessonName);
+    await LessonFileSaveService.deleteSelectedLessons(selectedLessonNames);
+    console.log("Selected Lesson Names:", selectedLessonNames);
   };
 
   useEffect(() => {
@@ -48,27 +63,38 @@ const ListLessons = (props) => {
       {lessons.length === 0 ? (
         <h2 className='title'>Witaj, Rozpocznij swoją przygodę z językiem Rust</h2>
       ) : (
-      <>
-        <h2 className='title'>Wybierz lekcję którą chcesz rozpocząć</h2>
-        <ul className='lesson-table'>
-          <li className='lesson-header'>
-            <div className='lesson-name' onClick={() => handleHeaderClick('name')}>
-              Nazwa Lekcji
-              {sortBy.column === 'name' && (sortBy.order === 'asc' ? ' ▲' : ' ▼')}
-            </div>
-            <div className='lesson-date' onClick={() => handleHeaderClick('lastModified')}>
-              {sortBy.column === 'lastModified' && (sortBy.order === 'asc' ? '▲ ' : '▼ ')}
-              Zmodyfikowano
-            </div>
-          </li>
-          {sortedLessons.map((lesson, index) => (
-            <li key={index} className='lesson-item' onClick={() => openLesson(lesson.name)}>
-              <div className='lesson-name'>{lesson.name}</div>
-              <div className='lesson-date'>{DateService.formatLocalDateTime(lesson.lastModified)}</div>
+        <>
+          <h2 className='title'>Wybierz lekcję którą chcesz rozpocząć</h2>
+          <button onClick={handleDeleteSelectedLessons}>Usuń zaznaczone lekcje</button>
+          <ul className='lesson-table'>
+            <li className='lesson-header'>
+              <div className='lesson-name' onClick={() => handleHeaderClick('name')}>
+                Nazwa Lekcji
+                {sortBy.column === 'name' && (sortBy.order === 'asc' ? ' ▲' : ' ▼')}
+              </div>
+              <div className='lesson-date' onClick={() => handleHeaderClick('lastModified')}>
+                {sortBy.column === 'lastModified' && (sortBy.order === 'asc' ? '▲ ' : '▼ ')}
+                Zmodyfikowano
+              </div>
             </li>
-          ))}
-        </ul>
-      </>)}
+            {sortedLessons.map((lesson, index) => (
+              <li key={index} className='lesson-item'>
+                <input
+                  type="checkbox"
+                  onChange={() => toggleLessonSelection(lesson.name)}
+                  checked={selectedLessons.includes(lesson.name)}
+                />
+                <div className='lesson-name' onClick={() => openLesson(lesson.name)}>
+                  {lesson.name}
+                </div>
+                <div className='lesson-date'>
+                  {DateService.formatLocalDateTime(lesson.lastModified)}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
     </div>
   );
 };

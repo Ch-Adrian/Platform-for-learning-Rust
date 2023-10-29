@@ -68,6 +68,19 @@ public class LessonService {
         oldFile.renameTo(newFile);
     }
 
+    public void deleteLesson(List<String> lessonsToDelete) {
+        for (String name: lessonsToDelete) {
+            File file = new File(rootDir + File.separator + name);
+
+            if (file.delete()) {
+                System.out.println("File deleted successfully");
+            }
+            else {
+                System.out.println("Failed to delete the file");
+            }
+        }
+    }
+
     public Lesson getLesson(String name) throws LessonNotFoundException {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Cell.class, new PolymorphDeserializer<Cell>())

@@ -52,11 +52,12 @@ li {
 }
 
 .lesson-name {
-  margin-left: 1vw;
+    margin-left: 1vw;
+    flex: 1;
 }
 
 .lesson-date {
-  margin-right: 1vw;
+    margin-right: 1vw;
 }
 
 .lesson-name:hover {
@@ -81,3 +82,9 @@ li {
 .lesson-table {
     top: 3vh;
 }
+
+.checkbox {
+    /* margin-left: 1vw; */
+    margin-left: auto;
+}
+

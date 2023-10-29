@@ -55,7 +55,41 @@ const LessonFileSaveService = {
         } else {
             return response;
         }
-    }
+    },
+    deleteSelectedLessons: async (selectedLessonNames) => {
+        try {
+            console.log("Request Data:", { lessonsToDelete: selectedLessonNames });
+
+            const config = {
+                headers: {
+                  "Access-Control-Allow-Origin": "*",
+                  "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+                }
+              };
+          const response = await axios.delete(RUST_COMPILER_REST_API_URL + "delete", {
+            "lessonsToDelete": [
+              "NewLesson(1).json", "DUPA.json"
+            ]
+          });
+          
+          
+          console.log("Response Data:", response.data);
+      
+          if (response.status !== 200) {
+            throw new Error(response.data);
+          } else {
+            return response;
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          throw error;
+        }
+      }      
+      
+      
+      
+      
+      
 
 }
 

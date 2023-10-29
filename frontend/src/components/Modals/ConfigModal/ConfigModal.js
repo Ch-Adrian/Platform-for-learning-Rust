@@ -17,7 +17,6 @@ const ConfigModal = ({open, configFileContent, handleCloseModal, handleSaveConfi
                     <Button variant='light' onClick={handleCloseModal}>Anuluj</Button>
                 </div>
             </div>
-            
         </div>
     )
 }

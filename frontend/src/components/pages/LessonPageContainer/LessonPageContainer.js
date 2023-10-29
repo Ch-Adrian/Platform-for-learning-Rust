@@ -14,6 +14,7 @@ import LessonFileSaveService from '../../../services/LessonFileHandleService';
 import UserTypeSwitch from '../../miscellaneous/UserTypeSwitch/UserTypeSwitch';
 import ConfigModal from '../../Modals/ConfigModal/ConfigModal';
 import CodeExecutorService from '../../../services/CodeExecutorService';
+import LessonSaveModal from '../../Modals/LessonSaveModal/LessonSaveModal';
 
 const DEFINED_USER_TYPE = currentUser;
 // const DEFAULT_LESSON = require('../../../assets/DefaultNewLesson.json');
@@ -48,6 +49,7 @@ const LessonPageContainer = () => {
   const [userType, setUserType] = useState(currentUser);
   const [sidebar, setSidebar] = useState(false);
   const [configModalOpen, setConfigModalOpen] = useState(false);
+  const [saveLessonModalOpen, setSaveLessonModalOpen] = useState(false);
   const [isCargoCompiled, setIsCargoCompiled] = useState(true);
   const [isCargoError, setIsCargoError] = useState(false);
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -105,14 +107,6 @@ const LessonPageContainer = () => {
     navigate('/');
   }
 
-  const handleConfigModalOpen = () => {
-    setConfigModalOpen(true);
-  }
-
-  const handleConfigModalClose = () => {
-    setConfigModalOpen(false);
-  }
-
   const handleSaveConfig =  useCallback( async (configContent) => {
     setConfigModalOpen(false);
     setIsCargoCompiled(false);
@@ -140,6 +134,12 @@ const LessonPageContainer = () => {
     onLoadBuild()
   }, [onLoadBuild, hasLoaded])
 
+  const handleSaveAndExit = async () => {
+    await handleSave();
+    setSaveLessonModalOpen(false)
+    handleOpen();
+  }
+
   url.pathname = path.join("/")
   localStorage.setItem(lessonDefinition, lessonDefinition);
 
@@ -152,7 +152,7 @@ const LessonPageContainer = () => {
         <div className='general-buttons'>
           <div style={{display: 'flex'}}>
             <NameHeader lessonName={lessonName} setLessonName={setLessonName} lessonDefinition={lessonDefinition}></NameHeader>
-            <Button className='general-button-item' variant='light' onClick={handleOpen}>Otwórz</Button>
+            <Button className='general-button-item' variant='light' onClick={() => setSaveLessonModalOpen(true)}>Wróć</Button>
             <Button className='general-button-item' variant='light' onClick={handleSave}>Zapisz</Button>
             <Button className='general-button-item' variant='light' onClick={handleDownload}>Pobierz</Button>
             <div className='cargo-info'>
@@ -165,7 +165,7 @@ const LessonPageContainer = () => {
             {DEFINED_USER_TYPE === UserType.teacher && <UserTypeSwitch handleSwitchUserType={handleSwitchUserType}/>}
             {DEFINED_USER_TYPE === UserType.teacher && <Button className='general-button-item' variant='light' onClick={newPageEvent}>Nowa strona</Button>}
             {DEFINED_USER_TYPE === UserType.teacher && <Button className='general-button-item' variant='light' disabled={lessonDefinition && lessonDefinition.pages.length === 1} onClick={deletePageEvent}>Usuń stronę</Button>}
-            <Button className='general-button-item' variant='light' onClick={handleConfigModalOpen}>Konfiguracja</Button>
+            <Button className='general-button-item' variant='light' onClick={() => setConfigModalOpen(true)}>Konfiguracja</Button>
           </div>
         </div>
       </div>
@@ -209,7 +209,8 @@ const LessonPageContainer = () => {
       <div className={sidebar ? 'page active' : 'page'}>
         <LessonPage userType={userType} setUserType={setUserType}/>
       </div>
-      {lessonDefinition ? <ConfigModal open={configModalOpen} configFileContent={lessonDefinition.cargoToml} handleCloseModal={handleConfigModalClose} handleSaveConfig={handleSaveConfig}/> : null}
+      {lessonDefinition ? <ConfigModal open={configModalOpen} configFileContent={lessonDefinition.cargoToml} handleCloseModal={() => setConfigModalOpen(false)} handleSaveConfig={handleSaveConfig}/> : null}
+      {lessonDefinition ? <LessonSaveModal open={saveLessonModalOpen} handleCloseModal={() => setSaveLessonModalOpen(false)} handleSaveLesson={handleSaveAndExit} handleExitLesson={handleOpen}/> : null}
     </div>
   );
 }

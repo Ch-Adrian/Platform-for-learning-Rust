@@ -1,0 +1,22 @@
+.modal-container-savelesson {
+    max-width: 30vw;
+    background-color: var(--backgroud-color);
+    border-radius: 5px;
+    padding: 1rem;
+}
+
+.button-container-savelesson {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+.button-container-savelesson Button {
+    background-color: #292525 !important;
+    color: var(--text-color) !important;
+}
+
+.text-container p {
+    color: var(--text-color);
+}

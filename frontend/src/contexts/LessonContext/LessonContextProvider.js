@@ -59,6 +59,9 @@ const LessonContextProvider = (props) => {
             case 'removePage':
                 modifiedLesson.pages.splice(action.currentPage, 1);
                 break;
+            case 'updateCargo':
+                modifiedLesson.cargoToml = action.config;
+                break;
             default: 
                 break;
         }
@@ -138,8 +141,25 @@ const LessonContextProvider = (props) => {
         });
     }
 
+    const updateCargoToml = (configContent) => {
+        lessonDefinitionHandler({
+            type: 'updateCargo',
+            config: configContent
+        })
+    }
+
     return (
-        <LessonContext.Provider value={{...value, updateCell, addCell, addSection, removeCell, removeSection, changeTitle, getTitle, addPage, removePage}}>
+        <LessonContext.Provider value={{...value, 
+                                        updateCell, 
+                                        addCell, 
+                                        addSection, 
+                                        removeCell, 
+                                        removeSection, 
+                                        changeTitle, 
+                                        getTitle, 
+                                        addPage, 
+                                        removePage, 
+                                        updateCargoToml}}>
             {props.children}
         </LessonContext.Provider>
     )

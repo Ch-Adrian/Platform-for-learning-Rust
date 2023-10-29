@@ -2,6 +2,18 @@ import axios from 'axios'
 const RUST_COMPILER_REST_API_URL = "http://localhost:8080/lesson/"
 
 const CodeExecutorService = {
+    buildCargo: async (configContent) => {
+        const response = await axios
+        .put(RUST_COMPILER_REST_API_URL + "config", {
+        item: configContent
+        });
+        if (response.status !== 200) {
+            throw new Error(response.data);
+        } else {
+            return response;
+        }
+    },
+
     compileAndRun: async (codeValue) => {
         const response = await axios
         .post(RUST_COMPILER_REST_API_URL + "code", {

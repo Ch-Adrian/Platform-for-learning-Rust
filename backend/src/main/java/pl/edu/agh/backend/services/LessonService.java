@@ -1,12 +1,16 @@
 package pl.edu.agh.backend.services;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonReader;
 import org.springframework.stereotype.Service;
 import pl.edu.agh.backend.exceptions.LessonNotFoundException;
 import pl.edu.agh.backend.exceptions.LessonsNameConflictException;
 import pl.edu.agh.backend.lesson.Lesson;
 import pl.edu.agh.backend.lesson.LessonFile;
 import pl.edu.agh.backend.lesson.LessonInfo;
+import pl.edu.agh.backend.lesson.cells.Cell;
+import pl.edu.agh.backend.serialization.PolymorphDeserializer;
 
 import java.io.*;
 import java.time.Instant;
@@ -65,16 +69,18 @@ public class LessonService {
     }
 
     public Lesson getLesson(String name) throws LessonNotFoundException {
-        File lessonFile = new File(rootDir, name);
-        if (!lessonFile.exists()) {
-            throw new LessonNotFoundException(name);
-        }
-        try (BufferedReader br = new BufferedReader(new FileReader(lessonFile))) {
-            return new Gson().fromJson(br, Lesson.class);
-        } catch (IOException e) {
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Cell.class, new PolymorphDeserializer<Cell>())
+                .create();
+        JsonReader reader = null;
+        try {
+            reader = new JsonReader(new FileReader(rootDir + File.separator + name));
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
-            return null;
         }
+
+        assert reader != null;
+        return gson.fromJson(reader, Lesson.class);
     }
 
     public LessonFile getDefaultLesson() {

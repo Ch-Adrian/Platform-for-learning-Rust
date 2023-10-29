@@ -1,9 +1,7 @@
 package pl.edu.agh.backend.controllers;
 
 import org.springframework.web.bind.annotation.*;
-import pl.edu.agh.backend.lesson.Lesson;
-import pl.edu.agh.backend.lesson.LessonFile;
-import pl.edu.agh.backend.lesson.LessonInfo;
+import pl.edu.agh.backend.lesson.*;
 import pl.edu.agh.backend.services.LessonService;
 
 import java.util.List;
@@ -23,7 +21,6 @@ public class LessonController {
 
     @PostMapping("save")
     public void save(@RequestBody LessonFile lessonFile) {
-        System.out.println("ZAPIS");
         lessonService.saveExistingLesson(lessonFile);
     }
 

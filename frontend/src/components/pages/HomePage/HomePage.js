@@ -19,8 +19,14 @@ function HomePage() {
         setLessonName(name.split('.json')[0]);
         setLessonDefinition(lessonFile);
         
-        
         navigate(`/lesson/${name}/0`, {state: {lessonFile: lessonFile}});
+    }
+
+    const loadLesson = async (lessonFile, lessonName) => {
+        setLessonName(lessonName.split('.json')[0]);
+        setLessonDefinition(lessonFile);
+        
+        navigate(`/lesson/${lessonName}/0`, {state: {lessonFile: lessonFile}});
     }
 
     const loadNewLesson = async () => {
@@ -28,12 +34,7 @@ function HomePage() {
         loadImportedLesson(lessonFile.data.lesson, lessonFile.data.name);
     }
 
-    const loadLesson = async (lessonFile, lessonName) => {
-        setLessonDefinition(lessonFile);
-        setLessonName(lessonName.split('.json')[0]);
-         
-        navigate(`/lesson/${lessonName}/0`, {state: {lessonFile: lessonFile}});
-    }
+    
 
     return (
         <div className='home-page'>

@@ -1,4 +1,4 @@
-package pl.edu.agh.backend.lesson.cells;
+package pl.edu.agh.backend.serialization;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

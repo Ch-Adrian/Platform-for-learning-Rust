@@ -12,12 +12,15 @@ const AddCellButton = (props) => {
     const addCellHandler = (eventKey, event) => {
         let newCell = {};
         if (event.target.innerHTML === "Kod"){
+            newCell.profileType = "pl.edu.agh.backend.lesson.cells.CodeCell"
             newCell.type = "CodeCell";
             newCell.value = "";
         } else if (event.target.innerHTML === "Tekst"){
+            newCell.profileType = "pl.edu.agh.backend.lesson.cells.TextCell"
             newCell.type = "TextCell";
             newCell.value = "Nowa komórka z tekstem";
         } else if (event.target.innerHTML === "Niemutowalny kod"){
+            newCell.profileType = "pl.edu.agh.backend.lesson.cells.ImmutableCodeCell"
             newCell.type = "ImmutableCodeCell";
             newCell.value = "fn main() {\r\n\t/*TO_FILL*/\r\n}";
             newCell.reference = "fn main() {\r\n\t/*TO_FILL*/\r\n}";

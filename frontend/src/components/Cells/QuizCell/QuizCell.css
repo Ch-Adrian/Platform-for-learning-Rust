@@ -13,6 +13,14 @@ root{
       margin-bottom: 10px;
   }
 
+  .text-cell-container {
+    display: flex;
+    flex-direction: column;
+    padding: 1em 10px 1em 10px;
+    transition: .2s background-color box-shadow;
+    border-radius: 20px;
+}
+
   .editor-button {
       padding: 0.5em !important;
   }

@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useState, useEffect, useCallback, memo } from 'react';
+import React, { useRef, useContext, useState, useEffect, useCallback, memo, Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import "./QuizCell.css"
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
@@ -15,7 +15,11 @@ const QuizCell = memo(function QuizCell(props) {
     const containerRef = useRef(null);
     const {updateCell, removeCell} = useContext(LessonContext);
     const [isConnectionError, setIsConnectionError] = useState(false);
-    const [options, setOptions] = useState(props.cell.options);
+    const [options, setOptions] = useState(props.cell.options.map((option) => {
+      if(props.userType === UserType.student)
+        option.valid = false;
+      return option;
+    }));
     const [focus, setFocus] = useState(false);
     const [value, setValue] = useState(props.text);
     const prevTextRef = useRef(props.text);
@@ -30,15 +34,16 @@ const QuizCell = memo(function QuizCell(props) {
       setOptions([...options, newOption]);
       console.log(options);
       updateOptionsHandler(newOption);
-      // console.log("adding option ...");
+    }
+
+    const checkAnswer = async () => {
+      
     }
 
     const updateOptionsHandler = (value) => {
       let modifiedCell = props.cell;
       if (modifiedCell.options.includes(value)) return;
       modifiedCell.options.push(value);
-      // console.log('modified cell');
-      // console.log(modifiedCell);
       updateCell(modifiedCell, props.cellIdx, props.currentPage, props.sectionIdx);
     }
 
@@ -60,13 +65,15 @@ const QuizCell = memo(function QuizCell(props) {
     const removeCellHandler = () => {
       removeCell(props.cellIdx, props.currentPage, props.sectionIdx);
     }
-
-    // useEffect(() => {
-    //   if (props.text.length !== 0 && props.text === prevTextRef.current) return;
-    //   setValue(props.text);
-    // }, [props.text]);
-
+    
     return (
+      <div ref={containerRef} className={"code-cell-container " + (props.userType === UserType.teacher && "code-cell-container-teacher")} >
+        <div className='cell-misc-buttons-container'>
+          {props.userType === UserType.teacher && <div className='text-cell-grab' {...props.handleDrag} ><TbGridDots/></div>}
+          {props.userType === UserType.teacher && <button className='code-cell-delete-button' onClick={removeCellHandler}><BsTrash3/></button>}
+          {props.userType === UserType.teacher && <div ><MovableMenuContext pageID={props.currentPage} sectionID={props.sectionIdx} cellID={props.cellIdx} ><TbArrowsMove /></MovableMenuContext></div> }
+        </div>
+        
       <div className={props.userType === UserType.teacher ? 'text-cell-container' : null} 
         tabIndex={1}
         onClick={focusHandler}
@@ -83,52 +90,44 @@ const QuizCell = memo(function QuizCell(props) {
         </ReactMarkdown>
       }
     </div>
-    );
-    
-    // (
-    //   <div ref={containerRef} className={"code-cell-container " + (props.userType === UserType.teacher && "code-cell-container-teacher")} >
-    //     <div className='cell-misc-buttons-container'>
-    //       {props.userType === UserType.teacher && <div className='text-cell-grab' {...props.handleDrag} ><TbGridDots/></div>}
-    //       {props.userType === UserType.teacher && <button className='code-cell-delete-button' onClick={removeCellHandler}><BsTrash3/></button>}
-    //       {props.userType === UserType.teacher && <div ><MovableMenuContext pageID={props.currentPage} sectionID={props.sectionIdx} cellID={props.cellIdx} ><TbArrowsMove /></MovableMenuContext></div> }
-    //     </div>
 
+        {props.userType === UserType.teacher ?
+        // TEACHER VERSION
+          <React.Fragment>
 
+            {
+              options.map(option => (
+                <QuizOption key={option.id} option={option} cell={props.cell} userType={props.userType} options={options}
+                cellIdx={props.cellIdx} currentPage={props.currentPage} sectionIdx={props.sectionIdx}></QuizOption>
+              ))
+            }
 
-    //     {props.userType === UserType.teacher ?
-    //     // TEACHER VERSION
-    //     <React.Fragment>
+          <div className='editor-button-container'>
+          <Button onClick={addOption} className='editor-button' variant="success">{'Add option'}</Button>
+          </div>  
 
-    //       {
-    //         options.map(option => (
-    //           <QuizOption key={option.id} option={option} cell={props.cell} userType={props.userType} options={options}
-    //           cellIdx={props.cellIdx} currentPage={props.currentPage} sectionIdx={props.sectionIdx}></QuizOption>
-    //         ))
-    //       }
+          {isConnectionError ? <div style={{color: 'red'}}>There was some error connecting to the compiler. Please check if all app components are running</div> : null}
 
-    //     <div className='editor-button-container'>
-    //      <Button onClick={addOption} className='editor-button' variant="success">{'Add option'}</Button>
-    //     </div>  
+          </React.Fragment> 
+        : 
+        // STUDENT VERSION
+          <React.Fragment>
+            {
+              options.map(option => (
+                <QuizOption key={option.id} option={option} cell={props.cell} userType={props.userType} options={options}
+                cellIdx={props.cellIdx} currentPage={props.currentPage} sectionIdx={props.sectionIdx}></QuizOption>
+              ))
+            }
 
-    //     {isConnectionError ? <div style={{color: 'red'}}>There was some error connecting to the compiler. Please check if all app components are running</div> : null}
+          {isConnectionError ? <div style={{color: 'red'}}>There was some error connecting to the compiler. Please check if all app components are running</div> : null}
+          <div className='editor-button-container'>
+            <Button onClick={checkAnswer} className='editor-button' variant="success">{'Sprawdź'}</Button>
+          </div>
+          </React.Fragment>
+        }
 
-    //     </React.Fragment> 
-    //     : 
-    //     // STUDENT VERSION
-    //     <React.Fragment>
-    //       {
-    //         options.map(option => (
-    //           <QuizOption key={option.id} option={option} cell={props.cell} userType={props.userType} options={options}
-    //           cellIdx={props.cellIdx} currentPage={props.currentPage} sectionIdx={props.sectionIdx}></QuizOption>
-    //         ))
-    //       }
-
-    //     {isConnectionError ? <div style={{color: 'red'}}>There was some error connecting to the compiler. Please check if all app components are running</div> : null}
-    //     </React.Fragment>
-    //     }
-
-    //   </div>
-    // )
+      </div>
+    )
   });
 
 export default QuizCell;

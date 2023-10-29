@@ -112,7 +112,6 @@ const QuizOption = (props) => {
                 }
                 <OptionText cell={props.cell} options={props.options} option={props.option} userType={props.userType} currentPage={props.currentPage} page={props.page} sectionIdx={props.sectionIdx}/>
             </div>
-            {/* <input type="text" className='text-field' name='option'/> */}
             <div className='management'>
                 <div className='checkbox'>
                     <Checkbox checked={checked} onChange={handleChange}></Checkbox>poprawna</div>

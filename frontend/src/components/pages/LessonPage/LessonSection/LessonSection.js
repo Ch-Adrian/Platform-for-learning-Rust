@@ -146,13 +146,9 @@ const LessonSection = (props) => {
                     )
                 }  else if (cell.type === "quiz") {
                     return (
-<<<<<<< HEAD
                         <Cell key={"cell" + idx + "quiz" + props.sectionIdx} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}>
                             <QuizCell key={idx} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></QuizCell>
                         </Cell>
-=======
-                        <QuizCell key={idx} text={cell.text} content={cell.options} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></QuizCell>
->>>>>>> ed9e327 (feat: fix appearance in of text in quiz cell)
                     )
                 } else if (cell.type === "Empty") {
                     return (

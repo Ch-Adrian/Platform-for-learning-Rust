@@ -6,6 +6,35 @@
     margin: 10px;
     border-radius: 10px;
 }
+.background-red {
+    width: 97%;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+    border-radius: 10px;
+    border: 3px solid red;
+}
+
+.background-green {
+    width: 97%;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+    border-radius: 10px;
+    border: 3px solid green;
+}
+
+/* .background {
+    width: 97%;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+    border-radius: 10px;
+    border
+} */
 
 .text-field {
     margin: 10px;

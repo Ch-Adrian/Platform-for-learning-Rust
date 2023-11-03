@@ -11,18 +11,32 @@ import MDEditor from '@uiw/react-md-editor'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
+function useForceUpdate(){
+  const [value, setValue] = useState(0); // integer state
+  return () => setValue(value => value + 1); // update state to force render
+}
+
 const QuizCell = memo(function QuizCell(props) {
     const containerRef = useRef(null);
     const {updateCell, removeCell} = useContext(LessonContext);
     const [isConnectionError, setIsConnectionError] = useState(false);
-    const [options, setOptions] = useState(props.cell.options.map((option) => {
-      if(props.userType === UserType.student)
-        option.valid = false;
-      return option;
+    const [options, setOptions] = useState(props.cell.options);
+    const [chOpt, setChOpt] = useState(JSON.parse(JSON.stringify(props.cell.options)).map((val) => {
+      val.valid = false;
+      return val;
     }));
+    const [resultColor, setResultColor] = useState(Array(props.cell.options.length).fill(0));
     const [focus, setFocus] = useState(false);
     const [value, setValue] = useState(props.text);
     const prevTextRef = useRef(props.text);
+    const forceUpdate = useForceUpdate();
+
+    console.log("QuizCell: ");
+    console.log(props.cell);
+    console.log("Options: ");
+    console.log(options);
+    console.log("chOpt");
+    console.log(chOpt);
 
 
     const addOption = async () => {
@@ -34,10 +48,25 @@ const QuizCell = memo(function QuizCell(props) {
       setOptions([...options, newOption]);
       console.log(options);
       updateOptionsHandler(newOption);
+      resultColor.push(0);
+      setResultColor(resultColor);
     }
 
     const checkAnswer = async () => {
-      
+      for(let i = 0; i< options.length; i++){
+        if(options[i].valid !== chOpt[i].valid){
+          resultColor[i] = -1;
+          setResultColor(resultColor);
+          console.log("notEqual");
+          console.log(resultColor);
+        }
+        else{
+          resultColor[i] = 1;
+          setResultColor(resultColor);
+          console.log("equal");
+        }
+      }
+      forceUpdate();
     }
 
     const updateOptionsHandler = (value) => {
@@ -73,7 +102,7 @@ const QuizCell = memo(function QuizCell(props) {
           {props.userType === UserType.teacher && <button className='code-cell-delete-button' onClick={removeCellHandler}><BsTrash3/></button>}
           {props.userType === UserType.teacher && <div ><MovableMenuContext pageID={props.currentPage} sectionID={props.sectionIdx} cellID={props.cellIdx} ><TbArrowsMove /></MovableMenuContext></div> }
         </div>
-        
+
       <div className={props.userType === UserType.teacher ? 'text-cell-container' : null} 
         tabIndex={1}
         onClick={focusHandler}
@@ -96,9 +125,9 @@ const QuizCell = memo(function QuizCell(props) {
           <React.Fragment>
 
             {
-              options.map(option => (
-                <QuizOption key={option.id} option={option} cell={props.cell} userType={props.userType} options={options}
-                cellIdx={props.cellIdx} currentPage={props.currentPage} sectionIdx={props.sectionIdx}></QuizOption>
+              options.map((option, idx) => (
+                <QuizOption resultColor={resultColor[idx]} key={option.id} option={option} cell={props.cell} userType={props.userType} options={options}
+                cellIdx={props.cellIdx} currentPage={props.currentPage} sectionIdx={props.sectionIdx} chOpt={chOpt}></QuizOption>
               ))
             }
 
@@ -113,13 +142,15 @@ const QuizCell = memo(function QuizCell(props) {
         // STUDENT VERSION
           <React.Fragment>
             {
-              options.map(option => (
-                <QuizOption key={option.id} option={option} cell={props.cell} userType={props.userType} options={options}
-                cellIdx={props.cellIdx} currentPage={props.currentPage} sectionIdx={props.sectionIdx}></QuizOption>
+              chOpt.map((option, idx) => (
+                  <QuizOption resultColor={resultColor[idx]} key={option.id} option={option} cell={props.cell} userType={props.userType} options={options}
+                    cellIdx={props.cellIdx} currentPage={props.currentPage} sectionIdx={props.sectionIdx} chOpt={chOpt}></QuizOption>
               ))
             }
 
-          {isConnectionError ? <div style={{color: 'red'}}>There was some error connecting to the compiler. Please check if all app components are running</div> : null}
+          {isConnectionError ? 
+          <div style={{color: 'red'}}>There was some error connecting to the compiler. Please check if all app components are running</div> :
+           null}
           <div className='editor-button-container'>
             <Button onClick={checkAnswer} className='editor-button' variant="success">{'Sprawdź'}</Button>
           </div>

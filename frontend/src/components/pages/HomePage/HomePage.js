@@ -1,3 +1,5 @@
+'use client'
+
 import React, {useContext} from 'react'
 import { useNavigate } from 'react-router-dom'
 import "./HomePage.css"
@@ -53,7 +55,7 @@ function HomePage() {
             </div>
             <div className='file-picker-container'>
                 <FilePicker openLesson={loadImportedLesson}/>
-                <div className='default-lesson-button' onClick={loadNewLesson}>Stwórz nową lekcję</div>
+                <div data-cy="new-lesson-button" className='default-lesson-button' onClick={loadNewLesson}>Stwórz nową lekcję</div>
             </div>
         </div>
         

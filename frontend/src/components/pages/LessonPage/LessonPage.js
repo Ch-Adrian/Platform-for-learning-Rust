@@ -30,7 +30,7 @@ const LessonPage = ({userType, setUserType}) => {
     }
 
     return (
-        <div className='page-container'>
+        <div className='page-container' data-cy="lesson-page-container">
             <DragDropContext onDragEnd={handleOnDragEnd}>
                 {userType === UserType.teacher && <AddSectionButton key={"-1addSection"+page} sectionIdx={-1} page={page}/>}
                 {userType === UserType.teacher && lessonDefinition && 
@@ -45,7 +45,7 @@ const LessonPage = ({userType, setUserType}) => {
                                             {(provided) => {
                                                 return (
                                                 <div {...provided.draggableProps}  ref={provided.innerRef}>
-                                                    <LessonSection key={idx} section={section} sectionIdx={idx} page={page} userType={userType} handleDrag={provided.dragHandleProps}></LessonSection>
+                                                    <LessonSection  key={idx} section={section} sectionIdx={idx} page={page} userType={userType} handleDrag={provided.dragHandleProps}></LessonSection>
                                                     <AddSectionButton key={idx+"addSection"+page} sectionIdx={idx} page={page}/>
                                                 </div>)}}
                             </Draggable>
@@ -57,7 +57,7 @@ const LessonPage = ({userType, setUserType}) => {
             </DragDropContext>
             {userType === UserType.student && lessonDefinition && lessonDefinition.pages[page].sections.map((section, idx) => {
             return (<React.Fragment key={idx}>
-            <LessonSection key={idx} section={section} sectionIdx={idx} page={page} userType={userType}></LessonSection>
+            <LessonSection  key={idx} section={section} sectionIdx={idx} page={page} userType={userType}></LessonSection>
             </React.Fragment>)
         })}
         </div>

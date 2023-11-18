@@ -65,8 +65,8 @@ const ListLessons = (props) => {
       ) : (
         <>
           <h2 className='title'>Wybierz lekcję którą chcesz rozpocząć</h2>
-          <button onClick={handleDeleteSelectedLessons}>Usuń zaznaczone lekcje</button>
-          <ul className='lesson-table'>
+          <button data-cy="delete-lessons-button" onClick={handleDeleteSelectedLessons}>Usuń zaznaczone lekcje</button>
+          <ul data-cy="lesson-list" className='lesson-table'>
             <li className='lesson-header'>
               <div className='lesson-name' onClick={() => handleHeaderClick('name')}>
                 Nazwa Lekcji
@@ -80,11 +80,12 @@ const ListLessons = (props) => {
             {sortedLessons.map((lesson, index) => (
               <li key={index} className='lesson-item'>
                 <input
+                  data-cy="list-checkbox"
                   type="checkbox"
                   onChange={() => toggleLessonSelection(lesson.name)}
                   checked={selectedLessons.includes(lesson.name)}
                 />
-                <div className='lesson-name' onClick={() => openLesson(lesson.name)}>
+                <div data-cy="list-lesson-item" className='lesson-name' onClick={() => openLesson(lesson.name)}>
                   {lesson.name}
                 </div>
                 <div className='lesson-date'>

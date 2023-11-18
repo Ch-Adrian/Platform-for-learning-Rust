@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import  LessonContextProvider  from './contexts/LessonContext/LessonContextProvider';
 import LessonPageContainer from './components/pages/LessonPageContainer/LessonPageContainer';
 
+
 function App() {
   return (
     <BrowserRouter>

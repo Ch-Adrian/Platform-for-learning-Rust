@@ -45,7 +45,7 @@ const LessonSection = (props) => {
     }
 
     return (
-        <div className='section-container' id={"section"+props.sectionIdx} >
+        <div className='section-container' id={"section"+props.sectionIdx} data-cy="lesson-section" >
             <div className='section-header-container'>
               <SectionHeader userType={props.userType} page={props.page} sectionIdx={props.sectionIdx}/>
               <div className='section-misc-buttons-container'>

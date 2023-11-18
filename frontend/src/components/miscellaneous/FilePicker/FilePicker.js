@@ -24,7 +24,7 @@ const FilePicker = (props) => {
     return (
         <div className='file-picker-box' {...getRootProps({className: "file-picker-box"})}>
             <div  style={{borderColor: isDragActive ? "rgb(217, 255, 81)" : ""}}>
-                <input {...getInputProps()} />
+                <input data-cy="upload-lesson-button" {...getInputProps()} />
                 {
                 isDragActive ?
                     <div>Importuj lekcję z komputera</div> :

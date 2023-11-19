@@ -11,9 +11,9 @@ const ConfigModal = ({open, configFileContent, handleCloseModal, handleSaveConfi
     return (
         <div className='overlay'onClick={handleCloseModal}>
             <div className='modal-container' onClick={(e) => e.stopPropagation()}>
-                <textarea value={configContent} onChange={(e) => setConfigContent(e.target.value)}/>
+                <textarea data-cy="config-textarea" value={configContent} onChange={(e) => setConfigContent(e.target.value)}/>
                 <div className='button-container'>
-                    <Button variant='light' onClick={() => handleSaveConfig(configContent)}>Zapisz</Button>
+                    <Button data-cy="config-save-button" variant='light' onClick={() => handleSaveConfig(configContent)}>Zapisz</Button>
                     <Button variant='light' onClick={handleCloseModal}>Anuluj</Button>
                 </div>
             </div>

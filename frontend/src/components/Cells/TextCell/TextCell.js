@@ -48,7 +48,9 @@ const TextCell = (props) => {
   }, [props.text]);
 
   return (
-    <div className={props.userType === UserType.teacher ? 'text-cell-container' : null} 
+    <div
+      data-cy="text-cell"
+      className={props.userType === UserType.teacher ? 'text-cell-container' : null} 
       tabIndex={1}
       onClick={focusHandler}
       onBlur={blurHandler}>

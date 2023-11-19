@@ -196,14 +196,14 @@ span {
   text-decoration: none
 }
 
-.cargo-info {
+.status-info {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-left: 1rem;
 }
 
-.cargo-info > p {
+.status-info > p {
   margin-top: auto;
   margin-bottom: auto;
   color: rgba(255, 255, 255, 0.4);

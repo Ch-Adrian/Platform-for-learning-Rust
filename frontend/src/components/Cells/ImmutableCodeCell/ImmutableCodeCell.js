@@ -59,10 +59,13 @@ const ImmutableCodeCell = memo(function ImmutableCodeCell(props) {
   
     const updateEditorValueHandler = useCallback((value) => {
       let modifiedCell = props.cell;
+      let regExp = null;
       if (modifiedCell.value === value) return;
-      const immutablePhrases = props.cell.reference.split(props.cell.mutableString);
-      const regExp = createValidationRegex(immutablePhrases);
-      if (regExp.exec(value) === null){
+      if (props.cell.reference){
+        const immutablePhrases = props.cell.reference.split(props.cell.mutableString);
+        regExp = createValidationRegex(immutablePhrases);
+      }
+      if (props.cell.reference === null || regExp.exec(value) === null){
         const oldValue = props.cell.value;
         let oldCursorPosition = editorRef.current.getPosition();
         oldCursorPosition.column -= (value.length - oldValue.length);
@@ -119,7 +122,7 @@ const ImmutableCodeCell = memo(function ImmutableCodeCell(props) {
     };
   
     return (
-      <div ref={containerRef} className={"code-cell-container " + (props.userType === UserType.teacher && "code-cell-container-teacher")} >
+      <div data-cy="immutable-code-cell" ref={containerRef} className={"code-cell-container " + (props.userType === UserType.teacher && "code-cell-container-teacher")} >
         <div className='cell-misc-buttons-container'>
           {props.userType === UserType.teacher && <div className='text-cell-grab' {...props.handleDrag} ><TbGridDots/></div>}
           {props.userType === UserType.teacher && <button className='code-cell-delete-button' onClick={removeCellHandler}><BsTrash3/></button>}

@@ -171,9 +171,9 @@ const LessonPageContainer = () => {
             <div style={{display: 'flex'}}>
               <NameHeader lessonName={lessonName} setLessonName={setLessonName} lessonDefinition={lessonDefinition}></NameHeader>
               <Button data-cy="back-button" className='general-button-item' variant='light' onClick={() => setSaveLessonModalOpen(true)}>Wróć</Button>
-              <Button className='general-button-item' variant='light' onClick={handleSave}>Zapisz</Button>
+              <Button data-cy="save-button" className='general-button-item' variant='light' onClick={handleSave}>Zapisz</Button>
               <Button className='general-button-item' variant='light' onClick={handleDownload}>Pobierz</Button>
-              <div className='cargo-info'>
+              <div className='status-info'>
                 {isCargoError ? <p>Error building project! Check cargo file</p> : null}
                 {!isCargoCompiled ? <p>Budowanie projektu...</p> : null}
                 {isCargoCompiled && !isCargoError ? <p>Gotowe</p> : null}
@@ -183,7 +183,7 @@ const LessonPageContainer = () => {
               {DEFINED_USER_TYPE === UserType.teacher && <UserTypeSwitch handleSwitchUserType={handleSwitchUserType}/>}
               {DEFINED_USER_TYPE === UserType.teacher && <Button className='general-button-item' variant='light' onClick={newPageEvent}>Nowa strona</Button>}
               {DEFINED_USER_TYPE === UserType.teacher && <Button className='general-button-item' variant='light' disabled={lessonDefinition && lessonDefinition.pages && lessonDefinition.pages.length === 1} onClick={deletePageEvent}>Usuń stronę</Button>}
-              <Button className='general-button-item' variant='light' onClick={() => setConfigModalOpen(true)}>Konfiguracja</Button>
+              <Button data-cy="config-button" className='general-button-item' variant='light' onClick={() => setConfigModalOpen(true)}>Konfiguracja</Button>
             </div>
           </div>
         </div>

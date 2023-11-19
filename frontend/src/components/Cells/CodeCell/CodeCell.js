@@ -6,9 +6,6 @@ import OutputCell from '../OutputCell/OutputCell';
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
 import MonacoEditor from '../../Editor/MonacoEditor';
 import UserType from '../../../models/UserType';
-import {BsTrash3} from 'react-icons/bs';
-import {TbGridDots, TbArrowsMove } from 'react-icons/tb';
-import MovableMenuContext from '../../miscellaneous/MenuContext/Movable/MovableMenuContext'
 
 
 const CodeCell = memo(function CodeCell(props) {
@@ -16,7 +13,7 @@ const CodeCell = memo(function CodeCell(props) {
   const testEditorRef = useRef(null);
   const referenceEditorRef = useRef(null);
   const containerRef = useRef(null);
-  const {updateCell, removeCell} = useContext(LessonContext);
+  const {updateCell} = useContext(LessonContext);
   const [isExecuting, setIsExecuting] = useState(false);
   const [isConnectionError, setIsConnectionError] = useState(false);
 
@@ -77,10 +74,6 @@ const CodeCell = memo(function CodeCell(props) {
     updateCell(modifiedCell, props.cellIdx, props.currentPage, props.sectionIdx);
   }
 
-  const removeCellHandler = () => {
-    removeCell(props.cellIdx, props.currentPage, props.sectionIdx);
-  }
-
   const clearOutput = async () => {
     let modifiedCell = props.cell;
     modifiedCell.output = "";
@@ -88,12 +81,7 @@ const CodeCell = memo(function CodeCell(props) {
   };
 
   return (
-    <div data-cy="code-cell" ref={containerRef} className={"code-cell-container " + (props.userType === UserType.teacher && "code-cell-container-teacher")} >
-      <div className='cell-misc-buttons-container'>
-        {props.userType === UserType.teacher && <div className='text-cell-grab' {...props.handleDrag} ><TbGridDots/></div>}
-        {props.userType === UserType.teacher && <button className='code-cell-delete-button' onClick={removeCellHandler}><BsTrash3/></button>}
-        {props.userType === UserType.teacher && <div ><MovableMenuContext pageID={props.currentPage} sectionID={props.sectionIdx} cellID={props.cellIdx} ><TbArrowsMove /></MovableMenuContext></div> }
-      </div>
+    <div data-cy="code-cell" ref={containerRef} className={"code-cell-container "} >
       {props.userType === UserType.teacher ?
       // TEACHER VERSION
       <React.Fragment>

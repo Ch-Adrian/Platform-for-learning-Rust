@@ -6,14 +6,11 @@ import "github-markdown-css"
 import MDEditor from '@uiw/react-md-editor'
 import UserType from '../../../models/UserType'
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider'
-import {BsTrash3} from 'react-icons/bs';
-import {TbGridDots, TbArrowsMove } from 'react-icons/tb';
-import MovableMenuContext from '../../miscellaneous/MenuContext/Movable/MovableMenuContext'
 
 const TextCell = (props) => {
   const [value, setValue] = useState(props.text);
   const [focus, setFocus] = useState(false);
-  const {updateCell, removeCell} = useContext(LessonContext);
+  const {updateCell} = useContext(LessonContext);
   const prevTextRef = useRef(props.text);
 
   const blurHandler = (e) => {
@@ -22,10 +19,6 @@ const TextCell = (props) => {
 
   const focusHandler = (e) => {
     if (e.detail === 2) setFocus(true);
-  }
-
-  const removeCellHandler = () => {
-    removeCell(props.cellIdx, props.currentPage, props.sectionIdx);
   }
 
   useEffect(() => {
@@ -50,15 +43,9 @@ const TextCell = (props) => {
   return (
     <div
       data-cy="text-cell"
-      className={props.userType === UserType.teacher ? 'text-cell-container' : null} 
       tabIndex={1}
       onClick={focusHandler}
       onBlur={blurHandler}>
-        <div className='cell-misc-buttons-container'>
-          {props.userType === UserType.teacher && <div className='text-cell-grab' {...props.handleDrag} ><TbGridDots/></div>}
-          {props.userType === UserType.teacher && <button className='text-cell-delete-button' onClick={removeCellHandler}><BsTrash3/></button>}
-          {props.userType === UserType.teacher && <div ><MovableMenuContext pageID={props.currentPage} sectionID={props.sectionIdx} cellID={props.cellIdx} ><TbArrowsMove /></MovableMenuContext></div> }
-        </div>
       {props.userType === UserType.teacher && focus ? 
       <MDEditor
       value={value}

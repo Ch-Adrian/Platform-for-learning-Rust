@@ -33,7 +33,7 @@ td {
     background-color: var(--background-cell-color) !important;
 }
 
-.text-cell-container {
+/* .text-cell-container {
     display: flex;
     flex-direction: column;
     padding: 1em 10px 1em 10px;
@@ -43,16 +43,16 @@ td {
 
 .text-cell-container:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
+} */
 
-.cell-misc-buttons-container {
+/* .cell-misc-buttons-container {
     margin-left: auto;
     display: flex;
     flex-direction: row;
     padding: 0 1em 1em 1em;
-}
+} */
 
-.cell-misc-buttons-container > * {
+/* .cell-misc-buttons-container > * {
     color: var(--buttons-color); 
     opacity: 0.4;
     background-color: var(--background-buttons-color); 
@@ -66,11 +66,11 @@ td {
 
 .cell-misc-buttons-container > *:active {
     color: var(--buttons-color-active); 
-}
+} */
 
-.text-cell-grab {
+/* .text-cell-grab {
     cursor: grab !important;
-}
+} */
 
 @media (max-width: 767px) {
     .markdown-body {

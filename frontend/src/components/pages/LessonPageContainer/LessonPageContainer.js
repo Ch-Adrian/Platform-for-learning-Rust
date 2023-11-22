@@ -164,7 +164,7 @@ const LessonPageContainer = () => {
     
       <div className='sidebar'>
         <div className='top-menu-bar'>
-          <Link to='#' className='menu-bars'>
+          <Link to='#' className='menu-bars' data-cy="hamburger">
             <FaIcons.FaBars className='hamburger' onClick={showSidebar} />
           </Link>
           <div className='general-buttons'>
@@ -181,15 +181,15 @@ const LessonPageContainer = () => {
             </div>
             <div style={{display: 'flex', marginRight: '1em'}}>
               {DEFINED_USER_TYPE === UserType.teacher && <UserTypeSwitch handleSwitchUserType={handleSwitchUserType}/>}
-              {DEFINED_USER_TYPE === UserType.teacher && <Button className='general-button-item' variant='light' onClick={newPageEvent}>Nowa strona</Button>}
-              {DEFINED_USER_TYPE === UserType.teacher && <Button className='general-button-item' variant='light' disabled={lessonDefinition && lessonDefinition.pages && lessonDefinition.pages.length === 1} onClick={deletePageEvent}>Usuń stronę</Button>}
+              {DEFINED_USER_TYPE === UserType.teacher && <Button data-cy="add-page-button" className='general-button-item' variant='light' onClick={newPageEvent}>Nowa strona</Button>}
+              {DEFINED_USER_TYPE === UserType.teacher && <Button data-cy="remove-page-button" className='general-button-item' variant='light' disabled={lessonDefinition && lessonDefinition.pages && lessonDefinition.pages.length === 1} onClick={deletePageEvent}>Usuń stronę</Button>}
               <Button data-cy="config-button" className='general-button-item' variant='light' onClick={() => setConfigModalOpen(true)}>Konfiguracja</Button>
             </div>
           </div>
         </div>
         <IconContext.Provider value={{ color: '#fff' }}>
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-          <ul className='nav-menu-items' onClick={showSidebar}>
+          <ul data-cy="lesson-navigation" className='nav-menu-items' onClick={showSidebar}>
             <li className='navbar-toggle'>
               Pages:
             </li>

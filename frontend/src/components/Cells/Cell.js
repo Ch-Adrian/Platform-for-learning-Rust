@@ -11,12 +11,12 @@ const Cell = (props) => {
     const removeCellHandler = () => {
         removeCell(props.cellIdx, props.currentPage, props.sectionIdx);
     }
-    console.log(props.userType);
+
     return (
-    <div className={(props.userType === UserType.teacher ? 'cell-container' : null) + ' base-cell'}>
+    <div data-cy="cell" className={(props.userType === UserType.teacher ? 'cell-container' : null) + ' base-cell'}>
         <div className='cell-misc-buttons-container'>
-          {props.userType === UserType.teacher && <div className='cell-grab' {...props.handleDrag} ><TbGridDots/></div>}
-          {props.userType === UserType.teacher && <button className='cell-delete-button' onClick={removeCellHandler}><BsTrash3/></button>}
+          {props.userType === UserType.teacher && <div data-cy="cell-drag" className='cell-grab' {...props.handleDrag} ><TbGridDots/></div>}
+          {props.userType === UserType.teacher && <button data-cy="cell-delete-button" className='cell-delete-button' onClick={removeCellHandler}><BsTrash3/></button>}
           {props.userType === UserType.teacher && <div ><MovableMenuContext pageID={props.currentPage} sectionID={props.sectionIdx} cellID={props.cellIdx} ><TbArrowsMove /></MovableMenuContext></div> }
         </div>
         {props.children}

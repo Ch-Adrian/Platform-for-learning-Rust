@@ -57,8 +57,10 @@
     ]
   },
   "devDependencies": {
+    "@4tw/cypress-drag-drop": "^2.2.5",
     "cypress": "^13.5.1",
     "cypress-file-upload": "^5.0.8",
+    "cypress-wait-until": "^2.0.1",
     "eslint": "^8.48.0",
     "react-router-dom": "^6.10.0"
   }

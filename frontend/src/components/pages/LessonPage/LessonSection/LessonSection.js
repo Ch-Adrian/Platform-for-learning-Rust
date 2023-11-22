@@ -30,7 +30,7 @@ const SectionHeader = ({userType, page, sectionIdx}) => {
 
     return (
         <div>
-            <div ref={headerInput} contentEditable={userType === UserType.teacher} className='section-header' onBlur={e => changeTitleHandler(e.currentTarget.textContent) } onKeyDown={handleHeaderChange} suppressContentEditableWarning={true} spellCheck="false"> 
+            <div data-cy="section-name" ref={headerInput} contentEditable={userType === UserType.teacher} className='section-header' onBlur={e => changeTitleHandler(e.currentTarget.textContent) } onKeyDown={handleHeaderChange} suppressContentEditableWarning={true} spellCheck="false"> 
                 {getTitle(page, sectionIdx)}
             </div>
         </div>
@@ -50,8 +50,8 @@ const LessonSection = (props) => {
             <div className='section-header-container'>
               <SectionHeader userType={props.userType} page={props.page} sectionIdx={props.sectionIdx}/>
               <div className='section-misc-buttons-container'>
-                  {props.userType === UserType.teacher && <div className='section-grab' {...props.handleDrag} ><TbGridDots/></div>}
-                  {props.userType === UserType.teacher && <button className='section-delete-button' onClick={removeSectionHandler}><BsTrash3/></button>}
+                  {props.userType === UserType.teacher && <div data-cy="section-drag" className='section-grab' {...props.handleDrag} ><TbGridDots/></div>}
+                  {props.userType === UserType.teacher && <button data-cy="section-delete-button" className='section-delete-button' onClick={removeSectionHandler}><BsTrash3/></button>}
                   {props.userType === UserType.teacher && <div ><MovableMenuContext pageID={props.page} sectionID={props.sectionIdx} ><TbArrowsMove /></MovableMenuContext></div> }
               </div>
             </div>
@@ -96,7 +96,7 @@ const LessonSection = (props) => {
                                     return (
                                         <Draggable key={props.sectionIdx+"dragcell"+idx} draggableId={props.sectionIdx+"dragcell"+idx} index={idx}>
                                             {(provided) => {
-                                                return (<div {...provided.draggableProps}  ref={provided.innerRef}>
+                                                return (<div data-cy="draggable-cell" {...provided.draggableProps}  ref={provided.innerRef}>
                                                     {React.cloneElement(cellToAdd, {handleDrag: provided.dragHandleProps})}
                                                    <div {...provided.dragHandleProps}></div>
                                                     <AddCellButton key={idx + "addcell" + props.sectionIdx} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} />

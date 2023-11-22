@@ -31,8 +31,8 @@ const AddCellButton = (props) => {
     } 
 
     return (
-        <div className="dropdown-button-wrapper">
-            <DropdownButton className={'dropdown-button'} id="dropdown-basic-button" 
+        <div data-cy="add-cell-button" className="dropdown-button-wrapper">
+            <DropdownButton  className={'dropdown-button'} id="dropdown-basic-button" 
             title="Dodaj komórkę" onSelect={addCellHandler} size="sm" >
                 {cellTypes.map((cellType, idx) => {
                     return <Dropdown.Item key={idx+"cellOption"}>{cellType}</Dropdown.Item>

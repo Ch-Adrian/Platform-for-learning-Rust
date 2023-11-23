@@ -73,53 +73,14 @@ Cypress.Commands.add('dragAndDrop', (subject, target, subjectIdx, targetIdx) => 
 });
 
 
-// Cypress.Commands.add("dragAndDrop", (subject, target, dragIndex, dropIndex) => {
-//     cy.get(subject).should("be.visible", { timeout: 2000 });
-//     Cypress.log({
-//         name: "DRAGNDROP",
-//         message: `Dragging element ${subject} to ${target}`,
-//         consoleProps: () => {
-//             return {
-//                 subject: subject,
-//                 target: target
-//             };
-//         }
-//     });
-//     const BUTTON_INDEX = 0;
-//     const SLOPPY_CLICK_THRESHOLD = 10;
-//     cy.get(target).eq(dropIndex).then($target => {
-//         let coordsDrop = $target[0].getBoundingClientRect();
-//         cy.get(subject).eq(dragIndex).then(subject => {
-//             const coordsDrag = subject[0].getBoundingClientRect();
-//             cy.wrap(subject)
-//             .trigger("mousedown", {
-//                 button: BUTTON_INDEX,
-//                 force: true
-//             })
-//             .trigger("mousemove", {
-//                 button: BUTTON_INDEX,
-//                 clientX: coordsDrag.x,
-//                 clientY: coordsDrag.y,
-//                 force: true
-//             })
-//             .wait(1000);
-//            cy.get('body')
-//             .trigger("mousemove", {
-//                 button: BUTTON_INDEX,
-//                 clientX: coordsDrop.x + SLOPPY_CLICK_THRESHOLD,
-//                 clientY: coordsDrop.y,
-//                 force: true
-//             });
-//            cy.get('body')
-//             .trigger("mousemove", {
-//                 button: BUTTON_INDEX,
-//                 clientX: coordsDrop.x,
-//                 clientY: coordsDrop.y + SLOPPY_CLICK_THRESHOLD,
-//                 force: true
-//             })
-//             .wait(1000);  
-//             cy.get(target)
-//             .trigger("mouseup");
-//         });
-//     });
-// });
+Cypress.Commands.add('initializeLesson', (lessonFile) => {
+    cy.visit('/')
+    cy.contains(lessonFile).click();
+
+    // Wait untill page is fully loaded
+    cy.contains('Gotowe');
+    cy.contains('Loading...').should('not.exist');
+    cy.get('[data-cy="cell"]').should('have.length', 3);
+    cy.get('.monaco-scrollable-element', { timeout: 30000 });
+    
+});

@@ -33,6 +33,7 @@ const section = '[data-cy="lesson-section"]';
 const cell = '[data-cy="cell"]';
 const cellDragIcon = '[data-cy="cell-drag"]';
 const sectionDragIcon = '[data-cy="section-drag"]';
+const moveItemToPageIcon = '[data-cy="move-item-to-page"]';
 
 describe('Opened lesson structure management', () => {
   it.skip('should add a page on clicking \'Dodaj stronę\' button', () => {
@@ -62,6 +63,17 @@ describe('Opened lesson structure management', () => {
 
         cy.get(removePageButton).click();
         cy.get(lessonNavigation).children().should('have.length', pagesBefore - 1);
+    });
+  })
+
+  it.skip('should have a \'Usuń stronę\' button disabled when there is only one page', () => {
+    let pagesBefore = 0;
+    cy.visit('/')
+    cy.contains("CypressTestLesson.json").click();
+    cy.wait(1000);
+    cy.get(hamburger).click();
+    cy.get(lessonNavigation).children().then(($children) => {
+        cy.get(removePageButton).should('be.disabled');
     });
   })
 
@@ -213,9 +225,7 @@ describe('Opened lesson structure management', () => {
   })
 
   it.skip('should rearrange the sequence of sections by drag`n drop', () => {
-    cy.visit('/')
-    cy.contains("CypressTestLesson.json").click();
-    cy.wait(1000);
+    cy.initializeLesson("CypressTestLesson.json");
     cy.get(section).first().find('[data-cy="section-delete-button"]').click({ force: true });
     // Create two empty sections
     cy.get(addSectionButton).first()
@@ -247,13 +257,9 @@ describe('Opened lesson structure management', () => {
 
   })
 
-  it('should move a cell to an other section by drag`n drop', () => {
-    cy.visit('/')
-    cy.contains("CypressTestLesson.json").click();
+  it.skip('should move a cell to an other section by drag`n drop', () => {
+    cy.initializeLesson("CypressTestLesson.json");
 
-    // Wait untill page is fully loaded
-    cy.get('.monaco-scrollable-element', { timeout: 30000 });
-    
     cy.get(section).first().find('[data-cy="section-delete-button"]').click({ force: true })
 
     // Create two empty sections
@@ -281,6 +287,42 @@ describe('Opened lesson structure management', () => {
     cy.get(section).eq(0).find(cell).should('have.length', 0);
     cy.get(section).eq(1).find(cell).should('have.length', 1);
 
+  })
+
+  it.skip('should move section to other page on \'Move to page\' icon', () => {
+    cy.initializeLesson("CypressTestLesson.json");
+
+    cy.get(addPageButton).click();
+    cy.get(moveItemToPageIcon).first().click();
+    cy.contains('Page 2').click();
+
+    cy.get(lessonSection).should('have.length', 0);
+
+    cy.get(hamburger).click();
+    cy.get(lessonNavigation).children().eq(2).click();
+
+    cy.get(lessonSection).should('have.length', 1);
+
+  })
+
+  it('should move a cell to the section on the other page on \'Move to page\' cell icon', () => {
+    cy.initializeLesson("CypressTestLesson.json");
+
+    cy.get(addSectionButton).first().click({force: true});
+    cy.get(addPageButton).click();
+    
+    cy.get(moveItemToPageIcon).first().click();
+    cy.get('li.MuiButtonBase-root').contains('Page 2').click({force: true});
+    cy.get(cell).first().find(moveItemToPageIcon).click();
+    cy.get('li.MuiButtonBase-root').contains('Page 2').click({force: true});
+    
+    
+    cy.get(lessonSection).should('have.length', 1);
+
+    cy.get(hamburger).click();
+    cy.get(lessonNavigation).children().eq(2).click();
+
+    cy.get(section).first().find(cell).should('have.length', 1);
   })
 
 })

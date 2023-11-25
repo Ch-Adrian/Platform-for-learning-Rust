@@ -1,14 +1,14 @@
 package pl.edu.agh.backend.compiler;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import pl.edu.agh.backend.configurations.CompilerConfiguration;
 import pl.edu.agh.backend.configurations.CompilerResponseConfig;
 import pl.edu.agh.backend.exceptions.CompilerErrorException;
-
 import java.io.*;
-import java.util.Arrays;
-import java.util.Objects;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 public class RustProgramProcess {
@@ -17,6 +17,7 @@ public class RustProgramProcess {
     private final RustFile rustFile;
     private final ProcessBuilder processBuilder;
     private final StringBuilder compilerMessage;
+    private static final Logger logger = LogManager.getLogger();
 
     public RustProgramProcess(RustFile rustFile) {
         this.compilerResponseConfig = new AnnotationConfigApplicationContext(CompilerConfiguration.class).getBean(CompilerResponseConfig.class);
@@ -34,10 +35,10 @@ public class RustProgramProcess {
 
         while ((line = reader.readLine()) != null) {
             line = line.trim();
-            System.out.println(line);
             if (line.startsWith("Compiling") || line.startsWith("Finished") || line.startsWith("Executable unittests")) continue;
             compilerMessage.append(line);
             compilerMessage.append("\n");
+            logger.info(line);
         }
 
         process.waitFor();
@@ -61,12 +62,22 @@ public class RustProgramProcess {
         while ((line = reader.readLine()) != null) {
             programOutput.append(line);
             programOutput.append("\n");
+            logger.info(line);
+        }
+
+        reader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+
+        while ((line = reader.readLine()) != null) {
+            line = line.trim();
+            if (line.startsWith("note")) continue;
+            compilerMessage.append(line);
+            compilerMessage.append("\n");
+            logger.info(line);
         }
 
         process.waitFor();
-        new File(rustFile.getExecutablePath()).delete();
+        cleanExecutable();
         createFileGitKeep(rustFile.getDirectory());
-
 
         return compilerResponseConfig.createResponse(compilerMessage.toString(), programOutput.toString(), rustFile);
     }
@@ -77,10 +88,10 @@ public class RustProgramProcess {
             this.compileProgram();
             return this.runProgram();
         } catch (CompilerErrorException ex) {
-            System.err.println(ex.getMessage());
+            logger.error(ex.getMessage());
             return compilerResponseConfig.createError(ex.getMessage());
         } catch (IOException | InterruptedException ex) {
-            ex.printStackTrace();
+            logger.error("\n" + ExceptionUtils.getStackTrace(ex));
             return compilerResponseConfig.createError("Exception occurred during compilation in Java environment.");
         } finally {
             this.cleanExecutable();
@@ -93,10 +104,10 @@ public class RustProgramProcess {
             this.cleanCodeFile();
             return this.compileProgram();
         } catch (CompilerErrorException ex) {
-            System.err.println(ex.getMessage());
+            logger.error(ex.getMessage());
             return compilerResponseConfig.createError(ex.getMessage());
         } catch (IOException | InterruptedException ex) {
-            ex.printStackTrace();
+            logger.error(ex.getMessage());
             return compilerResponseConfig.createError("Exception occurred during compilation in Java environment.");
         } finally {
             this.cleanExecutable();
@@ -116,8 +127,8 @@ public class RustProgramProcess {
         if (!file.exists()) return;
         try {
             FileUtils.delete(file);
-        } catch (IOException | IllegalArgumentException e) {
-            e.printStackTrace();
+        } catch (IOException | IllegalArgumentException ex) {
+            logger.error(ex.getMessage());
         }
         this.createFileGitKeep(rustFile.getDirectory());
     }
@@ -140,10 +151,10 @@ public class RustProgramProcess {
         try {
             File gitKeep = new File(directory + File.separator + ".gitkeep");
             if (gitKeep.createNewFile()) {
-                System.out.println("File .gitkeep created.");
+                logger.info("File .gitkeep created.");
             }
         } catch (IOException exception) {
-            System.err.println("Error: Cannot create .gitkeep file.");
+            logger.info("Error: Cannot create .gitkeep file.");
         }
     }
 

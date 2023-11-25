@@ -71,17 +71,13 @@ const LessonPageContainer = () => {
   const regExpNum = new RegExp("[0-9]*");
 
   const url = new URL(window.location.href);
-  console.log(url);
   let path = url.pathname.split("/");
-  console.log(path);
   let currPg = 0; 
 
   while(true){
     let word = path.pop();
-    console.log(word);
     if(regExpNum.test(word)){
       currPg = parseInt(word);
-      console.log(currPg);
     }
     if(path.at(path.length-1).indexOf(".json") !== -1){
       break;
@@ -90,8 +86,6 @@ const LessonPageContainer = () => {
 
   let jsonPos = window.location.href.search(".json");
   let urlPath = window.location.href.slice(0, jsonPos).concat(".json");
-  console.log("urlPath");
-  console.log(urlPath);
 
   // const [currentMenuPage, setCurrentMenuPage] = useState(currPg);
   const [currentList, setCurrentList] = useState(JSON.parse(JSON.stringify(lessonDefinition.pages)).map((page, id) => {
@@ -99,9 +93,6 @@ const LessonPageContainer = () => {
   }));
 
   const changePage = useCallback((pIdx) => {
-    console.log("changePage");
-    // console.log(lessonDefinition);
-    // setCurrentMenuPage(pIdx);
     let newList = JSON.parse(JSON.stringify(lessonDefinition.pages)).map((page, id) => {
       return {type: 'PAGE', pIdx: id, sIdx: 0, title: ""};
     });
@@ -112,7 +103,6 @@ const LessonPageContainer = () => {
       pageIdxInList = pageIdxInList + 1;
     });
     setCurrentList(newList);
-    console.log(currentList);
   }, [lessonDefinition]);
 
   const showSidebar = () => {

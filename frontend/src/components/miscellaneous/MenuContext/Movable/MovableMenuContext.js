@@ -42,6 +42,7 @@ const MovableMenuContext = ({pageID, sectionID, cellID=null, children}) => {
   return (
       <div>
           <div
+              data-cy="move-item-to-page"
               onClick={handleClick}
           >
           {children}

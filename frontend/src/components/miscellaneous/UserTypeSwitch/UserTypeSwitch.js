@@ -10,7 +10,7 @@ const UserTypeSwitch = ({handleSwitchUserType}) => {
     };
 
     return (
-        <div className="user-type-switch-container">
+        <div data-cy="mode-switch" className="user-type-switch-container">
             <label className="user-type-switch-label">
                 <span>Tryb studenta</span>
                 <Switch

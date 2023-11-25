@@ -78,7 +78,7 @@ Cypress.Commands.add('initializeLesson', (lessonFile) => {
     cy.contains(lessonFile).click();
 
     // Wait untill page is fully loaded
-    cy.contains('Gotowe');
+    cy.contains('Gotowe', {timeout: 20000});
     cy.contains('Loading...').should('not.exist');
     cy.get('[data-cy="cell"]').should('have.length', 3);
     cy.get('.monaco-scrollable-element', { timeout: 30000 });

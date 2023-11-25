@@ -87,26 +87,26 @@ const CodeCell = memo(function CodeCell(props) {
       <React.Fragment>
       <MonacoEditor ref={{containerRef: containerRef, editorRef: editorRef}} updateEditorValueHandler={updateEditorValueHandler} text={props.text}></MonacoEditor>
       <div className='editor-button-container'>
-       <Button onClick={compile} className='editor-button' variant="success" disabled={isExecuting}>{!isExecuting ? 'Run code' : 'Running...'}</Button>{' '}
-       {props.cell.test === undefined ? <Button onClick={() => {addEditor("test")}} className='editor-button' variant="success">{'Add tests'}</Button> : null}
-       {props.cell.reference === undefined ? <Button onClick={() => {addEditor("reference")}} className='editor-button' variant="success">{'Add reference code'}</Button> : null}
-       <Button onClick={clearOutput} className='clear-output-editor-button' variant="danger" style={{ display: !props.cell.output ? "none" : "inline"}}>Clear output</Button>{' '}
+       <Button data-cy="code-run-button" onClick={compile} className='editor-button' variant="success" disabled={isExecuting}>{!isExecuting ? 'Run code' : 'Running...'}</Button>{' '}
+       {props.cell.test === undefined ? <Button data-cy="add-tests-button" onClick={() => {addEditor("test")}} className='editor-button' variant="success">{'Add tests'}</Button> : null}
+       {props.cell.reference === undefined ? <Button data-cy="add-reference-button" onClick={() => {addEditor("reference")}} className='editor-button' variant="success">{'Add reference code'}</Button> : null}
+       <Button data-cy="clear-output-button" onClick={clearOutput} className='clear-output-editor-button' variant="danger" style={{ display: !props.cell.output ? "none" : "inline"}}>Clear output</Button>{' '}
       </div>  
       {isConnectionError ? <div style={{color: 'red'}}>There was some error connecting to the compiler. Please check if all app components are running</div> : null}
-      {props.cell.outputTest ? <div> Test Output <OutputCell output={props.cell.outputTest}></OutputCell></div> : null}
-      {props.cell.output ? <div><OutputCell output={props.cell.output}></OutputCell></div> : null}
+      {props.cell.outputTest ? <div data-cy="test-output"> Test Output <OutputCell output={props.cell.outputTest}></OutputCell></div> : null}
+      {props.cell.output ? <div data-cy="code-output"><OutputCell output={props.cell.output}></OutputCell></div> : null}
       {props.cell.test !== undefined ? 
       <div className={"code-cell-container"}> 
         <MonacoEditor ref={{containerRef: containerRef, editorRef: testEditorRef}} updateEditorValueHandler={updateTestEditorValueHandler} text={props.cell.test}></MonacoEditor>
         <div className='editor-button-container'>
-          <Button onClick={() => {removeEditor("test")}} className='editor-button' variant="danger">{'Remove tests'}</Button>
+          <Button data-cy="remove-tests-button" onClick={() => {removeEditor("test")}} className='editor-button' variant="danger">{'Remove tests'}</Button>
         </div>  
       </div>: null}
       {props.cell.reference !== undefined ? 
       <div className={"code-cell-container"}> 
         <MonacoEditor ref={{containerRef: containerRef, editorRef: referenceEditorRef}} updateEditorValueHandler={updateReferenceEditorValueHandler} text={props.cell.reference}></MonacoEditor>
         <div className='editor-button-container'>
-          <Button onClick={() => {removeEditor("reference")}} className='editor-button' variant="danger">{'Remove reference code'}</Button>
+          <Button data-cy="remove-reference-button" onClick={() => {removeEditor("reference")}} className='editor-button' variant="danger">{'Remove reference code'}</Button>
         </div>  
       </div>: null}
       </React.Fragment> 

@@ -23,6 +23,21 @@ const codeCell = '[data-cy="code-cell"]';
 const immutableCodeCell = '[data-cy="immutable-code-cell"]';
 const configButton = '[data-cy="config-button"]';
 const configTextarea = '[data-cy="config-textarea"]';
+const addPageButton = '[data-cy="add-page-button"]';
+const removePageButton = '[data-cy="remove-page-button"]';
+const hamburger = '[data-cy="hamburger"]';
+const lessonNavigation = '[data-cy="lesson-navigation"]';
+const addSectionButton = '[data-cy="add-section-button"]';
+const addCellButton = '[data-cy="add-cell-button"]';
+const section = '[data-cy="lesson-section"]';
+const cell = '[data-cy="cell"]';
+const cellDragIcon = '[data-cy="cell-drag"]';
+const sectionDragIcon = '[data-cy="section-drag"]';
+const moveItemToPageIcon = '[data-cy="move-item-to-page"]';
+const runCodeButton = '[data-cy="code-run-button"]';
+const addTestsButton = '[data-cy="add-tests-button"]';
+const codeOutput = '[data-cy="code-output"]';
+const testOutput = '[data-cy="test-output"]';
 
 describe('Opened lesson management utilities', () => {
   it.skip('should successfully rename a lesson from list - old name shouldn\'t be visible in the lessons list', () => {
@@ -94,8 +109,7 @@ describe('Opened lesson management utilities', () => {
   })
 
   it.skip('should fail building a project when a Cargo.toml with error is provided', () => {
-    cy.visit('/')
-    cy.contains("CypressTestLesson.json").click();
+    cy.initializeLesson("CypressTestLesson.json");
     cy.get(configButton).click();
     cy.get(configTextarea).clear({force: true}).type("WRONG VALUE - SHOULD FAIL", {force: true});
     cy.get('[data-cy="config-save-button"]').click();
@@ -104,13 +118,28 @@ describe('Opened lesson management utilities', () => {
   })
 
   it.skip('should succesfully build a project with a valid Cargo.toml file', () => {
-    cy.visit('/')
-    cy.contains("CypressTestLesson.json").click();
+    cy.initializeLesson("CypressTestLesson.json");
     cy.get(configButton).click();
     cy.get(configTextarea).clear({force: true}).type(defaultCargoToml, {force: true});
     cy.get('[data-cy="config-save-button"]').click();
 
     cy.contains("Gotowe").should('exist');
+  })
+
+  it.skip('should hide lesson content management utilities accessible only to teacher on \'switch mode\' switch', () => {
+    cy.initializeLesson("CypressTestLesson.json");
+
+    cy.get('[data-cy="mode-switch"]').find('.react-switch').click();
+
+
+    cy.get(addSectionButton).should('have.length', 0);
+    cy.get(addCellButton).should('have.length', 0);
+    cy.get(cellDragIcon).should('have.length', 0);
+    cy.get(sectionDragIcon).should('have.length', 0);
+    cy.get(moveItemToPageIcon).should('have.length', 0);
+
+    cy.get('[data-cy="mode-switch"]').find('.react-switch').click();
+    cy.get(addSectionButton).should('have.length', 2);
   })
 
 })

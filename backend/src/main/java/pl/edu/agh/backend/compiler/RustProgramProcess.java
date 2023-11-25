@@ -7,6 +7,8 @@ import pl.edu.agh.backend.configurations.CompilerResponseConfig;
 import pl.edu.agh.backend.exceptions.CompilerErrorException;
 
 import java.io.*;
+import java.util.Arrays;
+import java.util.Objects;
 
 
 public class RustProgramProcess {
@@ -110,8 +112,10 @@ public class RustProgramProcess {
     }
 
     private void cleanExecutable() {
+        File file = new File(rustFile.getExecutablePath());
+        if (!file.exists()) return;
         try {
-            FileUtils.delete(new File(rustFile.getExecutablePath()));
+            FileUtils.delete(file);
         } catch (IOException | IllegalArgumentException e) {
             e.printStackTrace();
         }

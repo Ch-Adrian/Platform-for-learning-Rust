@@ -1,22 +1,7 @@
-use rand::Rng;
-
-fn main() {
-  let mut sum = 0;  
-  for i in 1..10 {  
-    sum += i;  
-  }  
-  println!("sum: {}", sum);  
-  println!("dupa: {}", dupa());  
-
-  let mut rng = rand::thread_rng();
-
-    let n1: u8 = rng.gen();
-    let n2: u16 = rng.gen();
-    println!("Random u8: {}", n1);
-    println!("Radndom u16: {}", n2);
-    println!("{}",dupa());
+fn sum(x: i32, y: i32) -> i32 { 
+    x + y + 1
 }
 
-fn dupa() -> u8 {
-    return 23;
+fn main() {
+    println!("{}", sum(5, 3));
 }

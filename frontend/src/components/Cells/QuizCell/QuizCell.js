@@ -1,8 +1,11 @@
-import React, { useRef, useContext, useState, memo} from 'react';
+import React, { useRef, useContext, useState, useEffect, useCallback, memo, Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import "./QuizCell.css"
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
 import UserType from '../../../models/UserType';
+import {BsTrash3} from 'react-icons/bs';
+import {TbGridDots, TbArrowsMove } from 'react-icons/tb';
+import MovableMenuContext from '../../miscellaneous/MenuContext/Movable/MovableMenuContext'
 import QuizOption from '../../miscellaneous/QuizOptions/QuizOption';
 import MDEditor from '@uiw/react-md-editor'
 import ReactMarkdown from 'react-markdown'
@@ -10,21 +13,22 @@ import remarkGfm from 'remark-gfm'
 
 function useForceUpdate(){
   const [value, setValue] = useState(0); // integer state
-  if(value === 0){}
   return () => setValue(value => value + 1); // update state to force render
 }
 
 const QuizCell = memo(function QuizCell(props) {
     const containerRef = useRef(null);
-    const {updateCell} = useContext(LessonContext);
+    const {updateCell, removeCell} = useContext(LessonContext);
+    const [isConnectionError, setIsConnectionError] = useState(false);
     const [options, setOptions] = useState(props.cell.options);
-    const chOpt = useRef(JSON.parse(JSON.stringify(props.cell.options)).map((val) => {
+    const [chOpt, setChOpt] = useState(JSON.parse(JSON.stringify(props.cell.options)).map((val) => {
       val.valid = false;
       return val;
     }));
     const [resultColor, setResultColor] = useState(Array(props.cell.options.length).fill(0));
     const [focus, setFocus] = useState(false);
     const [value, setValue] = useState(props.text);
+    const prevTextRef = useRef(props.text);
     const forceUpdate = useForceUpdate();
 
 
@@ -42,7 +46,7 @@ const QuizCell = memo(function QuizCell(props) {
 
     const checkAnswer = async () => {
       for(let i = 0; i< options.length; i++){
-        if(options[i].valid !== chOpt.current[i].valid){
+        if(options[i].valid !== chOpt[i].valid){
           resultColor[i] = -1;
           setResultColor(resultColor);
         }
@@ -75,6 +79,10 @@ const QuizCell = memo(function QuizCell(props) {
       modifiedCell.value = value;
       updateCell(modifiedCell, props.cellIdx, props.currentPage, props.sectionIdx);
     }
+
+    const removeCellHandler = () => {
+      removeCell(props.cellIdx, props.currentPage, props.sectionIdx);
+    }
     
     return (
       <div data-cy="quiz-cell" ref={containerRef} className={"code-cell-container"} >
@@ -103,7 +111,7 @@ const QuizCell = memo(function QuizCell(props) {
             {
               options.map((option, idx) => (
                 <QuizOption resultColor={resultColor[idx]} key={option.id} option={option} cell={props.cell} userType={props.userType} options={options}
-                cellIdx={props.cellIdx} currentPage={props.currentPage} sectionIdx={props.sectionIdx} chOpt={chOpt.current}></QuizOption>
+                cellIdx={props.cellIdx} currentPage={props.currentPage} sectionIdx={props.sectionIdx} chOpt={chOpt}></QuizOption>
               ))
             }
 
@@ -111,19 +119,22 @@ const QuizCell = memo(function QuizCell(props) {
           <Button onClick={addOption} className='editor-button' variant="success">{'Add option'}</Button>
           </div>  
 
+          {isConnectionError ? <div style={{color: 'red'}}>There was some error connecting to the compiler. Please check if all app components are running</div> : null}
+
           </React.Fragment> 
-
         : 
-
         // STUDENT VERSION
           <React.Fragment>
             {
-              chOpt.current.map((option, idx) => (
+              chOpt.map((option, idx) => (
                   <QuizOption resultColor={resultColor[idx]} key={option.id} option={option} cell={props.cell} userType={props.userType} options={options}
-                    cellIdx={props.cellIdx} currentPage={props.currentPage} sectionIdx={props.sectionIdx} chOpt={chOpt.current}></QuizOption>
+                    cellIdx={props.cellIdx} currentPage={props.currentPage} sectionIdx={props.sectionIdx} chOpt={chOpt}></QuizOption>
               ))
             }
 
+          {isConnectionError ? 
+          <div style={{color: 'red'}}>There was some error connecting to the compiler. Please check if all app components are running</div> :
+           null}
           <div className='editor-button-container'>
             <Button onClick={checkAnswer} className='editor-button' variant="success">{'Sprawdź'}</Button>
           </div>

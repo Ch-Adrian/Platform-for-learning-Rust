@@ -91,10 +91,12 @@ const LessonSection = (props) => {
                                                 <ImmutableCodeCell key={idx + "code" + props.sectionIdx} profileType={cell.profileType} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></ImmutableCodeCell>
                                             </Cell>
                                         )
-                                } else if (cell.type === "quiz") {
+                                } else if (cell.type === "QuizCell") {
                                     cellToAdd =
                                         (
-                                            <QuizCell key={idx + "quiz" + props.sectionIdx} text={cell.text} content={cell.options} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></QuizCell>
+                                            <Cell key={"cell" + idx + "quiz" + props.sectionIdx} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}>
+                                                <QuizCell key={idx + "quiz" + props.sectionIdx} profileType={cell.profileType} text={cell.value} content={cell.options} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></QuizCell>
+                                            </Cell>
                                         )
                                 } 
                                 else if (cell.type === "Empty") {
@@ -144,7 +146,7 @@ const LessonSection = (props) => {
                             <ImmutableCodeCell profileType={cell.profileType} key={idx} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></ImmutableCodeCell>
                         </Cell>
                     )
-                }  else if (cell.type === "quiz") {
+                }  else if (cell.type === "QuizCell") {
                     return (
                         <Cell key={"cell" + idx + "quiz" + props.sectionIdx} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}>
                             <QuizCell key={idx} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></QuizCell>

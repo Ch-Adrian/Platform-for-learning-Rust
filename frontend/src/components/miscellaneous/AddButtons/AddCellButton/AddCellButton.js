@@ -26,9 +26,9 @@ const AddCellButton = (props) => {
             newCell.reference = "fn main() {\r\n\t/*TO_FILL*/\r\n}";
             newCell.mutableString = "/*TO_FILL*/";
         } else if (event.target.innerHTML === "Quiz"){
-            newCell.profileType = "pl.edu.agh.backend.lesson.cells.ImmutableCodeCell"
-            newCell.type = "quiz";
-            newCell.text = "Tutaj możesz dodać pytanie.";
+            newCell.profileType = "pl.edu.agh.backend.lesson.cells.QuizCell"
+            newCell.type = "QuizCell";
+            newCell.value = "Tutaj możesz dodać pytanie.";
             newCell.options = [];
         }
         console.log(newCell);

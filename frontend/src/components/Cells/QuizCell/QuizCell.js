@@ -87,7 +87,7 @@ const QuizCell = memo(function QuizCell(props) {
     const updateTextValue = (value) => {
       setValue(value);
       let modifiedCell = props.cell;
-      modifiedCell.text = value;
+      modifiedCell.value = value;
       updateCell(modifiedCell, props.cellIdx, props.currentPage, props.sectionIdx);
     }
 

@@ -394,4 +394,57 @@ it.skip('should fail to compile due to missing dependencies in Cargo.toml', () =
     
 })
 
+it('should allow user to write a code in a part of editor marked by mutableString in ImmutableCodeCell', () => {
+    cy.initializeLesson("CypressTestLesson.json");
+
+    const codeValue = `{ctrl+a}fn test_func(x: i32) -> i32 {{}{del}
+x*5
+}
+
+fn main() {{}{del}
+println!("{}", test_func(5));
+}`;
+    const shouldContainList = ['fn test_func(x: i32) -> i32 {', 'println!("{}", test_func(5));'];
+
+    cy.get('[data-cy="section-delete-button"]').click();
+    cy.get(addSectionButton).first().click({ force: true });
+    cy.get(section).find(addCellButton).find('button')
+    .click({force: true});
+    cy.contains('Niemutowalny').click({force: true}).wait(650);
+
+    cy.get(immutableCodeCell).first().find('.monaco-editor').first().click()
+    .focused().clear({force: true})
+    .type(codeValue, {force: true}).wait(650);
+
+    shouldContainList.forEach((text) => {
+        cy.get(immutableCodeCell).first().find('.monaco-editor').contains(text);
+    })
+})
+
+it.skip('should prevent user from writing code in the restricted part of editor in ImmutableCodeCell', () => {
+    cy.initializeLesson("CypressTestLesson.json");
+
+    const codeValue = `{ctrl+a}fn test_func(x: i32) -> i32 {{}{del}
+x*5
+}
+
+fn main(ADDITIONAL_TEXT) {{}{del}
+println!("{}", test_func(5));
+}`;
+    const shouldContainList = ['fn main() {', '/*TO_FILL*/', '}'];
+    cy.get('[data-cy="section-delete-button"]').click();
+    cy.get(addSectionButton).first().click({ force: true });
+    cy.get(section).find(addCellButton).find('button')
+    .click({force: true});
+    cy.contains('Niemutowalny').click({force: true}).wait(650);
+
+    cy.get(immutableCodeCell).first().find('.monaco-editor').first().click()
+    .focused().clear({force: true})
+    .type(codeValue, {force: true}).wait(650);
+
+    shouldContainList.forEach((text) => {
+        cy.get(immutableCodeCell).first().find('.monaco-editor').contains(text);
+    })
+})
+
 })

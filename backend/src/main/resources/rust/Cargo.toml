@@ -1,0 +1,13 @@
+[package]
+name = "main"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+<<<<<<< HEAD
+                
+[dependencies]
+=======
+
+[dependencies]
+>>>>>>> 360d96b (fix: deleted comments and fixed cell in quizcell)

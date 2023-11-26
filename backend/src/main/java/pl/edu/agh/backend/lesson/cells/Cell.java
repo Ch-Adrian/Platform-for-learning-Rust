@@ -11,7 +11,7 @@ import pl.edu.agh.backend.serialization.JsonType;
 @Getter
 @Setter
 @JsonType(
-        property = "types",
+        property = "type",
         subtypes = {
                 @JsonSubtype(clazz = TextCell.class, name = "TextCell"),
                 @JsonSubtype(clazz = CodeCell.class, name = "CodeCell"),
@@ -29,7 +29,7 @@ import pl.edu.agh.backend.serialization.JsonType;
         @JsonSubTypes.Type(value = TilesCell.class, name = "TilesCell")
 })
 public class Cell {
-    @SerializedName("types")
+    @SerializedName("type")
     private String type;
     private String value;
 

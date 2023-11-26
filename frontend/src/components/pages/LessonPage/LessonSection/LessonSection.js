@@ -13,6 +13,7 @@ import {TbGridDots, TbArrowsMove } from 'react-icons/tb';
 import MovableMenuContext from '../../../miscellaneous/MenuContext/Movable/MovableMenuContext'
 import ImmutableCodeCell from '../../../Cells/ImmutableCodeCell/ImmutableCodeCell'
 import Cell from '../../../Cells/Cell'
+import QuizCell from '../../../Cells/QuizCell/QuizCell'
 
 const SectionHeader = ({userType, page, sectionIdx}) => {
     const { getTitle, changeTitle } = useContext(LessonContext);
@@ -30,7 +31,14 @@ const SectionHeader = ({userType, page, sectionIdx}) => {
 
     return (
         <div>
-            <div data-cy="section-name" ref={headerInput} contentEditable={userType === UserType.teacher} className='section-header' onBlur={e => changeTitleHandler(e.currentTarget.textContent) } onKeyDown={handleHeaderChange} suppressContentEditableWarning={true} spellCheck="false"> 
+            <div data-cy="section-name"
+             ref={headerInput}
+              contentEditable={userType === UserType.teacher} 
+              className='section-header' 
+              onBlur={e => changeTitleHandler(e.currentTarget.textContent) } 
+              onKeyDown={handleHeaderChange} 
+              suppressContentEditableWarning={true} 
+              spellCheck="false"> 
                 {getTitle(page, sectionIdx)}
             </div>
         </div>
@@ -83,6 +91,13 @@ const LessonSection = (props) => {
                                                 <ImmutableCodeCell key={idx + "code" + props.sectionIdx} profileType={cell.profileType} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></ImmutableCodeCell>
                                             </Cell>
                                         )
+                                } else if (cell.type === "QuizCell") {
+                                    cellToAdd =
+                                        (
+                                            <Cell key={"cell" + idx + "quiz" + props.sectionIdx} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}>
+                                                <QuizCell key={idx + "quiz" + props.sectionIdx} profileType={cell.profileType} text={cell.value} content={cell.options} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></QuizCell>
+                                            </Cell>
+                                        )
                                 } 
                                 else if (cell.type === "Empty") {
                                     cellToAdd =
@@ -110,7 +125,6 @@ const LessonSection = (props) => {
                         {provided.placeholder}
                         </div>)
                     }}
-                    
                 </StrictModeDroppable>
             }
             {props.userType === "STUDENT" && props.section?.cells.map((cell, idx) => {
@@ -131,7 +145,13 @@ const LessonSection = (props) => {
                         <Cell key={"cell" + idx + "immutable-code" + props.sectionIdx} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}>
                             <ImmutableCodeCell profileType={cell.profileType} key={idx} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></ImmutableCodeCell>
                         </Cell>
-                        )
+                    )
+                }  else if (cell.type === "QuizCell") {
+                    return (
+                        <Cell key={"cell" + idx + "quiz" + props.sectionIdx} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}>
+                            <QuizCell key={idx} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></QuizCell>
+                        </Cell>
+                    )
                 } else if (cell.type === "Empty") {
                     return (
                         <Cell key={"cell" + idx + "empty" + props.sectionIdx} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}>

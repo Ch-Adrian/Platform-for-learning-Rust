@@ -41,7 +41,7 @@ const NameHeader = ({lessonName, setLessonName, lessonDefinition}) => {
       await LessonFileSaveService.renameLesson(oldName, newName);
       await LessonFileSaveService.saveLesson(lessonDefinition, newName);
     } catch(e) {console.log(e)}
-  } 
+  }
 
   const handleNameChange = (e) => {
     if (e.key === 'Enter'){
@@ -67,8 +67,6 @@ const LessonPageContainer = () => {
   const navigate = useNavigate();
   // const { ErrorBoundary, didCatch, error } = useErrorBoundary();
 
-  const showSidebar = () => setSidebar(!sidebar);
-
   const {lessonDefinition, lessonName, setLessonName, addPage, removePage, updateCargoToml} = useContext(LessonContext);
   const regExpNum = new RegExp("[0-9]*");
 
@@ -86,12 +84,41 @@ const LessonPageContainer = () => {
     }
   }
 
+  let jsonPos = window.location.href.search(".json");
+  let urlPath = window.location.href.slice(0, jsonPos).concat(".json");
+
+  // const [currentMenuPage, setCurrentMenuPage] = useState(currPg);
+  const [currentList, setCurrentList] = useState(JSON.parse(JSON.stringify(lessonDefinition.pages)).map((page, id) => {
+    return {type: 'PAGE', pIdx: id, sIdx: 0, title: ""};
+  }));
+
+  const changePage = useCallback((pIdx) => {
+    let newList = JSON.parse(JSON.stringify(lessonDefinition.pages)).map((page, id) => {
+      return {type: 'PAGE', pIdx: id, sIdx: 0, title: ""};
+    });
+
+    let pageIdxInList = newList.findIndex((itemDesc) => {return itemDesc.pIdx === pIdx}) + 1;
+    lessonDefinition.pages[pIdx].sections.map((section, sIdx) => {
+      newList.splice(pageIdxInList, 0, {type: 'SECTION', pIdx: pIdx, sIdx: sIdx, title: section.title});
+      pageIdxInList = pageIdxInList + 1;
+    });
+    setCurrentList(newList);
+  }, [lessonDefinition]);
+
+  const showSidebar = () => {
+    setSidebar(!sidebar);
+    changePage(currPg);
+  }
+
   const handleSwitchUserType= nextChecked => {
     nextChecked ? setUserType(UserType.student) : setUserType(UserType.teacher);
   }
 
   const newPageEvent = () => {
     addPage();
+    let newList = currentList;
+    newList.push({type: 'PAGE', pIdx: lessonDefinition.pages.length, sIdx: 0, title: ""});
+    setCurrentList(newList);
   }
 
   const deletePageEvent = () => {
@@ -187,51 +214,50 @@ const LessonPageContainer = () => {
             </div>
           </div>
         </div>
-        <IconContext.Provider value={{ color: '#fff' }}>
-        <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-          <ul data-cy="lesson-navigation" className='nav-menu-items' onClick={showSidebar}>
-            <li className='navbar-toggle'>
-              Pages:
-            </li>
-            {(lessonDefinition && lessonDefinition.pages) ? lessonDefinition.pages.map((_, idx) => {
-              return (
-                <li key={idx} className='nav-text'>
-                  <Link to={url + "/" + idx}>
-                    <span >{"PAGE " + (idx+1)}</span>
-                  </Link>
-                </li>
-              );
-            }) : null}
-          </ul>
-        </nav>
-        <nav className={sidebar ? 'nav-menu-inner active' : 'nav-menu-inner'}>
-          <ul className='nav-menu-items' onClick={showSidebar}>
-            <li className='navbar-toggle-2'>
-              Sections:
-            </li>
-              {
-                (lessonDefinition && lessonDefinition.pages) ? lessonDefinition.pages[currPg].sections.map( (content, sectionIdx) => {
-                  return (
-                    <li key={currPg*10+sectionIdx} className='nav-text-inner'>
-                    <HashLink to={url+"/"+currPg+"/#section"+sectionIdx}>
-                      <span >{content.title}</span>
-                    </HashLink>
+
+              <IconContext.Provider value={{ color: '#fff' }}>
+              <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
+                <ul className='nav-menu-items'>
+                  <li className='navbar-toggle'>
+                    Pages:
                   </li>
-                  )
-                })
-                : null
-              }
-          </ul>
-        </nav>
-        </IconContext.Provider>
-        <div className={sidebar ? 'page active' : 'page'}>     
+      
+                  { currentList ? currentList.map((itemDesc, idx) => {
+                        return (
+                          <div>
+                            { itemDesc.type === "PAGE" ? 
+                            
+                            <li key={idx} className='nav-text'>
+                                <Link to={urlPath + "/" + itemDesc.pIdx}>
+                                  <button type="button" className='nav-button-page' onClick={()=>changePage(itemDesc.pIdx)}>{"PAGE " + (itemDesc.pIdx+1)}</button>
+                                </Link>
+                            </li>
+      
+                                :
+      
+                            <li key={idx} className='nav-text-inner' >
+                                <HashLink to={urlPath+"/"+itemDesc.pIdx+"/#section"+itemDesc.sIdx} onClick={showSidebar}>
+                                    <span>{itemDesc.title}</span>
+                                </HashLink>
+                            </li>
+      
+                            }
+                          </div>
+                        );
+                      }) 
+                   : null}
+      
+                </ul>
+              </nav>
+            </IconContext.Provider>
+        <div className={sidebar ? 'page active' : 'page'} onClick={() => setSidebar(false)}>     
           <ErrorBoundary FallbackComponent={ErrorFallback}>
             <LessonPage userType={userType} setUserType={setUserType}/> 
           </ErrorBoundary>
         </div>
         {lessonDefinition ? <ConfigModal open={configModalOpen} configFileContent={lessonDefinition.cargoToml} handleCloseModal={() => setConfigModalOpen(false)} handleSaveConfig={handleSaveConfig}/> : null}
         {lessonDefinition ? <LessonSaveModal open={saveLessonModalOpen} handleCloseModal={() => setSaveLessonModalOpen(false)} handleSaveLesson={handleSaveAndExit} handleExitLesson={handleOpen}/> : null}
-      </div>
+        </div>
       
   );
 }

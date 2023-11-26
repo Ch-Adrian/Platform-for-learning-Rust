@@ -4,7 +4,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import { LessonContext } from '../../../../contexts/LessonContext/LessonContextProvider';
 import "../AddButton.css";
 
-const cellTypes = ["Tekst", "Kod", "Niemutowalny kod"];
+const cellTypes = ["Tekst", "Kod", "Niemutowalny kod", "Quiz"];
 
 const AddCellButton = (props) => {
     const {addCell} = useContext(LessonContext);
@@ -25,8 +25,13 @@ const AddCellButton = (props) => {
             newCell.value = "fn main() {\r\n\t/*TO_FILL*/\r\n}";
             newCell.reference = "fn main() {\r\n\t/*TO_FILL*/\r\n}";
             newCell.mutableString = "/*TO_FILL*/";
+        } else if (event.target.innerHTML === "Quiz"){
+            newCell.profileType = "pl.edu.agh.backend.lesson.cells.QuizCell"
+            newCell.type = "QuizCell";
+            newCell.value = "Tutaj możesz dodać pytanie.";
+            newCell.options = [];
         }
-        console.log(newCell);
+
         addCell(newCell, props.cellIdx, props.currentPage, props.sectionIdx);
     } 
 
@@ -43,4 +48,4 @@ const AddCellButton = (props) => {
     )
 }
 
-export default AddCellButton
+export default AddCellButton;

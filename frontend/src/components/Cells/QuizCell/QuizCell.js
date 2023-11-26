@@ -31,13 +31,6 @@ const QuizCell = memo(function QuizCell(props) {
     const prevTextRef = useRef(props.text);
     const forceUpdate = useForceUpdate();
 
-    console.log("QuizCell: ");
-    console.log(props.cell);
-    console.log("Options: ");
-    console.log(options);
-    console.log("chOpt");
-    console.log(chOpt);
-
 
     const addOption = async () => {
       let newId = 0;
@@ -46,7 +39,6 @@ const QuizCell = memo(function QuizCell(props) {
       }
       let newOption = {'id': newId, 'text': '-- TO EDIT', 'valid': false};
       setOptions([...options, newOption]);
-      console.log(options);
       updateOptionsHandler(newOption);
       resultColor.push(0);
       setResultColor(resultColor);
@@ -57,13 +49,10 @@ const QuizCell = memo(function QuizCell(props) {
         if(options[i].valid !== chOpt[i].valid){
           resultColor[i] = -1;
           setResultColor(resultColor);
-          console.log("notEqual");
-          console.log(resultColor);
         }
         else{
           resultColor[i] = 1;
           setResultColor(resultColor);
-          console.log("equal");
         }
       }
       forceUpdate();
@@ -96,12 +85,7 @@ const QuizCell = memo(function QuizCell(props) {
     }
     
     return (
-      <div ref={containerRef} className={"code-cell-container " + (props.userType === UserType.teacher && "code-cell-container-teacher")} >
-        <div className='cell-misc-buttons-container'>
-          {props.userType === UserType.teacher && <div className='text-cell-grab' {...props.handleDrag} ><TbGridDots/></div>}
-          {props.userType === UserType.teacher && <button className='code-cell-delete-button' onClick={removeCellHandler}><BsTrash3/></button>}
-          {props.userType === UserType.teacher && <div ><MovableMenuContext pageID={props.currentPage} sectionID={props.sectionIdx} cellID={props.cellIdx} ><TbArrowsMove /></MovableMenuContext></div> }
-        </div>
+      <div data-cy="quiz-cell" ref={containerRef} className={"code-cell-container"} >
 
       <div className={props.userType === UserType.teacher ? 'text-cell-container' : null} 
         tabIndex={1}

@@ -31,7 +31,6 @@ const ListLessons = (props) => {
   const handleDeleteSelectedLessons = async () => {
     const selectedLessonNames = selectedLessons.map((lessonName) => lessonName);
     await LessonFileSaveService.deleteSelectedLessons(selectedLessonNames);
-    console.log("Selected Lesson Names:", selectedLessonNames);
   };
 
   useEffect(() => {

@@ -3,9 +3,6 @@ const RUST_COMPILER_REST_API_URL = "http://localhost:8080/lessons/"
 
 const LessonFileSaveService = {
     saveLesson: async (lessonBody, lessonName) => {
-        console.log("lessonBody");
-        console.log(lessonBody)
-        console.log(lessonName)
         const response = await axios
         .post(RUST_COMPILER_REST_API_URL + "save", {lesson: lessonBody, name: lessonName+'.json'});
         if (response.status !== 200) {
@@ -59,7 +56,6 @@ const LessonFileSaveService = {
     },
     deleteSelectedLessons: async (selectedLessonNames) => {
         try {
-            console.log("Request Data:", { lessonsToDelete: selectedLessonNames });
 
             const config = {
                 headers: {
@@ -74,7 +70,6 @@ const LessonFileSaveService = {
           });
           
           
-          console.log("Response Data:", response.data);
       
           if (response.status !== 200) {
             throw new Error(response.data);

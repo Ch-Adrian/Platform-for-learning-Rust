@@ -21,7 +21,6 @@ const OptionText = (props) => {
         }
 
         if(findId !== -1){
-            console.log("found");
             
             let newOption = props.cell.options[findId];
             newOption.text = newOptionText;
@@ -60,10 +59,6 @@ const QuizOption = (props) => {
     const [checked, setChecked] = React.useState(props.option.valid);
     const [checkPhase, setCheckPhase] = React.useState(props.option.valid);
 
-    console.log("QuizOption: ");
-    console.log(props.cell);
-    console.log("idx");
-    console.log(props.idx);
 
     // const handleChange = () => {
     //     setChecked(!checked);
@@ -76,36 +71,28 @@ const QuizOption = (props) => {
     //     }
         
     //     if(findId !== -1){
-    //         console.log("found");
             
     //         let newOption = props.cell.options[findId];
     //         newOption.valid = !checked;
-    //         console.log(newOption);
     //         props.cell.options[findId] = newOption;
-    //         console.log(props.cell);
     //         updateCell(props.cell, props.cellIdx, props.currentPage, props.sectionIdx);
     //     }
     //   };
 
 
     const handleChange = () => {
-        console.log("handleChange");
 
         let someObj = {
             "someVal": [{"innerVal": 1}]
         };
         let obj = {"innerVal": 2};
 
-        console.log(someObj['someVal']);
-        console.log("second: ")
-        console.log(someObj["someVal"].splice(0,1,obj));
 
 
         setChecked(!checked);
         if (props.userType === UserType.teacher){
 
             let findId = -1;
-            console.log("seeking");
             for(let i = 0; i<props.options.length; i++){
                 if (props.options[i].id === props.option.id ) {
                     findId = i;
@@ -114,25 +101,14 @@ const QuizOption = (props) => {
             }
 
             if(findId !== -1){
-                console.log("found");
 
                 let newOption = props.cell.options[findId];
                 let newCell = props.cell;
                 newOption.valid = !checked;
-                console.log(checked);
-                console.log(newOption.valid);
-                console.log(newOption);
-                console.log(findId);
                 props.cell.options.splice(findId, 1, newOption);
                 // props.cell.options[findId].valid = !checked;
                 newCell['options'][findId].valid = !checked;
-                console.log("newCell: ");
-                console.log(newCell['options'][1]);
-                console.log(props.cell.options[findId]);
-                console.log("!!! props.cell.options");
-                console.log(props.cell.options);
                 updateCell(props.cell, props.cellIdx, props.currentPage, props.sectionIdx);
-                console.log(props.cell);
             }
 
         }
@@ -140,9 +116,6 @@ const QuizOption = (props) => {
             
             props.chOpt.forEach((option) => {
                 if(option.id === props.option.id){
-                    console.log("chOpt changed");
-                    console.log(option.id);
-                    console.log(checked);
                     option.valid = !checked;
                 }
             })
@@ -155,7 +128,6 @@ const QuizOption = (props) => {
         let id = props.option.id;
         let cell = props.cell;
         let optionsList = props.options;
-        console.log(optionsList);
 
         let findId = -1;
         for(let i = 0; i < optionsList.length; i++){

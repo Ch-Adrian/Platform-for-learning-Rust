@@ -31,7 +31,6 @@ const AddCellButton = (props) => {
             newCell.value = "Tutaj możesz dodać pytanie.";
             newCell.options = [];
         }
-        console.log(newCell);
 
         addCell(newCell, props.cellIdx, props.currentPage, props.sectionIdx);
     } 

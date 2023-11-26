@@ -65,9 +65,9 @@ const LessonPageContainer = () => {
   const [isCargoError, setIsCargoError] = useState(false);
   const [hasLoaded, setHasLoaded] = useState(false);
   const navigate = useNavigate();
-  // const { ErrorBoundary, didCatch, error } = useErrorBoundary();
 
   const {lessonDefinition, lessonName, setLessonName, addPage, removePage, updateCargoToml} = useContext(LessonContext);
+  const [currentList, setCurrentList] = useState([{}]);
   const regExpNum = new RegExp("[0-9]*");
 
   const url = new URL(window.location.href);
@@ -87,10 +87,13 @@ const LessonPageContainer = () => {
   let jsonPos = window.location.href.search(".json");
   let urlPath = window.location.href.slice(0, jsonPos).concat(".json");
 
-  // const [currentMenuPage, setCurrentMenuPage] = useState(currPg);
-  const [currentList, setCurrentList] = useState(JSON.parse(JSON.stringify(lessonDefinition.pages)).map((page, id) => {
-    return {type: 'PAGE', pIdx: id, sIdx: 0, title: ""};
-  }));
+  useEffect(() => {
+    if (lessonDefinition) {
+      setCurrentList(JSON.parse(JSON.stringify(lessonDefinition.pages)).map((page, id) => {
+        return {type: 'PAGE', pIdx: id, sIdx: 0, title: ""};
+      }))
+    }
+  }, [lessonDefinition])
 
   const changePage = useCallback((pIdx) => {
     let newList = JSON.parse(JSON.stringify(lessonDefinition.pages)).map((page, id) => {
@@ -98,7 +101,7 @@ const LessonPageContainer = () => {
     });
 
     let pageIdxInList = newList.findIndex((itemDesc) => {return itemDesc.pIdx === pIdx}) + 1;
-    lessonDefinition.pages[pIdx].sections.map((section, sIdx) => {
+    lessonDefinition.pages[pIdx].sections.forEach((section, sIdx) => {
       newList.splice(pageIdxInList, 0, {type: 'SECTION', pIdx: pIdx, sIdx: sIdx, title: section.title});
       pageIdxInList = pageIdxInList + 1;
     });

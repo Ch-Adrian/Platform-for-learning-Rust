@@ -1,18 +1,18 @@
 import { Checkbox } from "@mui/material";
 import "./QuizOption.css"
 import Button from 'react-bootstrap/Button';
-import React, { useRef, useContext, useState, useCallback, memo } from 'react';
+import React, { useRef, useContext, useState } from 'react';
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
 import UserType from '../../../models/UserType';
 
 const OptionText = (props) => {
-    // const { getTitle, changeTitle } = useContext(LessonContext);
     const headerInput = useRef(null);
     const {updateCell} = useContext(LessonContext);
 
 
     const changeOptionHandler = (newOptionText) =>{
         let findId = -1;
+        let newCell = window.structuredClone(props.cell);
         for(let i = 0; i<props.options.length; i++){
             if (props.options[i].id === props.option.id ) {
                 findId = i;
@@ -24,8 +24,8 @@ const OptionText = (props) => {
             
             let newOption = props.cell.options[findId];
             newOption.text = newOptionText;
-            props.cell.options[findId] = newOption;
-            updateCell(props.cell, props.cellIdx, props.currentPage, props.sectionIdx);
+            newCell.options[findId] = newOption;
+            updateCell(newCell, props.cellIdx, props.currentPage, props.sectionIdx);
         }
     }
 
@@ -54,10 +54,8 @@ const OptionText = (props) => {
 
 
 const QuizOption = (props) => {
-    const {updateCell, removeCell} = useContext(LessonContext);
-    // const [checked, setChecked] = React.useState(props.userType === UserType.teacher ? props.option.valid : false);
-    const [checked, setChecked] = React.useState(props.option.valid);
-    const [checkPhase, setCheckPhase] = React.useState(props.option.valid);
+    const {updateCell} = useContext(LessonContext);
+    const [checked, setChecked] = useState(props.option.valid);
 
 
     // const handleChange = () => {
@@ -81,14 +79,6 @@ const QuizOption = (props) => {
 
 
     const handleChange = () => {
-
-        let someObj = {
-            "someVal": [{"innerVal": 1}]
-        };
-        let obj = {"innerVal": 2};
-
-
-
         setChecked(!checked);
         if (props.userType === UserType.teacher){
 
@@ -102,11 +92,10 @@ const QuizOption = (props) => {
 
             if(findId !== -1){
 
-                let newOption = props.cell.options[findId];
-                let newCell = props.cell;
+                let newOption = window.structuredClone(props.cell.options[findId]);
+                let newCell = window.structuredClone(props.cell);
                 newOption.valid = !checked;
                 props.cell.options.splice(findId, 1, newOption);
-                // props.cell.options[findId].valid = !checked;
                 newCell['options'][findId].valid = !checked;
                 updateCell(props.cell, props.cellIdx, props.currentPage, props.sectionIdx);
             }
@@ -140,7 +129,7 @@ const QuizOption = (props) => {
         if(findId !== -1){
             let cell_options_size = cell.options.length;
             optionsList.splice(findId, 1);
-            if (cell_options_size == cell.options.length){
+            if (cell_options_size === cell.options.length){
                 cell.options.splice(findId, 1);
             }
             updateCell(cell, props.cellIdx, props.currentPage, props.sectionIdx);
@@ -149,14 +138,14 @@ const QuizOption = (props) => {
     };
 
     return (
-            <div className={ props.resultColor == -1 ? 'background-red' : props.resultColor == 0 ? 'background' : 'background-green'}>
+            <div className={ props.resultColor === -1 ? 'background-red' : props.resultColor === 0 ? 'background' : 'background-green'}>
                 <div className='option-text'>
                     <OptionText cell={props.cell} options={props.options} option={props.option} userType={props.userType} currentPage={props.currentPage} page={props.page} sectionIdx={props.sectionIdx}/>
                 </div>
                 <div className='management'>
                     <div className='checkbox'>
                         <Checkbox checked={checked} onChange={handleChange}></Checkbox>poprawna</div>
-                        { props.userType == UserType.teacher ? <React.Fragment><Button onClick={handleClickOnDelete} className='button-x'>X</Button></React.Fragment>:
+                        { props.userType === UserType.teacher ? <React.Fragment><Button onClick={handleClickOnDelete} className='button-x'>X</Button></React.Fragment>:
                         <React.Fragment></React.Fragment>}
                     </div>
             </div>

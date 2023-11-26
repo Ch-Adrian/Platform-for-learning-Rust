@@ -1,11 +1,8 @@
-import React, { useRef, useContext, useState, useEffect, useCallback, memo, Component } from 'react';
+import React, { useRef, useContext, useState, useEffect, memo } from 'react';
 import Button from 'react-bootstrap/Button';
 import "./QuizCell.css"
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
 import UserType from '../../../models/UserType';
-import {BsTrash3} from 'react-icons/bs';
-import {TbGridDots, TbArrowsMove } from 'react-icons/tb';
-import MovableMenuContext from '../../miscellaneous/MenuContext/Movable/MovableMenuContext'
 import QuizOption from '../../miscellaneous/QuizOptions/QuizOption';
 import MDEditor from '@uiw/react-md-editor'
 import ReactMarkdown from 'react-markdown'
@@ -18,9 +15,9 @@ function useForceUpdate(){
 
 const QuizCell = memo(function QuizCell(props) {
     const containerRef = useRef(null);
-    const {updateCell, removeCell} = useContext(LessonContext);
+    const {updateCell} = useContext(LessonContext);
     const [isConnectionError, setIsConnectionError] = useState(false);
-    const [options, setOptions] = useState(props.cell.options);
+    const [options, setOptions] = useState(props.content);
     const [chOpt, setChOpt] = useState(JSON.parse(JSON.stringify(props.cell.options)).map((val) => {
       val.valid = false;
       return val;
@@ -29,7 +26,25 @@ const QuizCell = memo(function QuizCell(props) {
     const [focus, setFocus] = useState(false);
     const [value, setValue] = useState(props.text);
     const prevTextRef = useRef(props.text);
+    const prevContentRef = useRef(props.content);
     const forceUpdate = useForceUpdate();
+
+    useEffect(() => {
+      prevTextRef.current = value;
+    }, [value])
+
+    useEffect(() => {
+      prevContentRef.current = options;
+    }, [options])
+  
+    useEffect(() => {
+      if (!(props.text.length !== 0 && props.text === prevTextRef.current)) {
+        setValue(props.text);
+      };
+      if (!(props.content.length !== 0 && props.content === prevContentRef.current)) {
+        setOptions(props.content);
+      }
+    }, [props.text, props.content]);
 
 
     const addOption = async () => {
@@ -78,10 +93,6 @@ const QuizCell = memo(function QuizCell(props) {
       let modifiedCell = props.cell;
       modifiedCell.value = value;
       updateCell(modifiedCell, props.cellIdx, props.currentPage, props.sectionIdx);
-    }
-
-    const removeCellHandler = () => {
-      removeCell(props.cellIdx, props.currentPage, props.sectionIdx);
     }
     
     return (

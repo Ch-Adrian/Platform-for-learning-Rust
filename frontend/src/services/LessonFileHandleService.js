@@ -56,13 +56,6 @@ const LessonFileSaveService = {
     },
     deleteSelectedLessons: async (selectedLessonNames) => {
         try {
-
-            const config = {
-                headers: {
-                  "Access-Control-Allow-Origin": "*",
-                  "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-                }
-              };
           const response = await axios.delete(RUST_COMPILER_REST_API_URL + "delete", {
             "lessonsToDelete": [
               "NewLesson(1).json", "DUPA.json"
@@ -81,11 +74,6 @@ const LessonFileSaveService = {
           throw error;
         }
       }      
-      
-      
-      
-      
-      
 
 }
 

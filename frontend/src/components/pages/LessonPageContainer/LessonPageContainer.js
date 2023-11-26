@@ -98,7 +98,7 @@ const LessonPageContainer = () => {
     });
 
     let pageIdxInList = newList.findIndex((itemDesc) => {return itemDesc.pIdx === pIdx}) + 1;
-    lessonDefinition.pages[pIdx].sections.map((section, sIdx) => {
+    lessonDefinition.pages[pIdx].sections.forEach((section, sIdx) => {
       newList.splice(pageIdxInList, 0, {type: 'SECTION', pIdx: pIdx, sIdx: sIdx, title: section.title});
       pageIdxInList = pageIdxInList + 1;
     });

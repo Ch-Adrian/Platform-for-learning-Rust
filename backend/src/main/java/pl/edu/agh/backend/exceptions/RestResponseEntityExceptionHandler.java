@@ -1,4 +1,4 @@
-package pl.edu.agh.backend.controllers;
+package pl.edu.agh.backend.exceptions;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 
-@CrossOrigin(origins = "http://localhost:3000/")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("lessons/")
+@RequestMapping("/lessons")
 public class LessonController {
 
     private final LessonService lessonService;
@@ -19,38 +19,43 @@ public class LessonController {
         this.lessonService = lessonService;
     }
 
-    @PostMapping("save")
-    public void save(@RequestBody LessonFile lessonFile) {
-        lessonService.saveExistingLesson(lessonFile);
-    }
-
-    @PostMapping("create")
+    @PostMapping
     public String createNewLesson(@RequestBody LessonFile lessonFile) {
         return lessonService.createNewLesson(lessonFile);
     }
 
-    @PostMapping("rename")
-    public void renameLesson(@RequestBody Map<String, String> json) {
-        lessonService.renameLesson(json.get("oldName"), json.get("newName"));
-    }
-
-    @GetMapping("list")
-    public List<LessonInfo> getAllLessonsNames() {
+    @GetMapping("/names")
+    public List<LessonInfoDTO> getAllLessonsInfo() {
         return lessonService.getAllLessonsInfo();
     }
 
-    @GetMapping("open/{name}")
-    public Lesson getLesson(@PathVariable String name) {
-        return lessonService.getLesson(name);
+    @GetMapping("/{lessonName}")
+    public Lesson getLessonByName(@PathVariable String lessonName) {
+        return lessonService.getLessonByName(lessonName);
     }
 
-    @GetMapping("open/new")
+    @GetMapping("/default")
     public LessonFile getDefaultLesson() {
         return lessonService.getDefaultLesson();
     }
 
-    @DeleteMapping("delete")
-    public void deleteLesson(@RequestBody List<String> lessonsToDelete) {
-        lessonService.deleteLesson(lessonsToDelete);
+    @PostMapping("/{lessonName}")
+    public void saveLesson(@PathVariable String lessonName, @RequestBody Lesson lesson) {
+        lessonService.saveLesson(lessonName, lesson);
+    }
+
+    @PutMapping("/{lessonName}")
+    public void renameLesson(@PathVariable String lessonName, @RequestBody String newLessonName) {
+        lessonService.renameLesson(lessonName, newLessonName);
+    }
+
+    @DeleteMapping("/{lessonName}")
+    public void deleteLesson(@PathVariable String lessonName) {
+        lessonService.deleteLesson(lessonName);
+    }
+
+    @DeleteMapping("/deleteBatch")
+    public void deleteLessons(@RequestBody List<String> lessonNames) {
+        lessonService.deleteLessons(lessonNames);
     }
 }

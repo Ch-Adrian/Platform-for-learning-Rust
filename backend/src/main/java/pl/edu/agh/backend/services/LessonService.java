@@ -3,12 +3,14 @@ package pl.edu.agh.backend.services;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import pl.edu.agh.backend.exceptions.LessonNotFoundException;
 import pl.edu.agh.backend.exceptions.LessonsNameConflictException;
 import pl.edu.agh.backend.lesson.Lesson;
 import pl.edu.agh.backend.lesson.LessonFile;
-import pl.edu.agh.backend.lesson.LessonInfo;
+import pl.edu.agh.backend.lesson.LessonInfoDTO;
 import pl.edu.agh.backend.lesson.cells.Cell;
 import pl.edu.agh.backend.serialization.PolymorphDeserializer;
 
@@ -25,25 +27,7 @@ public class LessonService {
 
     private static final String rootDir = "lessons";
     private static final String newLessonName = "NewLesson";
-
-    public List<LessonInfo> getAllLessonsInfo() {
-        File currentDir = new File(rootDir);
-        FilenameFilter filter = (file, name) -> name.endsWith(".json");
-
-        return Arrays
-                .stream(Objects.requireNonNull(currentDir.listFiles(filter)))
-                .map(file -> new LessonInfo(file.getName(),
-                        LocalDateTime.ofInstant(Instant.ofEpochMilli(file.lastModified()),
-                                TimeZone.getDefault().toZoneId())))
-                .toList();
-    }
-
-    public void saveExistingLesson(LessonFile lessonFile) {
-        if (!this.existsLesson(lessonFile.getName())) {
-            throw new LessonNotFoundException(lessonFile.getName());
-        }
-        this.saveLesson(lessonFile);
-    }
+    private static final Logger logger = LogManager.getLogger();
 
     public String createNewLesson(LessonFile lessonFile) {
         if (this.existsLesson(lessonFile.getName())) {
@@ -51,6 +35,41 @@ public class LessonService {
         }
         this.saveLesson(lessonFile);
         return lessonFile.getName();
+    }
+
+    public List<LessonInfoDTO> getAllLessonsInfo() {
+        File currentDir = new File(rootDir);
+        FilenameFilter filter = (file, name) -> name.endsWith(".json");
+
+        return Arrays
+                .stream(Objects.requireNonNull(currentDir.listFiles(filter)))
+                .map(file -> new LessonInfoDTO(file.getName(),
+                        LocalDateTime.ofInstant(Instant.ofEpochMilli(file.lastModified()),
+                                TimeZone.getDefault().toZoneId())))
+                .toList();
+    }
+
+    public Lesson getLessonByName(String name) throws LessonNotFoundException {
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Cell.class, new PolymorphDeserializer<Cell>())
+                .create();
+
+        JsonReader reader = null;
+        try {
+            reader = new JsonReader(new FileReader(rootDir + File.separator + name));
+        } catch (FileNotFoundException e) {
+            logger.error(e.getMessage());
+        }
+        assert reader != null;
+        return gson.fromJson(reader, Lesson.class);
+    }
+
+    public LessonFile getDefaultLesson() {
+        return new LessonFile(findAvailableName(newLessonName), Lesson.getDefaultLesson());
+    }
+
+    public void saveLesson(String lessonName, Lesson lesson) {
+        saveLesson(new LessonFile(lessonName, lesson));
     }
 
     public void renameLesson(String oldName, String newName) {
@@ -68,36 +87,21 @@ public class LessonService {
         oldFile.renameTo(newFile);
     }
 
-    public void deleteLesson(List<String> lessonsToDelete) {
-        for (String name: lessonsToDelete) {
-            File file = new File(rootDir + File.separator + name);
+    public void deleteLesson(String name) {
+        File file = new File(rootDir + File.separator + name);
 
-            if (file.delete()) {
-                System.out.println("File deleted successfully");
-            }
-            else {
-                System.out.println("Failed to delete the file");
-            }
+        if (file.delete()) {
+            System.out.println("File deleted successfully");
+        }
+        else {
+            System.out.println("Failed to delete the file");
         }
     }
 
-    public Lesson getLesson(String name) throws LessonNotFoundException {
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Cell.class, new PolymorphDeserializer<Cell>())
-                .create();
-        JsonReader reader = null;
-        try {
-            reader = new JsonReader(new FileReader(rootDir + File.separator + name));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+    public void deleteLessons(List<String> names) {
+        for (String name: names) {
+            this.deleteLesson(name);
         }
-
-        assert reader != null;
-        return gson.fromJson(reader, Lesson.class);
-    }
-
-    public LessonFile getDefaultLesson() {
-        return new LessonFile(findAvailableName(newLessonName), Lesson.getDefaultLesson());
     }
 
     private boolean existsLesson(String name) {

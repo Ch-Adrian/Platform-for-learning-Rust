@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @AllArgsConstructor
-public class LessonInfo {
+public class LessonInfoDTO {
     private String name;
     private LocalDateTime lastModified;
 }

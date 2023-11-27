@@ -1,4 +1,4 @@
-package pl.edu.agh.backend.comannds;
+package pl.edu.agh.backend.ossystems;
 
 import pl.edu.agh.backend.factories.CommandsFactory;
 

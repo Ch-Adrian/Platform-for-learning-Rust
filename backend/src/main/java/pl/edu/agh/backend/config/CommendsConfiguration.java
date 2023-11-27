@@ -1,10 +1,10 @@
-package pl.edu.agh.backend.configurations;
+package pl.edu.agh.backend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import pl.edu.agh.backend.comannds.CommandsLinux;
+import pl.edu.agh.backend.ossystems.CommandsLinux;
 import pl.edu.agh.backend.factories.CommandsFactory;
-import pl.edu.agh.backend.comannds.CommandsWindows;
+import pl.edu.agh.backend.ossystems.CommandsWindows;
 
 import java.util.Objects;
 

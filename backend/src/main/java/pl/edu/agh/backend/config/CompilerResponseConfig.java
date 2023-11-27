@@ -1,4 +1,4 @@
-package pl.edu.agh.backend.configurations;
+package pl.edu.agh.backend.config;
 
 
 import pl.edu.agh.backend.compiler.CompilationResponse;

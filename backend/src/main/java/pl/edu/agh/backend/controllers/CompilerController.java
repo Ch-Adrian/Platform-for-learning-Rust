@@ -2,7 +2,7 @@ package pl.edu.agh.backend.controllers;
 
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.backend.compiler.StudentInput;
-import pl.edu.agh.backend.configurations.RustFileConfig;
+import pl.edu.agh.backend.config.RustFileConfig;
 import pl.edu.agh.backend.services.CompilerService;
 
 @CrossOrigin(origins = "http://localhost:3000/")

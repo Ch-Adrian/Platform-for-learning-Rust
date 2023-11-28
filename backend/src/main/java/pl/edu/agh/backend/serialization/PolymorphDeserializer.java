@@ -17,10 +17,15 @@ public class PolymorphDeserializer<T> implements JsonDeserializer<T> {
             JsonType jsonType = typeClass.getDeclaredAnnotation(JsonType.class);
             String property = json.getAsJsonObject().get(jsonType.property()).getAsString();
             JsonSubtype[] subtypes = jsonType.subtypes();
-            Type subType = Arrays.stream(subtypes).filter(subtype -> subtype.name().equals(property)).findFirst().orElseThrow(IllegalArgumentException::new).clazz();
+            Type subType = Arrays
+                    .stream(subtypes)
+                    .filter(subtype -> subtype.name().equals(property))
+                    .findFirst()
+                    .orElseThrow(IllegalArgumentException::new)
+                    .clazz();
             return context.deserialize(json, subType);
-        } catch (Exception e) {
-            throw new JsonParseException("Failed deserialize json", e);
+        } catch (Exception ex) {
+            throw new JsonParseException("Failed deserialize json", ex);
         }
     }
 }

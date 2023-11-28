@@ -49,7 +49,7 @@ public class LessonService {
                 .toList();
     }
 
-    public Lesson getLessonByName(String name) throws LessonNotFoundException {
+    public LessonFile getLessonByName(String name) throws LessonNotFoundException {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Cell.class, new PolymorphDeserializer<Cell>())
                 .create();
@@ -57,11 +57,11 @@ public class LessonService {
         JsonReader reader = null;
         try {
             reader = new JsonReader(new FileReader(rootDir + File.separator + name));
-        } catch (FileNotFoundException e) {
-            logger.error(e.getMessage());
+        } catch (FileNotFoundException ex) {
+            logger.error(ex.getMessage());
         }
         assert reader != null;
-        return gson.fromJson(reader, Lesson.class);
+        return new LessonFile(name, gson.fromJson(reader, Lesson.class));
     }
 
     public LessonFile getDefaultLesson() {
@@ -113,8 +113,8 @@ public class LessonService {
             Gson gson = new Gson();
             String jsonString = gson.toJson(lessonFile.getLesson());
             out.write(jsonString);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
         }
     }
 

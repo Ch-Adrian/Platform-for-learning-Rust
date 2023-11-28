@@ -1,8 +1,8 @@
 package pl.edu.agh.backend.config;
 
-import pl.edu.agh.backend.compiler.RustConfigFile;
-import pl.edu.agh.backend.compiler.RustFile;
-import pl.edu.agh.backend.compiler.RustTestsFile;
+import pl.edu.agh.backend.compiler.files.RustConfigFile;
+import pl.edu.agh.backend.compiler.files.RustFile;
+import pl.edu.agh.backend.compiler.files.RustTestsFile;
 
 public class RustFileConfig {
 

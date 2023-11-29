@@ -24,7 +24,7 @@ public class LessonController {
     }
 
     @GetMapping("/{lessonName}")
-    public LessonFile getLessonByName(@PathVariable String lessonName) {
+    public Lesson getLessonByName(@PathVariable String lessonName) {
         return lessonService.getLessonByName(lessonName);
     }
 

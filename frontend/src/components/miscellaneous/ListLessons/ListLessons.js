@@ -30,7 +30,15 @@ const ListLessons = (props) => {
 
   const handleDeleteSelectedLessons = async () => {
     const selectedLessonNames = selectedLessons.map((lessonName) => lessonName);
+    if (selectedLessonNames.length === 0) {
+      return;
+    }
+
     await LessonFileSaveService.deleteSelectedLessons(selectedLessonNames);
+
+    const reaminingLessons = lessons.filter((lesson) => !selectedLessonNames.includes(lesson.name));
+    setLessons(reaminingLessons);
+    setSelectedLessons([])
   };
 
   useEffect(() => {

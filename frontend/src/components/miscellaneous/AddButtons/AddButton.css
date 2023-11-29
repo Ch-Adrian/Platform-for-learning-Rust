@@ -13,7 +13,8 @@
     background-color: var(--background-color) !important; 
     border-color: var(--background-color) !important; 
     color: var(--text-button-color) !important;
-    min-width: 160px !important;
+    min-width: 12rem !important;
+    height: 1.8rem !important;
 }
 
 .dropdown-toggle:hover {
@@ -29,6 +30,7 @@
     top: -4px !important;
     background-color: var(--background-color) !important;
     position: absoulte;
+    min-width: 12rem !important;
 }
 
 .dropdown-button {
@@ -43,8 +45,8 @@
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     align-items: center;
-    padding-top: 1em;
-    padding-bottom: 1em;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
 .dropdown-button-wrapper *{
@@ -61,7 +63,7 @@
     grid-area: 1 / 1 / 2 / 2 !important;
     align-self: center;
     justify-self: center;
-    width: 300px;
+    width: 18rem;
     height: 3px;
     background-color: var(--background-color); 
 }
@@ -73,7 +75,8 @@
     background-color: var(--background-color) !important; 
     border-color: var(--background-color) !important; 
     color: var(--text-button-color) !important;
-    min-width: 160px !important;
+    min-width: 12rem !important;
+    height: 1.8rem;
 }
 
 .section-button:hover {

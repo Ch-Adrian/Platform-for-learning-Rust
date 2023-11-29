@@ -65,7 +65,7 @@ const MonacoEditor = memo(forwardRef(function MonacoEditor(props, ref) {
             scrollbar: {
             alwaysConsumeMouseWheel: false
             },
-            fontSize: 14,
+            fontSize: "16px",
             wordWrap: "on",
             lineNumbers: "off",
             automaticLayout: true,

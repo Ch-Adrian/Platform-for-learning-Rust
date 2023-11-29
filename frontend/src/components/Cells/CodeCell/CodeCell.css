@@ -24,8 +24,8 @@
 }
 
 .editor-button {
-    padding: 0em 0.2em 0em 0.2em!important;
-    border-radius: 2px;
+    padding: 0.1rem 0.2rem 0.1rem 0.2rem !important;
+    border-radius: 0.1rem;
     border-width: 0px;
     display: flex;
     justify-content: center;

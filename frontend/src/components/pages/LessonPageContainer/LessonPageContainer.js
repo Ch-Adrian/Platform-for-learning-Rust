@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useContext, useState, useRef, useEffect, useCallback } from 'react'
-import Button from 'react-bootstrap/esm/Button';
+// import button from 'react-bootstrap/esm/button';
 import * as FaIcons from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import './LessonPageContainer.css'
@@ -41,12 +41,18 @@ const NameHeader = ({lessonName, setLessonName, lessonDefinition}) => {
       await LessonFileSaveService.renameLesson(oldName, newName);
       await LessonFileSaveService.saveLesson(lessonDefinition, newName);
     } catch(e) {console.log(e)}
+
+    if (nameInput.current) {
+      nameInput.current.scrollLeft = 0;
+    }
   }
 
   const handleNameChange = (e) => {
+    nameInput.current.textContent = e.target.textContent;
     if (e.key === 'Enter'){
       nameInput.current.blur();
     }
+    
   }
 
   return (
@@ -198,22 +204,22 @@ const LessonPageContainer = () => {
             <FaIcons.FaBars className='hamburger' onClick={showSidebar} />
           </Link>
           <div className='general-buttons'>
-            <div style={{display: 'flex'}}>
+            <div style={{display: 'flex'}} className='left-side-buttons'>
               <NameHeader lessonName={lessonName} setLessonName={setLessonName} lessonDefinition={lessonDefinition}></NameHeader>
-              <Button data-cy="back-button" className='general-button-item' variant='light' onClick={() => setSaveLessonModalOpen(true)}>Wróć</Button>
-              <Button data-cy="save-button" className='general-button-item' variant='light' onClick={handleSave}>Zapisz</Button>
-              <Button className='general-button-item' variant='light' onClick={handleDownload}>Pobierz</Button>
+              <button data-cy="back-button" className='general-button-item' variant='light' onClick={() => setSaveLessonModalOpen(true)}>Wróć</button>
+              <button data-cy="save-button" className='general-button-item' variant='light' onClick={handleSave}>Zapisz</button>
+              <button className='general-button-item' variant='light' onClick={handleDownload}>Pobierz</button>
               <div className='status-info'>
                 {isCargoError ? <p>Error building project! Check cargo file</p> : null}
                 {!isCargoCompiled ? <p>Budowanie projektu...</p> : null}
                 {isCargoCompiled && !isCargoError ? <p>Gotowe</p> : null}
               </div>
             </div>
-            <div style={{display: 'flex', marginRight: '1em'}}>
+            <div style={{display: 'flex', marginRight: '1rem'}} className='right-side-buttons'>
               {DEFINED_USER_TYPE === UserType.teacher && <UserTypeSwitch handleSwitchUserType={handleSwitchUserType}/>}
-              {DEFINED_USER_TYPE === UserType.teacher && <Button data-cy="add-page-button" className='general-button-item' variant='light' onClick={newPageEvent}>Nowa strona</Button>}
-              {DEFINED_USER_TYPE === UserType.teacher && <Button data-cy="remove-page-button" className='general-button-item' variant='light' disabled={lessonDefinition && lessonDefinition.pages && lessonDefinition.pages.length === 1} onClick={deletePageEvent}>Usuń stronę</Button>}
-              <Button data-cy="config-button" className='general-button-item' variant='light' onClick={() => setConfigModalOpen(true)}>Konfiguracja</Button>
+              {DEFINED_USER_TYPE === UserType.teacher && <button data-cy="add-page-button" className='general-button-item' variant='light' onClick={newPageEvent}>Nowa strona</button>}
+              {DEFINED_USER_TYPE === UserType.teacher && <button data-cy="remove-page-button" className='general-button-item' variant='light' disabled={lessonDefinition && lessonDefinition.pages && lessonDefinition.pages.length === 1} onClick={deletePageEvent}>Usuń stronę</button>}
+              <button data-cy="config-button" className='general-button-item' variant='light' onClick={() => setConfigModalOpen(true)}>Konfiguracja</button>
             </div>
           </div>
         </div>
@@ -222,7 +228,6 @@ const LessonPageContainer = () => {
               <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
                 <ul className='nav-menu-items'>
                   <li className='navbar-toggle'>
-                    Pages:
                   </li>
       
                   { currentList ? currentList.map((itemDesc, idx) => {
@@ -232,7 +237,7 @@ const LessonPageContainer = () => {
                             
                             <li key={idx} className='nav-text'>
                                 <Link to={urlPath + "/" + itemDesc.pIdx}>
-                                  <button type="button" className='nav-button-page' onClick={()=>changePage(itemDesc.pIdx)}>{"PAGE " + (itemDesc.pIdx+1)}</button>
+                                  <button type="button" className='nav-button-page' onClick={()=>changePage(itemDesc.pIdx)}>{"Strona " + (itemDesc.pIdx+1)}</button>
                                 </Link>
                             </li>
       

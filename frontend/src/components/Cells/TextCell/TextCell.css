@@ -30,6 +30,7 @@ td {
 }
 
 .markdown-body {
+    font-size: 1rem;
     background-color: var(--background-cell-color) !important;
 }
 

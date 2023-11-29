@@ -65,7 +65,7 @@
 
 .section-header{
     color: var(--title-color);
-    font-size:xx-large;
+    font-size: 2rem;
     text-align: center;
     padding-left: 20px;
 }

@@ -1,29 +1,38 @@
 :root{
   --background-cell-color: #524B4B;
-  --buttons-color: grey;
+  --buttons-color-hovered: rgba(39, 36, 51, 50%);
   --buttons-color-active: white;
   --background-buttons-color: transparent;
+  --editor-color: rgb(39, 36, 51);
 }
 
 .editor-button-container {
     display: flex;
     flex-direction: row;
     gap: 1em;
-    margin-left: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 1em;
+    background-color: var(--background-cell-color);
+    padding: 0.3em;
+    padding-right: 0px;
+    padding-left: 0px;
+    height: 35px;
+}
+
+
+.grIcon path{
+    stroke: white;
 }
 
 .editor-button {
-    padding: 0.5em !important;
+    padding: 0em 0.2em 0em 0.2em!important;
+    border-radius: 2px;
+    border-width: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--background-cell-color);
 }
 
-.clear-output-editor-button {
-    padding: 0.5em !important;
-    margin-left: auto;
-    display: "none";
-}
-.code-cell-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
+.editor-button:hover {
+    background-color: var(--buttons-color-hovered);
 }

@@ -21,7 +21,7 @@ const MutableStringPicker = memo((props) => {
 
   return (
      <div className='mutable-string-container'>
-        <p>Skopiuj napis po prawej i wklej tam, gdzie chcesz, aby student miał możliwość modyfikacji kodu</p>
+        <p >Skopiuj napis po prawej i wklej tam, gdzie chcesz, aby student miał możliwość modyfikacji kodu</p>
         <input type='text' onChange={changeMutableStringHandler} value={mutableString}/>
     </div>
   )

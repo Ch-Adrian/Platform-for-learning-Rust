@@ -1,5 +1,4 @@
 import React, { useRef, useContext, useState, useCallback, memo } from 'react';
-import Button from 'react-bootstrap/Button';
 import "./ImmutableCodeCell.css"
 import CodeExecutorService from '../../../services/CodeExecutorService';
 import OutputCell from '../OutputCell/OutputCell';
@@ -7,6 +6,10 @@ import { LessonContext } from '../../../contexts/LessonContext/LessonContextProv
 import MonacoEditor from '../../Editor/MonacoEditor';
 import UserType from '../../../models/UserType';
 import MutableStringPicker from './MutableStringPicker/MutableStringPicker';
+import { FaPlay } from "react-icons/fa";
+import { HiOutlineDotsHorizontal } from "react-icons/hi";
+import { GrDocumentTest } from "react-icons/gr";
+import { IoMdAdd, IoIosRemove } from "react-icons/io";
 
 const createValidationRegex = (immutablePhrases) => {
   immutablePhrases = immutablePhrases.map(phrase => escapeRegExp(phrase.trim()));
@@ -28,8 +31,12 @@ const ImmutableCodeCell = memo(function ImmutableCodeCell(props) {
     const {updateCell} = useContext(LessonContext);
     const [isExecuting, setIsExecuting] = useState(false);
     const [isConnectionError, setIsConnectionError] = useState(false);
+    const [codeButtonsStyle, setCodeButtonsStyle] = useState({visibility: 'hidden'});
+    const [testButtonsStyle, setTestButtonsStyle] = useState({visibility: 'hidden'});
   
     const compile = async () => {
+      clearCodeOutput()
+      clearTestOutput()
       setIsConnectionError(false);
       setIsExecuting(true);
       let modifiedCell = props.cell;
@@ -108,9 +115,15 @@ const ImmutableCodeCell = memo(function ImmutableCodeCell(props) {
       updateCell(modifiedCell, props.cellIdx, props.currentPage, props.sectionIdx);
     }
   
-    const clearOutput = async () => {
-      let modifiedCell = props.cell;
+    const clearCodeOutput = async () => {
+      let modifiedCell = window.structuredClone(props.cell);
       modifiedCell.output = "";
+      updateCell(modifiedCell, props.cellIdx, props.currentPage, props.sectionIdx);
+    };
+  
+    const clearTestOutput = async () => {
+      let modifiedCell = window.structuredClone(props.cell);
+      modifiedCell.outputTest = "";
       updateCell(modifiedCell, props.cellIdx, props.currentPage, props.sectionIdx);
     };
   
@@ -118,27 +131,48 @@ const ImmutableCodeCell = memo(function ImmutableCodeCell(props) {
       <div data-cy="immutable-code-cell" ref={containerRef} 
       className={'code-cell-container'}
       >
-        <p style={{color: "white"}}>Możesz modyfikować tylko część kodu oznaczoną tekstem "{props.cell.mutableString}". Pozostałe zmiany w kodzie zostaną cofnięte</p>
+        <p style={{color: "var(--code-color)"}}>Możesz modyfikować tylko część kodu oznaczoną tekstem "{props.cell.mutableString}". Pozostałe zmiany w kodzie zostaną cofnięte</p>
         {props.userType === UserType.teacher ?
         // TEACHER VERSION
         <React.Fragment>
-        <MonacoEditor ref={{containerRef: containerRef, editorRef: editorRef}} updateEditorValueHandler={updateEditorValueHandler} text={props.text}></MonacoEditor>
-        <div className='editor-button-container'>
-         <Button onClick={compile} className='editor-button' variant="success" disabled={isExecuting}>{!isExecuting ? 'Run code' : 'Running...'}</Button>{' '}
-         {props.cell.test === undefined ? <Button onClick={() => {addEditor("test")}} className='editor-button' variant="success">{'Add tests'}</Button> : null}
-         <Button onClick={clearOutput} className='clear-output-editor-button' variant="danger" style={{ display: !props.cell.output ? "none" : "inline"}}>Clear output</Button>{' '}
+        <div onMouseEnter={e => {
+            setCodeButtonsStyle({visibility: 'visible'});
+          }}
+          onMouseLeave={e => {
+            setCodeButtonsStyle({visibility: 'hidden'})
+          }}>
+          <MonacoEditor ref={{containerRef: containerRef, editorRef: editorRef}} updateEditorValueHandler={updateEditorValueHandler} text={props.text}/>  
+        </div>
+        <div className='editor-button-container'
+          onMouseEnter={e => {
+            setCodeButtonsStyle({visibility: 'visible'});
+          }}
+          onMouseLeave={e => {
+            setCodeButtonsStyle({visibility: 'hidden'})
+          }}>
+         <button style={codeButtonsStyle} data-cy="code-run-button" onClick={compile} className='editor-button' disabled={isExecuting}>{!isExecuting ? <FaPlay color='white'/> : <HiOutlineDotsHorizontal color="white" />}</button>
+         {props.cell.test === undefined ? <button style={codeButtonsStyle} data-cy="add-tests-button" onClick={() => {addEditor("test")}} className='editor-button' variant="success"><IoMdAdd color="white" /><GrDocumentTest className='grIcon' /></button> : null}
         </div>  
         {isConnectionError ? <div style={{color: 'red'}}>There was some error connecting to the compiler. Please check if all app components are running</div> : null}
-        {props.cell.outputTest && <div> Test Output <OutputCell output={props.cell.outputTest}></OutputCell></div>}
-        {props.cell.output && <div><OutputCell output={props.cell.output}></OutputCell></div>}
+        {props.cell.outputTest && <div> <OutputCell titleValue="Rezultat testów" clearOutputHandler={clearTestOutput} output={props.cell.outputTest}></OutputCell></div>}
+        {props.cell.output && <div><OutputCell titleValue="Rezultat wykonania" clearOutputHandler={clearCodeOutput} output={props.cell.output}></OutputCell></div>}
         {props.cell.test !== undefined ? 
-        <div className={"code-cell-container"}> 
+        // TEST EDITOR
+        <div className={"code-cell-container"}
+            onMouseEnter={e => {
+              setTestButtonsStyle({visibility: 'visible'});
+            }}
+            onMouseLeave={e => {
+              setTestButtonsStyle({visibility: 'hidden'})
+            }}> 
           <MonacoEditor ref={{containerRef: containerRef, editorRef: testEditorRef}} updateEditorValueHandler={updateTestEditorValueHandler} text={props.cell.test}></MonacoEditor>
           <div className='editor-button-container'>
-            <Button onClick={() => {removeEditor("test")}} className='editor-button' variant="danger">{'Remove tests'}</Button>
+          <button style={testButtonsStyle} data-cy="remove-tests-button" onClick={() => {removeEditor("test")}} className='editor-button' variant="danger"><IoIosRemove color="white" /><GrDocumentTest className='grIcon' /></button>
           </div>  
         </div>: null}
-        {props.cell.reference !== undefined ? 
+        
+        {// REFERENCE EDITOR
+        props.cell.reference !== undefined ? 
         <div className={"code-cell-container"}> 
           <MonacoEditor ref={{containerRef: containerRef, editorRef: referenceEditorRef}} updateEditorValueHandler={updateReferenceEditorValueHandler} text={props.cell.reference}></MonacoEditor>
         </div>: null}
@@ -147,13 +181,27 @@ const ImmutableCodeCell = memo(function ImmutableCodeCell(props) {
         : 
         // STUDENT VERSION
         <React.Fragment>
-        <MonacoEditor ref={{containerRef: containerRef, editorRef: editorRef}} updateEditorValueHandler={updateEditorValueHandler} text={props.text}></MonacoEditor>
-        <div className='editor-button-container'>
-         <Button onClick={compile} className='editor-button' variant="success" disabled={isExecuting}>{!isExecuting ? 'Run code' : 'Running...'}</Button>{' '}
+        <div
+          onMouseEnter={e => {
+            setCodeButtonsStyle({visibility: 'visible'});
+          }}
+          onMouseLeave={e => {
+            setCodeButtonsStyle({visibility: 'hidden'})
+          }}>
+          <MonacoEditor ref={{containerRef: containerRef, editorRef: editorRef}} updateEditorValueHandler={updateEditorValueHandler} text={props.text}></MonacoEditor>
+        </div>
+        <div className='editor-button-container'
+          onMouseEnter={e => {
+            setCodeButtonsStyle({visibility: 'visible'});
+          }}
+          onMouseLeave={e => {
+            setCodeButtonsStyle({visibility: 'hidden'})
+          }}>
+         <button style={codeButtonsStyle} data-cy="code-run-button" onClick={compile} className='editor-button' disabled={isExecuting}>{!isExecuting ? <FaPlay color='white'/> : <HiOutlineDotsHorizontal color="white" />}</button>
         </div>  
         {isConnectionError ? <div style={{color: 'red'}}>There was some error connecting to the compiler. Please check if all app components are running</div> : null}
-        {props.cell.outputTest && <div> Test Output <OutputCell output={props.cell.outputTest}></OutputCell></div>}
-        {props.cell.output && <div> Code output <OutputCell output={props.cell.output}></OutputCell></div>}
+        {props.cell.outputTest && <div><OutputCell titleValue="Rezultat testów" clearOutputHandler={clearTestOutput} output={props.cell.outputTest}></OutputCell></div>}
+        {props.cell.output && <div><OutputCell titleValue="Rezultat wykonania" clearOutputHandler={clearCodeOutput} output={props.cell.output}></OutputCell></div>}
         </React.Fragment>
         }
       </div>

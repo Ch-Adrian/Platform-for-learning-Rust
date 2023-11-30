@@ -55,9 +55,14 @@ public class LessonService {
         } catch (FileNotFoundException ex) {
             logger.error(ex.getMessage());
         }
-        assert reader != null;
-        logger.info("Lesson loaded successfully: " + name);
-        return gson.fromJson(reader, Lesson.class);
+        Lesson lesson = gson.fromJson(Objects.requireNonNull(reader), Lesson.class);
+        logger.info("Lesson loaded: " + name);
+        try {
+            reader.close();
+        } catch (Exception ex) {
+            logger.error("Reader could not be closed!");
+        }
+        return lesson;
     }
 
     public List<LessonInfoDTO> getAllLessonsInfo() {
@@ -94,20 +99,25 @@ public class LessonService {
         }
         File oldFile = new File(rootDir + File.separator + oldName);
         File newFile = new File(rootDir + File.separator + newName);
-        oldFile.renameTo(newFile);
+        boolean isRenamed = oldFile.renameTo(newFile);
+        if (isRenamed) {
+            logger.info("Lessons renamed: " + oldName + " -> " + newName);
+        } else {
+            logger.error("Lesson could not be renamed!");
+        }
     }
 
     public void deleteLesson(String name) {
         if (!existsLesson(name)) {
             logger.error("Lesson not found: " + name);
             throw new LessonNotFoundException(name);
-        }
+        }  else {
         try {
             Files.delete(Path.of(rootDir + File.separator + name));
         } catch (IOException ex) {
             logger.error("Failed to delete lesson: " + name);
         }
-        logger.info("Lesson deleted successfully: " + name);
+        logger.info("Lesson deleted successfully: " + name);}
     }
 
     public void deleteLessons(List<String> names) {

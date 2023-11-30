@@ -28,19 +28,18 @@ const ErrorFallback = ({ error }) => (
 
 
 const DEFINED_USER_TYPE = currentUser;
-// const DEFAULT_LESSON = require('../../../assets/DefaultNewLesson.json');
-// const DEFAULT_LESSON_NAME = "Nowa lekcja";
 
 const NameHeader = ({lessonName, setLessonName, lessonDefinition}) => {
   const nameInput = useRef(null);
   const handleNameSubmit = async (e) => {
     const oldName = lessonName;
     const newName = e.currentTarget.textContent;
-    setLessonName(newName);
     try {
       await LessonFileSaveService.renameLesson(oldName, newName);
-      await LessonFileSaveService.saveLesson(lessonDefinition, newName);
-    } catch(e) {console.log(e)}
+    } catch(e) {
+      console.log(e)
+    }
+    setLessonName(newName);
   }
 
   const handleNameChange = (e) => {

@@ -35,11 +35,20 @@ const NameHeader = ({lessonName, setLessonName, lessonDefinition}) => {
     const oldName = lessonName;
     const newName = e.currentTarget.textContent;
     try {
-      await LessonFileSaveService.renameLesson(oldName, newName);
-    } catch(e) {
-      console.log(e)
+      const response = await LessonFileSaveService.getAllLessons();
+      console.log(response.data)
+      if (response.data.some(lesson => lesson.name === oldName + ".json")) {
+        try {
+          await LessonFileSaveService.renameLesson(oldName, newName);
+        } catch(e) {
+          console.log(e)
+        }
+      }
+      setLessonName(newName);
+    } catch (error) {
+      console.error(error);
     }
-    setLessonName(newName);
+    
   }
 
   const handleNameChange = (e) => {

@@ -66,12 +66,18 @@
 .section-header{
     color: var(--title-color);
     font-size: 2rem;
-    text-align: center;
-    padding-left: 20px;
+    padding-left: 1.3rem;
+    overflow: hidden;
+    overflow-wrap: break-word;
+}
+
+.header-name-container {
+    overflow: auto;
+    overflow-wrap: break-word;
 }
 
 .section-header-container {
   display: flex;
   border-bottom: solid var(--accent-color) 2px;
-  padding-top: 10px;
+  padding-top: 0.7rem;
 }

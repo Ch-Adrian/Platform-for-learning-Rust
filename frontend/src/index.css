@@ -23,6 +23,12 @@ code {
   }
 }
 
+@media (min-width: 1920px) {
+  * {
+    font-size: 22px;
+  }
+}
+
 @media (min-width: 2560px) {
   * {
     font-size: 30px;

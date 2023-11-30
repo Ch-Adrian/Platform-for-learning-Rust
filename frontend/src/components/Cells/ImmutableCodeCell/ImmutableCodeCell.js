@@ -165,6 +165,7 @@ const ImmutableCodeCell = memo(function ImmutableCodeCell(props) {
             onMouseLeave={e => {
               setTestButtonsStyle({visibility: 'hidden'})
             }}> 
+          <div className='editor-caption'>Testy</div>
           <MonacoEditor ref={{containerRef: containerRef, editorRef: testEditorRef}} updateEditorValueHandler={updateTestEditorValueHandler} text={props.cell.test}></MonacoEditor>
           <div className='editor-button-container'>
           <button style={testButtonsStyle} data-cy="remove-tests-button" onClick={() => {removeEditor("test")}} className='editor-button' variant="danger"><IoIosRemove color="white" /><GrDocumentTest className='grIcon' /></button>
@@ -174,6 +175,7 @@ const ImmutableCodeCell = memo(function ImmutableCodeCell(props) {
         {// REFERENCE EDITOR
         props.cell.reference !== undefined ? 
         <div className={"code-cell-container"}> 
+          <div className='editor-caption'>Kod ze wzorcem początkowym - tu zdefiniuj, gdzie student powinien mieć możliwość edycji kodu</div>
           <MonacoEditor ref={{containerRef: containerRef, editorRef: referenceEditorRef}} updateEditorValueHandler={updateReferenceEditorValueHandler} text={props.cell.reference}></MonacoEditor>
         </div>: null}
         <MutableStringPicker initialMutableString={props.cell.mutableString} updateMutableStringHandler={updateMutableStringHandler}></MutableStringPicker>

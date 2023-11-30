@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useContext, useState, useRef, useEffect, useCallback } from 'react'
-// import button from 'react-bootstrap/esm/button';
 import * as FaIcons from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import './LessonPageContainer.css'
@@ -18,6 +17,14 @@ import ConfigModal from '../../Modals/ConfigModal/ConfigModal';
 import CodeExecutorService from '../../../services/CodeExecutorService';
 import LessonSaveModal from '../../Modals/LessonSaveModal/LessonSaveModal';
 import { ErrorBoundary } from 'react-error-boundary';
+import { HiArrowUturnLeft } from "react-icons/hi2";
+import { FaSave } from "react-icons/fa";
+import { ImFolderDownload } from "react-icons/im";
+import DescriptionIcon from '@mui/icons-material/Description';
+import { IoMdAdd, IoIosRemove } from "react-icons/io";
+import SettingsIcon from '@mui/icons-material/Settings';
+
+
 
 const ErrorFallback = ({ error }) => (
   <div item-cy="render-errror-message" style={{color: "red"}}>
@@ -56,7 +63,7 @@ const NameHeader = ({lessonName, setLessonName, lessonDefinition}) => {
   }
 
   return (
-    <div data-cy="lesson-name" ref={nameInput} contentEditable="true" className='name-header general-button-item' onKeyDown={handleNameChange} onBlur={handleNameSubmit} suppressContentEditableWarning={true} spellCheck="false"> 
+    <div data-cy="lesson-name" title={lessonName} ref={nameInput} contentEditable="true" className='name-header general-button-item' onKeyDown={handleNameChange} onBlur={handleNameSubmit} suppressContentEditableWarning={true} spellCheck="false"> 
       {lessonName}
     </div>
   );
@@ -188,11 +195,6 @@ const LessonPageContainer = () => {
     handleOpen();
   }
 
-  // if (didCatch) {
-  //   console.error(error);
-  //   return <ErrorFallback />;
-  // }
-
   url.pathname = path.join("/")
   localStorage.setItem(lessonDefinition, lessonDefinition);
 
@@ -206,10 +208,10 @@ const LessonPageContainer = () => {
           <div className='general-buttons'>
             <div style={{display: 'flex'}} className='left-side-buttons'>
               <NameHeader lessonName={lessonName} setLessonName={setLessonName} lessonDefinition={lessonDefinition}></NameHeader>
-              <button data-cy="back-button" className='general-button-item' variant='light' onClick={() => setSaveLessonModalOpen(true)}>Wróć</button>
-              <button data-cy="save-button" className='general-button-item' variant='light' onClick={handleSave}>Zapisz</button>
-              <button className='general-button-item' variant='light' onClick={handleDownload}>Pobierz</button>
-              <div className='status-info'>
+              <button data-cy="back-button" title="Wróć" className='general-button-item' onClick={() => setSaveLessonModalOpen(true)}><HiArrowUturnLeft/></button>
+              <button data-cy="save-button" title="Zapisz" className='general-button-item' onClick={handleSave}><FaSave /></button>
+              <button className='general-button-item' title="Pobierz" onClick={handleDownload}><ImFolderDownload /></button>
+              <div className='status-info' title="Status">
                 {isCargoError ? <p>Error building project! Check cargo file</p> : null}
                 {!isCargoCompiled ? <p>Budowanie projektu...</p> : null}
                 {isCargoCompiled && !isCargoError ? <p>Gotowe</p> : null}
@@ -217,9 +219,9 @@ const LessonPageContainer = () => {
             </div>
             <div style={{display: 'flex', marginRight: '1rem'}} className='right-side-buttons'>
               {DEFINED_USER_TYPE === UserType.teacher && <UserTypeSwitch handleSwitchUserType={handleSwitchUserType}/>}
-              {DEFINED_USER_TYPE === UserType.teacher && <button data-cy="add-page-button" className='general-button-item' variant='light' onClick={newPageEvent}>Nowa strona</button>}
-              {DEFINED_USER_TYPE === UserType.teacher && <button data-cy="remove-page-button" className='general-button-item' variant='light' disabled={lessonDefinition && lessonDefinition.pages && lessonDefinition.pages.length === 1} onClick={deletePageEvent}>Usuń stronę</button>}
-              <button data-cy="config-button" className='general-button-item' variant='light' onClick={() => setConfigModalOpen(true)}>Konfiguracja</button>
+              {DEFINED_USER_TYPE === UserType.teacher && <button data-cy="add-page-button" title="Dodaj stronę" className='general-button-item' variant='light' onClick={newPageEvent}><IoMdAdd color="white" /><DescriptionIcon/></button>}
+              {DEFINED_USER_TYPE === UserType.teacher && <button data-cy="remove-page-button"  title="Usuń stronę" className='general-button-item' variant='light' disabled={lessonDefinition && lessonDefinition.pages && lessonDefinition.pages.length === 1} onClick={deletePageEvent}><IoIosRemove /><DescriptionIcon/></button>}
+              <button data-cy="config-button" className='general-button-item' variant='light'  title="Konfiguracja Cargo.toml" onClick={() => setConfigModalOpen(true)}><SettingsIcon /></button>
             </div>
           </div>
         </div>
@@ -245,7 +247,7 @@ const LessonPageContainer = () => {
       
                             <li key={idx} className='nav-text-inner' >
                                 <HashLink to={urlPath+"/"+itemDesc.pIdx+"/#section"+itemDesc.sIdx} onClick={showSidebar}>
-                                    <span>{itemDesc.title}</span>
+                                    <span title={itemDesc.title}>{itemDesc.title}</span>
                                 </HashLink>
                             </li>
       

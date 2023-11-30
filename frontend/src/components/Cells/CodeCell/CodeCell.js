@@ -131,6 +131,7 @@ const CodeCell = memo(function CodeCell(props) {
           onMouseLeave={e => {
             setTestButtonsStyle({visibility: 'hidden'})
           }}> 
+        <div className='editor-caption'>Testy</div>
         <MonacoEditor ref={{containerRef: containerRef, editorRef: testEditorRef}} updateEditorValueHandler={updateTestEditorValueHandler} text={props.cell.test}></MonacoEditor>
         <div className='editor-button-container'>
           <button style={testButtonsStyle} data-cy="remove-tests-button" onClick={() => {removeEditor("test")}} className='editor-button' variant="danger"><IoIosRemove color="white" /><GrDocumentTest className='grIcon' /></button>
@@ -144,6 +145,7 @@ const CodeCell = memo(function CodeCell(props) {
           onMouseLeave={e => {
             setReferenceButtonsStyle({visibility: 'hidden'})
           }}> 
+        <div className='editor-caption'>Kod referencyjny</div>
         <MonacoEditor ref={{containerRef: containerRef, editorRef: referenceEditorRef}} updateEditorValueHandler={updateReferenceEditorValueHandler} text={props.cell.reference}></MonacoEditor>
         <div className='editor-button-container'>
           <button style={referenceButtonsStyle} data-cy="remove-reference-button" onClick={() => {removeEditor("reference")}} className='editor-button' variant="danger"><IoIosRemove color="white" /><VscReferences color="white" /></button>

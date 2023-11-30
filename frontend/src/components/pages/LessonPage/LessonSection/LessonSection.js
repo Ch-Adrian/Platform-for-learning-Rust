@@ -30,15 +30,17 @@ const SectionHeader = ({userType, page, sectionIdx}) => {
     }
 
     return (
-        <div>
+        <div className='header-name-container'>
             <div data-cy="section-name"
              ref={headerInput}
               contentEditable={userType === UserType.teacher} 
-              className='section-header' 
+              className='section-header'
               onBlur={e => changeTitleHandler(e.currentTarget.textContent) } 
               onKeyDown={handleHeaderChange} 
               suppressContentEditableWarning={true} 
-              spellCheck="false"> 
+              spellCheck="false"
+            //   style={userType!==UserType.teacher ? {display: 'block'} : {display: 'initial'}}
+              > 
                 {getTitle(page, sectionIdx)}
             </div>
         </div>
@@ -59,7 +61,7 @@ const LessonSection = (props) => {
               <SectionHeader userType={props.userType} page={props.page} sectionIdx={props.sectionIdx}/>
               <div className='section-misc-buttons-container'>
                   {props.userType === UserType.teacher && <div data-cy="section-drag" className='section-grab' {...props.handleDrag} ><TbGridDots/></div>}
-                  {props.userType === UserType.teacher && <button data-cy="section-delete-button" className='section-delete-button' onClick={removeSectionHandler}><BsTrash3/></button>}
+                  {props.userType === UserType.teacher && <div data-cy="section-delete-button" className='section-delete-button' onClick={removeSectionHandler}><BsTrash3/></div>}
                   {props.userType === UserType.teacher && <div ><MovableMenuContext pageID={props.page} sectionID={props.sectionIdx} ><TbArrowsMove /></MovableMenuContext></div> }
               </div>
             </div>

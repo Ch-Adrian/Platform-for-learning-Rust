@@ -9,13 +9,13 @@
 .editor-button-container {
     display: flex;
     flex-direction: row;
-    gap: 1em;
-    margin-bottom: 1em;
+    gap: 1rem;
+    margin-bottom: 1rem;
     background-color: var(--background-cell-color);
     padding: 0.3em;
     padding-right: 0px;
     padding-left: 0px;
-    height: 35px;
+    height: 2.3rem;
 }
 
 
@@ -35,4 +35,9 @@
 
 .editor-button:hover {
     background-color: var(--buttons-color-hovered);
+}
+
+.editor-caption {
+    color: var(--code-color);
+    margin-bottom: 0.2rem;
 }

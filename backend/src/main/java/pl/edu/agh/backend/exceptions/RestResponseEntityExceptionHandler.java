@@ -1,4 +1,4 @@
-package pl.edu.agh.backend.controllers;
+package pl.edu.agh.backend.exceptions;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -12,8 +12,18 @@ import pl.edu.agh.backend.exceptions.LessonsNameConflictException;
 
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
-    @ExceptionHandler(value = {LessonsNameConflictException.class, LessonNotFoundException.class})
+    @ExceptionHandler(value = {LessonsNameConflictException.class})
     protected ResponseEntity<Object> handleConflicts(RuntimeException ex, WebRequest request) {
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.CONFLICT, request);
+    }
+
+    @ExceptionHandler(value = {LessonNotFoundException.class})
+    protected ResponseEntity<Object> handleNotFound(RuntimeException ex, WebRequest request) {
+        return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(value = {LessonNotSavedException.class})
+    protected ResponseEntity<Object> handleNotSaved(RuntimeException ex, WebRequest request) {
+        return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 }

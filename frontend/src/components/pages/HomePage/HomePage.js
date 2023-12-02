@@ -9,6 +9,8 @@ import LessonFileSaveService from '../../../services/LessonFileHandleService';
 import ListLessons from '../../miscellaneous/ListLessons/ListLessons';
 import defaultCargoToml from '../../../config/cargoToml';
 
+const BACKEND_PATH = "pl.edu.agh.backend.lesson.cells."
+
 function HomePage() {
     const navigate = useNavigate();
     const {setLessonDefinition, setLessonName} = useContext(LessonContext);
@@ -23,21 +25,21 @@ function HomePage() {
 
     const loadImportedLesson = async (lessonFile, lessonName) => {
     
-        const newLessonName = await LessonFileSaveService.createLesson(lessonFile, lessonName.split('.json')[0])
-        .catch((e) => console.log(e));
+        lessonFile.pages.forEach((page) => {
+            page.sections.forEach((section) => {
+                section.cells.forEach((cell) => {
+                    cell.profileType = BACKEND_PATH + cell.type;
+                });
+            });
+        });
 
-        const name = newLessonName.data;
-        setLessonName(name.split('.json')[0]);
-        handleConfigEmpty(lessonFile);
-        setLessonDefinition(lessonFile);
-        
-        
-        navigate(`/lesson/${name}/0`, {state: {lessonFile: lessonFile}});
+        const uniqueLessonName = await LessonFileSaveService.createLesson(lessonFile, lessonName);
+        loadLesson(lessonFile, uniqueLessonName.data);
     }
 
     const loadNewLesson = async () => {
         const lessonFile = await LessonFileSaveService.getDefaultLesson();
-        loadImportedLesson(lessonFile.data.lesson, lessonFile.data.name);
+        loadLesson(lessonFile.data.lesson, lessonFile.data.name);
     }
 
     const loadLesson = async (lessonFile, lessonName) => {

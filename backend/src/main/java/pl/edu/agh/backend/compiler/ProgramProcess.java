@@ -3,6 +3,7 @@ package pl.edu.agh.backend.compiler;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import pl.edu.agh.backend.compiler.files.RustFile;
 import pl.edu.agh.backend.config.CompilerConfiguration;
 import pl.edu.agh.backend.config.CompilerResponseConfig;
 import pl.edu.agh.backend.exceptions.CompilerErrorException;
@@ -11,7 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
-public class RustProgramProcess {
+public class ProgramProcess {
 
     private final CompilerResponseConfig compilerResponseConfig;
     private final RustFile rustFile;
@@ -19,7 +20,7 @@ public class RustProgramProcess {
     private final StringBuilder compilerMessage;
     private static final Logger logger = LogManager.getLogger();
 
-    public RustProgramProcess(RustFile rustFile) {
+    public ProgramProcess(RustFile rustFile) {
         this.compilerResponseConfig = new AnnotationConfigApplicationContext(CompilerConfiguration.class).getBean(CompilerResponseConfig.class);
         this.processBuilder = new ProcessBuilder();
         this.compilerMessage = new StringBuilder();

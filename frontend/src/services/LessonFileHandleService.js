@@ -1,10 +1,10 @@
 import axios from 'axios'
-const RUST_COMPILER_REST_API_URL = "http://localhost:8080/lessons/"
+const RUST_COMPILER_REST_API_URL = "http://localhost:8080/lessons"
 
 const LessonFileSaveService = {
     saveLesson: async (lessonBody, lessonName) => {
         const response = await axios
-        .post(RUST_COMPILER_REST_API_URL + "save", {lesson: lessonBody, name: lessonName+'.json'});
+        .post(RUST_COMPILER_REST_API_URL + "/" + lessonName + ".json", lessonBody);
         if (response.status !== 200) {
             throw new Error(response.data);
         } else {
@@ -13,16 +13,21 @@ const LessonFileSaveService = {
     },
     createLesson: async (lessonBody, lessonName) => {
         const response = await axios
-        .post(RUST_COMPILER_REST_API_URL + "create", {lesson: lessonBody, name: lessonName+'.json'});
+        .post(RUST_COMPILER_REST_API_URL, {name: lessonName + ".json", lesson: lessonBody});
         if (response.status !== 200) {
             throw new Error(response.data);
         } else {
             return response;
         }
     },
-    renameLesson: async (oldName, newName) => {
+    renameLesson: async (oldName, newLessonName) => { 
+        let config = {
+            headers: {
+                "Content-Type": "text/plain"
+            }
+          }
         const response = await axios
-        .post(RUST_COMPILER_REST_API_URL + "rename", {newName: newName+'.json', oldName: oldName+'.json'});
+        .put(RUST_COMPILER_REST_API_URL + "/" + oldName + ".json", newLessonName + ".json", config);
         if (response.status !== 200) {
             throw new Error(response.data);
         } else {
@@ -31,7 +36,7 @@ const LessonFileSaveService = {
     },
     getAllLessons: async () => {
         const response = await axios
-        .get(RUST_COMPILER_REST_API_URL + "list");
+        .get(RUST_COMPILER_REST_API_URL);
         if (response.status !== 200) {
             throw new Error(response.data);
         } else {
@@ -39,15 +44,16 @@ const LessonFileSaveService = {
         }
     },
     getLesson: async (name) => {
-        const response = await axios.get(RUST_COMPILER_REST_API_URL + "open/" + name);
+        const response = await axios.get(RUST_COMPILER_REST_API_URL + "/" + name);
         if (response.status !== 200) {
             throw new Error(response.data);
         } else {
             return response;
         }
     },
+    
     getDefaultLesson: async () => {
-        const response = await axios.get(RUST_COMPILER_REST_API_URL + "open/new");
+        const response = await axios.get(RUST_COMPILER_REST_API_URL + "/default");
         if (response.status !== 200) {
             throw new Error(response.data);
         } else {
@@ -55,26 +61,21 @@ const LessonFileSaveService = {
         }
     },
     deleteSelectedLessons: async (selectedLessonNames) => {
-        try {
-          const response = await axios.delete(RUST_COMPILER_REST_API_URL + "delete", {
-            "lessonsToDelete": [
-              "NewLesson(1).json", "DUPA.json"
-            ]
-          });
-          
-          
-      
-          if (response.status !== 200) {
+        const response = await axios.delete(RUST_COMPILER_REST_API_URL + '/deleteBatch', {data: selectedLessonNames});
+        if (response.status !== 200) {
             throw new Error(response.data);
-          } else {
+        } else {
             return response;
-          }
-        } catch (error) {
-          console.error("Error:", error);
-          throw error;
         }
-      }      
-
+    },
+    deleteLesson: async (name) => {
+        const response = await axios.delete(RUST_COMPILER_REST_API_URL + "/" + name);
+        if (response.status !== 200) {
+            throw new Error(response.data);
+        } else {
+            return response;
+        }
+    }       
 }
 
 export default LessonFileSaveService;

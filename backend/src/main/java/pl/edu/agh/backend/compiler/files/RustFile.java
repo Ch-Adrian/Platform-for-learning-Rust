@@ -1,4 +1,4 @@
-package pl.edu.agh.backend.compiler;
+package pl.edu.agh.backend.compiler.files;
 
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;

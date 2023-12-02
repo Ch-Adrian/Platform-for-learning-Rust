@@ -2,8 +2,8 @@ package pl.edu.agh.backend.config;
 
 
 import pl.edu.agh.backend.compiler.CompilationResponse;
-import pl.edu.agh.backend.compiler.RustFile;
-import pl.edu.agh.backend.compiler.RustTestsFile;
+import pl.edu.agh.backend.compiler.files.RustFile;
+import pl.edu.agh.backend.compiler.files.RustTestsFile;
 import pl.edu.agh.backend.compiler.Status;
 
 public class CompilerResponseConfig {

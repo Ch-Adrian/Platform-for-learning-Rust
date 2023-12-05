@@ -3,10 +3,11 @@
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 1rem;
+    margin-top: 1rem;
 }
 
 .mutable-string-container p {
-    color: white;
+    color: var(--code-color);
     margin-top: auto;
     margin-bottom: auto;
 }
@@ -15,5 +16,5 @@
     background-color: #262335;
     border: none;
     border-radius: 3px;
-    color: white;
+    color: var(--code-color);
 }

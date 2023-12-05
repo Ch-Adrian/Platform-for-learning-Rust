@@ -10,6 +10,7 @@ const LessonContextProvider = (props) => {
     useEffect(() => {
         if (window.localStorage.getItem('lessonDefinition') !== 'undefined') setLessonDefinition(JSON.parse(window.localStorage.getItem('lessonDefinition')));
         if (window.localStorage.getItem('lessonName') !== 'undefined') setLessonName(window.localStorage.getItem('lessonName'));
+        console.log('lessonname: ', window.localStorage.getItem('lessonName'));
     }, []);
 
     useEffect(() => {

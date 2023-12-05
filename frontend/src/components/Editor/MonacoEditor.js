@@ -7,6 +7,8 @@ const MonacoEditor = memo(forwardRef(function MonacoEditor(props, ref) {
     const [monaco, setMonaco] = useState(null);
     const [editorValue, setEditorValue] = useState(text);
     const prevEditorValue = useRef(text);
+    const [width, setWidth] = useState(window.innerWidth);
+    const [fontSize, setFontSize] = useState("16px");
 
     const handleEditorDidMount = (editor, monaco) => {
         setMonaco(monaco);
@@ -26,6 +28,32 @@ const MonacoEditor = memo(forwardRef(function MonacoEditor(props, ref) {
     useEffect(() => {
       prevEditorValue.current = editorValue;
     }, [editorValue])
+
+    useEffect(() => {
+      function handleResize() {
+        setWidth(window.innerWidth);
+      }
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }, [width]);
+  
+    useEffect(() => {
+      const timeOutId = setTimeout(() => {
+      monaco && document.fonts.ready.then(() => {
+        monaco.editor.remeasureFonts();
+        if (width >= 2560){
+          setFontSize("30px");
+        } else if (width >= 1920) {
+          setFontSize("22px");
+        } else if (width >= 1024) {
+          setFontSize("16px");
+        } else {
+          setFontSize("12px");
+        }
+      })}, 40);
+      return () => clearTimeout(timeOutId);
+    }, [width, monaco]);
+  
 
     useEffect(() => {
       const syncEditorValues = () => {
@@ -65,7 +93,7 @@ const MonacoEditor = memo(forwardRef(function MonacoEditor(props, ref) {
             scrollbar: {
             alwaysConsumeMouseWheel: false
             },
-            fontSize: 14,
+            fontSize: fontSize,
             wordWrap: "on",
             lineNumbers: "off",
             automaticLayout: true,

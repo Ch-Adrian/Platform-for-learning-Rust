@@ -48,6 +48,7 @@ const TextCell = (props) => {
       onBlur={blurHandler}>
       {props.userType === UserType.teacher && focus ? 
       <MDEditor
+      highlightEnable={false}
       value={value}
       onChange={setValue}
       />

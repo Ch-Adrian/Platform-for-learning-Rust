@@ -5,39 +5,12 @@ root{
     --background-buttons-color: transparent;
   }
 
-  .editor-button-container {
-      display: flex;
-      flex-direction: row;
-      gap: 1em;
-      margin-left: 10px;
-      margin-bottom: 10px;
-  }
-
-  .text-cell-container {
-    display: flex;
-    flex-direction: column;
-    padding: 1em 10px 1em 10px;
-    transition: .2s background-color box-shadow;
-    border-radius: 20px;
-}
-
-  .editor-button {
-      padding: 0.5em !important;
-  }
-
-  .clear-output-editor-button {
-      padding: 0.5em !important;
-      margin-left: auto;
-      display: "none";
-  }
   .code-cell-container {
       display: flex;
       flex-direction: column;
-      gap: 1em;
   }
 
   .code-cell-container-teacher {
-      /* padding: 1em 10px 1em 10px; */
       transition: .2s background-color box-shadow;
       border-radius: 20px;
   }

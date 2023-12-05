@@ -9,3 +9,22 @@
     white-space: pre-wrap;
     border-radius: 10px; 
 }
+
+.output-container {
+    position: relative;
+}
+
+.clear-output-editor-button {
+    position: absolute;
+    top: 0.5em;
+    right: 1em;
+    background-color: transparent !important;
+}
+
+.clear-output-editor-button > .grIcon path {
+    stroke: grey;
+}
+
+.clear-output-editor-button:hover > .grIcon path {
+    stroke: white;
+}

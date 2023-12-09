@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { useContext } from 'react'
 import "./MovableMenuContext.css"
 import { LessonContext } from '../../../../contexts/LessonContext/LessonContextProvider';
 
-const MovableMenuContext = ({pageID, sectionID, cellID=null, children}) => {
+const MovableMenuContext = ({pageID, sectionID, cellID=null, children, isSection=false}) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { lessonDefinition, setLessonDefinition } = useContext(LessonContext);
+  const firstEmptyClick = useRef(true);
 
   const changeComponentPosition = (pageDst) => {
       
@@ -32,12 +33,29 @@ const MovableMenuContext = ({pageID, sectionID, cellID=null, children}) => {
   };
 
   const handleClick = (event) => {
+      console.log("first click");
+      firstEmptyClick.current = true;
       setAnchorEl(event.currentTarget);
   };
 
   const justClose = (event) => {
     setAnchorEl(null);
   }
+
+  useEffect( () => {
+    console.log("useEffect");
+    const handleClicked = () => {
+      console.log("handleClick");
+      if (firstEmptyClick.current === false){
+        setAnchorEl(null);
+      }
+      firstEmptyClick.current = false;
+    }
+    window.addEventListener("click", handleClicked);
+    return () => {
+      window.removeEventListener("click", handleClicked);
+    };
+  }, []);
 
   return (
       <div>
@@ -54,10 +72,11 @@ const MovableMenuContext = ({pageID, sectionID, cellID=null, children}) => {
               open={Boolean(anchorEl)}
           >
           {lessonDefinition.pages.map((content, idx) => {
-            // if(content.sections.length >= 1)
-              return<MenuItem key={idx} onClick={handleClose(idx)}>{"Page "+(idx+1)+" Section: 1"}</MenuItem>;
+            if(isSection === false && content.sections.length >= 1)
+              return <MenuItem key={idx} onClick={handleClose(idx)}>{"Page "+(idx+1)+" Section: 1"}</MenuItem>;
+            else if (isSection === true)
+              return <MenuItem key={idx} onClick={handleClose(idx)}>{"Page "+(idx+1)+" Section: 1"}</MenuItem>;
           })}
-          <MenuItem key={lessonDefinition.pages.length+1} onClick={justClose}>Close</MenuItem>
           </Menu>
       </div>
   );

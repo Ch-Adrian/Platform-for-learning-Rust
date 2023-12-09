@@ -1,22 +1,19 @@
 package pl.edu.agh.backend.controllers;
 
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.backend.lesson.*;
 import pl.edu.agh.backend.services.LessonService;
 
 import java.util.List;
 
-
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
+@AllArgsConstructor
 @RequestMapping("/lessons")
+@CrossOrigin(origins = "http://localhost:3000")
 public class LessonController {
 
     private final LessonService lessonService;
-
-    public LessonController(LessonService lessonService) {
-        this.lessonService = lessonService;
-    }
 
     @PostMapping
     public String createNewLesson(@RequestBody LessonFile lessonFile) {
@@ -57,4 +54,5 @@ public class LessonController {
     public void deleteLessons(@RequestBody List<String> lessonNames) {
         lessonService.deleteLessons(lessonNames);
     }
+
 }

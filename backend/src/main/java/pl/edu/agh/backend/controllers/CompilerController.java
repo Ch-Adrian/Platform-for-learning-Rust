@@ -1,21 +1,20 @@
 package pl.edu.agh.backend.controllers;
 
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.backend.compiler.StudentInput;
 import pl.edu.agh.backend.config.RustFileConfig;
 import pl.edu.agh.backend.services.CompilerService;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
+@AllArgsConstructor
 @RequestMapping("/compilations")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CompilerController {
-    private final CompilerService compilerService;
-    private final RustFileConfig rustFileConfig;
 
-    CompilerController(CompilerService compilerService, RustFileConfig rustFileConfig) {
-        this.compilerService = compilerService;
-        this.rustFileConfig = rustFileConfig;
-    }
+    private final CompilerService compilerService;
+
+    private final RustFileConfig rustFileConfig;
 
     @PostMapping("/code")
     public String getOutput(@RequestBody StudentInput studentInput) {
@@ -32,4 +31,5 @@ public class CompilerController {
     public String configure(@RequestBody StudentInput studentInput) {
         return compilerService.configure(rustFileConfig.createRustConfigFile(studentInput.getItem())).getAll();
     }
+
 }

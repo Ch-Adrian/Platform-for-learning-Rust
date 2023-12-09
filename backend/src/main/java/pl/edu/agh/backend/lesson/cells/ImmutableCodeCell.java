@@ -11,6 +11,7 @@ public class ImmutableCodeCell extends CodeCell {
     public static ImmutableCodeCell getDefault() {
         ImmutableCodeCell immutableCodeCell = new ImmutableCodeCell();
         immutableCodeCell.setValue("To jest komórka z niemutowalnym kodem!");
+        immutableCodeCell.setMutableString("/*TO_FILL*/");
         return immutableCodeCell;
     }
 }

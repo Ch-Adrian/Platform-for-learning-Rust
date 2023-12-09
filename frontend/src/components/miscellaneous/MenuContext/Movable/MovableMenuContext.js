@@ -33,7 +33,6 @@ const MovableMenuContext = ({pageID, sectionID, cellID=null, children, isSection
   };
 
   const handleClick = (event) => {
-      console.log("first click");
       firstEmptyClick.current = true;
       setAnchorEl(event.currentTarget);
   };
@@ -43,9 +42,7 @@ const MovableMenuContext = ({pageID, sectionID, cellID=null, children, isSection
   }
 
   useEffect( () => {
-    console.log("useEffect");
     const handleClicked = () => {
-      console.log("handleClick");
       if (firstEmptyClick.current === false){
         setAnchorEl(null);
       }

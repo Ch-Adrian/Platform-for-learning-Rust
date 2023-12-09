@@ -1,5 +1,6 @@
 package pl.edu.agh.backend.lesson.cells;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.gson.annotations.SerializedName;
@@ -28,6 +29,7 @@ import pl.edu.agh.backend.serialization.JsonType;
         @JsonSubTypes.Type(value = QuizCell.class, name = "QuizCell"),
         @JsonSubTypes.Type(value = TilesCell.class, name = "TilesCell")
 })
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Cell {
     @SerializedName("type")
     private String type;

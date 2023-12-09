@@ -3,7 +3,7 @@ package pl.edu.agh.backend.exceptions;
 import lombok.Getter;
 
 @Getter
-public class CompilerErrorException extends Exception {
+public class CompilerErrorException extends RuntimeException {
     private final String message;
     private final String rustFile;
 

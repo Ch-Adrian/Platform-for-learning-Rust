@@ -5,21 +5,21 @@ import lombok.Getter;
 @Getter
 public class StudentInput {
 
-    private final String item;
+    private final String codeContent;
     private final String testContent;
 
     public StudentInput() {
-        item = "";
-        testContent = "";
-    }
-
-    public StudentInput(String item) {
-        this.item = item;
+        this.codeContent = "";
         this.testContent = "";
     }
 
-    public StudentInput(String item, String testContent) {
-        this.item = item;
+    public StudentInput(String codeContent) {
+        this.codeContent = codeContent;
+        this.testContent = "";
+    }
+
+    public StudentInput(String codeContent, String testContent) {
+        this.codeContent = codeContent;
         this.testContent = testContent;
     }
 }

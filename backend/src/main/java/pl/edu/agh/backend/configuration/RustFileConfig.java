@@ -1,15 +1,16 @@
-package pl.edu.agh.backend.config;
+package pl.edu.agh.backend.configuration;
 
 import pl.edu.agh.backend.compiler.files.RustConfigFile;
 import pl.edu.agh.backend.compiler.files.RustFile;
 import pl.edu.agh.backend.compiler.files.RustTestsFile;
+import pl.edu.agh.backend.factories.CommandsFactory;
 
 public class RustFileConfig {
 
-    private final CommendsConfiguration commendsConfiguration;
+    private final CommandsFactory commandsFactory;
 
-    public RustFileConfig(CommendsConfiguration commendsConfiguration) {
-        this.commendsConfiguration = commendsConfiguration;
+    public RustFileConfig(CommandsFactory commandsFactory) {
+        this.commandsFactory = commandsFactory;
     }
 
     public RustFile createRustFile(String content) {
@@ -17,7 +18,7 @@ public class RustFileConfig {
                 .codeFileName("main.rs")
                 .directory("src/main/resources/rust")
                 .content(content)
-                .commandsFactory(commendsConfiguration.getOperatingSystem())
+                .commandsFactory(commandsFactory)
                 .build();
     }
 
@@ -27,7 +28,7 @@ public class RustFileConfig {
                 .directory("src/main/resources/rust")
                 .content(content)
                 .testContent(testContent)
-                .commandsFactory(commendsConfiguration.getOperatingSystem())
+                .commandsFactory(commandsFactory)
                 .build();
     }
 
@@ -37,7 +38,7 @@ public class RustFileConfig {
                 .configFileName("Cargo.toml")
                 .directory("src/main/resources/rust")
                 .configContent(configContent)
-                .commandsFactory(commendsConfiguration.getOperatingSystem())
+                .commandsFactory(commandsFactory)
                 .build();
     }
 }

@@ -4,8 +4,8 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import pl.edu.agh.backend.compiler.files.RustFile;
-import pl.edu.agh.backend.config.CompilerConfiguration;
-import pl.edu.agh.backend.config.CompilerResponseConfig;
+import pl.edu.agh.backend.configuration.AppConfig;
+import pl.edu.agh.backend.configuration.CompilerResponseConfig;
 import pl.edu.agh.backend.exceptions.CompilerErrorException;
 import java.io.*;
 import org.apache.logging.log4j.LogManager;
@@ -21,10 +21,11 @@ public class ProgramProcess {
     private static final Logger logger = LogManager.getLogger();
 
     public ProgramProcess(RustFile rustFile) {
-        this.compilerResponseConfig = new AnnotationConfigApplicationContext(CompilerConfiguration.class).getBean(CompilerResponseConfig.class);
         this.processBuilder = new ProcessBuilder();
         this.compilerMessage = new StringBuilder();
         this.rustFile = rustFile;
+        this.compilerResponseConfig = new AnnotationConfigApplicationContext(AppConfig.class)
+                .getBean(CompilerResponseConfig.class);
     }
 
     private CompilationResponse compileProgram() throws CompilerErrorException, IOException, InterruptedException {
@@ -36,7 +37,9 @@ public class ProgramProcess {
 
         while ((line = reader.readLine()) != null) {
             line = line.trim();
-            if (line.startsWith("Compiling") || line.startsWith("Finished") || line.startsWith("Executable unittests")) continue;
+            if (line.startsWith("Compiling") || line.startsWith("Finished") || line.startsWith("Executable unittests")) {
+                continue;
+            }
             compilerMessage.append(line);
             compilerMessage.append("\n");
             logger.info(line);
@@ -146,7 +149,6 @@ public class ProgramProcess {
         fileWriter.close();
 
     }
-
 
     private void createFileGitKeep(String directory) {
         try {

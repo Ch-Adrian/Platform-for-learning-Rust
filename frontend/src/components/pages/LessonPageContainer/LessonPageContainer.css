@@ -78,6 +78,7 @@
   left: -100%;
   transition: 500ms;
   z-index: 50;
+  overflow-y: scroll;
 }
 
 .page {

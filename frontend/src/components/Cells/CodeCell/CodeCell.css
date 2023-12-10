@@ -1,5 +1,8 @@
+@import url('../../../values/colors.css');
+
 :root{
-  --background-cell-color: #524B4B;
+  /* --background-cell-color: #524B4B; */
+  --background-cell-color: #111111;
   --buttons-color-hovered: rgba(39, 36, 51, 50%);
   --buttons-color-active: white;
   --background-buttons-color: transparent;
@@ -11,10 +14,10 @@
     flex-direction: row;
     gap: 1rem;
     margin-bottom: 1rem;
-    background-color: var(--background-cell-color);
+    background-color: var(--semi_black);
     padding: 0.3em;
     padding-right: 0px;
-    padding-left: 0px;
+    padding-left: 1rem;
     height: 2.3rem;
 }
 
@@ -30,14 +33,24 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--background-cell-color);
+    background-color: var(--semi_black);
 }
 
 .editor-button:hover {
-    background-color: var(--buttons-color-hovered);
+    background-color: var(--dark_gray);
 }
 
 .editor-caption {
-    color: var(--code-color);
+    color: var(--font_color);
     margin-bottom: 0.2rem;
+}
+
+.editor {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.code-cell-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
 }

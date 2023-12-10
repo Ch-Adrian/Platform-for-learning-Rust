@@ -105,8 +105,8 @@ const CodeCell = memo(function CodeCell(props) {
        {props.cell.reference === undefined ? <button data-cy="add-reference-button" title="Dodaj kod referencyjny" onClick={() => {addEditor("reference")}} className='editor-button' variant="success"><IoMdAdd color="white" /><VscReferences color="white" /></button> : null}
       </div>  
       {isConnectionError ? <div style={{color: 'red'}}>There was some error connecting to the compiler. Please check if all app components are running</div> : null}
-      {props.cell.output ? <div data-cy="code-output"> <OutputCell  titleValue="Rezultat wykonania" clearOutputHandler={clearCodeOutput} output={props.cell.output}></OutputCell></div> : null}
-      {props.cell.outputTest ? <div data-cy="test-output"> <OutputCell titleValue="Rezultat testów" clearOutputHandler={clearTestOutput} output={props.cell.outputTest}></OutputCell></div> : null}
+      {props.cell.output ? <div data-cy="code-output"> <OutputCell className='output-cell' titleValue="Rezultat wykonania" clearOutputHandler={clearCodeOutput} output={props.cell.output}></OutputCell></div> : null}
+      {props.cell.outputTest ? <div data-cy="test-output"> <OutputCell className='output-cell' titleValue="Rezultat testów" clearOutputHandler={clearTestOutput} output={props.cell.outputTest}></OutputCell></div> : null}
       {props.cell.test !== undefined ? 
       <div className={"code-cell-container"}> 
         <div className='editor-caption'>Testy</div>

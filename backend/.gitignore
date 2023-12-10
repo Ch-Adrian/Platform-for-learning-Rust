@@ -29,3 +29,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Rust output files ###
+src/main/resources/rust/*

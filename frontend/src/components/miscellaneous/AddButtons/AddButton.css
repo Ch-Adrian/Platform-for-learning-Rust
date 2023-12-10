@@ -54,11 +54,13 @@
 .dropdown-button-wrapper *{
     visibility: hidden;
     opacity: 0;
+    transition: 0s visibility !important;
 }
 
 .dropdown-button-wrapper:hover * {
     visibility: visible;
     opacity: 1;
+    transition-delay:.2s !important;
 }
 
 .dropdown-button-line {

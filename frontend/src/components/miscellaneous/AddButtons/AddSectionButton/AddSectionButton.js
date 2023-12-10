@@ -16,7 +16,7 @@ const AddSectionButton = (props) => {
 
     return (
         <div className="dropdown-button-wrapper">
-            <Button data-cy="add-section-button" onClick={addSectionHandler} className={'editor-button section-button dropdown-button'} variant="success" size="sm">Dodaj sekcję</Button>
+            <Button data-cy="add-section-button" onClick={addSectionHandler} className={'section-button dropdown-button'} variant="success" size="sm">Dodaj sekcję</Button>
             <div className="dropdown-button-line"></div>
         </div>
     )

@@ -3,6 +3,8 @@ package pl.edu.agh.backend.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.backend.lesson.*;
+import pl.edu.agh.backend.lesson.dto.LessonInfoDTO;
+import pl.edu.agh.backend.lesson.dto.LessonRenameDTO;
 import pl.edu.agh.backend.services.LessonService;
 
 import java.util.List;
@@ -41,8 +43,8 @@ public class LessonController {
     }
 
     @PutMapping("/{lessonName}")
-    public void renameLesson(@PathVariable String lessonName, @RequestBody String newLessonName) {
-        lessonService.renameLesson(lessonName, newLessonName);
+    public void renameLesson(@PathVariable String lessonName, @RequestBody LessonRenameDTO lessonRenameDTO) {
+        lessonService.renameLesson(lessonName, lessonRenameDTO);
     }
 
     @DeleteMapping("/{lessonName}")

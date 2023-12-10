@@ -20,10 +20,10 @@ const LessonFileSaveService = {
             return response;
         }
     },
-    renameLesson: async (oldName, newLessonName, override = false) => { 
+    renameLesson: async (oldName, newLessonName, override) => { 
         const request = {
             newLessonName: newLessonName + ".json",
-            override: override
+            override: override === undefined ? false : override
         };
         const response = await axios
         .put(RUST_COMPILER_REST_API_URL + "/" + oldName + ".json", request);

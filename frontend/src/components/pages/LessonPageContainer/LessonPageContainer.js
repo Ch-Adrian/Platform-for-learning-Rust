@@ -115,7 +115,8 @@ const LessonPageContainer = () => {
   }
 
   const handleSave = async () => {
-    setIsSaveLessonError(false)
+    setIsSaveLessonError(false);
+    console.log(lessonName);
     LessonFileSaveService.saveLesson(lessonDefinition, lessonName)
     .then((res) => {
       setStatusInfo("Zapisano!");

@@ -17,14 +17,13 @@ const NameHeader = ({lessonName, setLessonName, lessonDefinition, setStatusInfo,
           try {
             await LessonFileSaveService.renameLesson(oldName, newName);
             setStatusInfo("Nazwa zmieniona");
+            setLessonName(newName);
           } catch(e) {
             console.log(e.response.data)
             if (e.response.data.includes("There is already lesson with name")){
               setOverwriteLessonModalOpen(true);
             }
           }
-        } else {
-            setLessonName(newName);
         }
       } catch (error) {
         console.error(error);

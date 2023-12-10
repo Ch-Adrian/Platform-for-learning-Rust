@@ -135,7 +135,7 @@ const ImmutableCodeCell = memo(function ImmutableCodeCell(props) {
         {props.userType === UserType.teacher ?
         // TEACHER VERSION
         <React.Fragment>
-        <div onMouseEnter={e => {
+        <div className='editor' onMouseEnter={e => {
             setCodeButtonsStyle({visibility: 'visible'});
           }}
           onMouseLeave={e => {

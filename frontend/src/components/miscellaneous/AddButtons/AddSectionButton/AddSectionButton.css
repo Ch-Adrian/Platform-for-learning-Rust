@@ -1,4 +1,4 @@
-@import url('../../../values/colors.css');
+@import url('../../../../values/colors.css');
 
 :root{
   --background-color: #c9d1d9;

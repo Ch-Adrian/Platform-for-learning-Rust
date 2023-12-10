@@ -3,9 +3,10 @@ import '../LessonPageContainer.css'
 import LessonFileSaveService from '../../../../services/LessonFileHandleService';
 import OverwriteLessonNameModal from '../../../Modals/OverwriteLessonNameModal/OverwriteLessonNameModal';
 
-const NameHeader = ({lessonName, setLessonName, lessonDefinition, setStatusInfo}) => {
+const NameHeader = ({lessonName, setLessonName, lessonDefinition, setStatusInfo, setIsSaveLessonError}) => {
     const [overwriteLessonModalOpen, setOverwriteLessonModalOpen] = useState(false);
     const nameInput = useRef(null);
+
     const handleNameSubmit = async (e) => {
       const oldName = lessonName;
       const newName = e.currentTarget.textContent;
@@ -15,7 +16,6 @@ const NameHeader = ({lessonName, setLessonName, lessonDefinition, setStatusInfo}
         if (response.data.some(lesson => lesson.name === oldName + ".json")) {
           try {
             await LessonFileSaveService.renameLesson(oldName, newName);
-            setLessonName(newName);
             setStatusInfo("Nazwa zmieniona");
           } catch(e) {
             console.log(e.response.data)
@@ -23,6 +23,8 @@ const NameHeader = ({lessonName, setLessonName, lessonDefinition, setStatusInfo}
               setOverwriteLessonModalOpen(true);
             }
           }
+        } else {
+            setLessonName(newName);
         }
       } catch (error) {
         console.error(error);
@@ -34,8 +36,18 @@ const NameHeader = ({lessonName, setLessonName, lessonDefinition, setStatusInfo}
     }
   
     const handleOverwriteLesson = () => {
+      const newName = nameInput.current.textContent;
+      const oldName = lessonName;
+
       setOverwriteLessonModalOpen(false);
-      setLessonName(nameInput.current.textContent);
+      setLessonName(newName);
+      LessonFileSaveService.renameLesson(oldName, newName, true)
+      .then((response) => {
+        setStatusInfo("Nazwa zmieniona");
+      })
+      .catch((e) => {
+        setIsSaveLessonError(true);
+      });
     }
   
     const handleCloseOverwriteModal = () => {

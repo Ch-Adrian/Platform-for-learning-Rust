@@ -192,7 +192,7 @@ const LessonPageContainer = () => {
           </Link>
           <div className='general-buttons'>
             <div style={{display: 'flex'}} className='left-side-buttons'>
-              <NameHeader lessonName={lessonName} setLessonName={setLessonName} lessonDefinition={lessonDefinition} setStatusInfo={setStatusInfo}></NameHeader>
+              <NameHeader lessonName={lessonName} setLessonName={setLessonName} lessonDefinition={lessonDefinition} setStatusInfo={setStatusInfo} setIsSaveLessonError={setIsSaveLessonError}></NameHeader>
               <button data-cy="back-button" title="Wróć" className='general-button-item' onClick={() => setSaveLessonModalOpen(true)}><HiArrowUturnLeft/></button>
               <button data-cy="save-button" title="Zapisz" className='general-button-item' onClick={handleSave}><FaSave /></button>
               <button className='general-button-item' title="Pobierz" onClick={handleDownload}><ImFolderDownload /></button>

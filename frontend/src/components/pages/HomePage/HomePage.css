@@ -50,7 +50,7 @@
     border-width: 4;
     border-radius: 2;
     border-color: var(--border-color);
-    border-style: dashed;
+    border-style: solid;
     background-color: var(--backgroud-color); 
     color: var(--text-color); 
     outline: none;

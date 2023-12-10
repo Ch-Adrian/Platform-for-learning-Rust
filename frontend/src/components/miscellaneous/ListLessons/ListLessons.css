@@ -1,3 +1,9 @@
+:root {
+    --manage-buttons-hover-color: #6b6565d7;
+    --list-item-hover-color: #333333;
+    --list-header-color: #3d3939;
+}
+
 .list-lessons ul {
     position: relative;
     list-style: none;
@@ -16,14 +22,14 @@ li {
     list-style: none;
     cursor: pointer;
     padding: 10px;
-    background-color: #524B4B;
+    background-color: var(--background-section-color);
     color: #bdbdbd;
     border: 1px solid #333333;
     transition: background-color 0.2s, color 0.2s, transform 0.2s;
 }
 
 .lesson-item:hover {
-    background-color: #333333;
+    background-color: var(--list-item-hover-color);
     color: #FFFFFF;
     border-color: #555555;
 }
@@ -71,7 +77,11 @@ li {
 }
 
 .lesson-header {
+    background-color: var(--list-header-color);
     font-weight: bold;
+    position: sticky;
+    top: 0;
+    z-index: 999;
 }
 
 .title {
@@ -80,7 +90,7 @@ li {
 }
 
 .lesson-table {
-    top: 3vh;
+    top: 1vh;
 }
 
 .checkbox {
@@ -88,3 +98,32 @@ li {
     margin-left: auto;
 }
 
+.manage-buttons-container {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.delete-lessons-button {
+    display: flex;
+    background-color: var(--backgroud-color);
+    border-radius: 0.1rem;
+    border-width: 0;
+    text-align: center;
+    padding: 0.4rem;
+    justify-content: center;
+    align-items: center;
+    color: var(--buttons-color-active);
+    transition: background-color 0.2s, color 0.2s, transform 0.2s;
+}
+
+.delete-lessons-button:disabled {
+    opacity: 0.3;
+}
+
+.delete-lessons-button:hover:enabled {
+    background-color: var(--list-item-hover-color);
+}
+
+.delete-lessons-button > svg {
+    font-size: 1.3rem;
+}

@@ -37,10 +37,6 @@ const MovableMenuContext = ({pageID, sectionID, cellID=null, children, isSection
       setAnchorEl(event.currentTarget);
   };
 
-  const justClose = (event) => {
-    setAnchorEl(null);
-  }
-
   useEffect( () => {
     const handleClicked = () => {
       if (firstEmptyClick.current === false){
@@ -73,6 +69,7 @@ const MovableMenuContext = ({pageID, sectionID, cellID=null, children, isSection
               return <MenuItem key={idx} onClick={handleClose(idx)}>{"Page "+(idx+1)+" Section: 1"}</MenuItem>;
             else if (isSection === true)
               return <MenuItem key={idx} onClick={handleClose(idx)}>{"Page "+(idx+1)+" Section: 1"}</MenuItem>;
+            return null;
           })}
           </Menu>
       </div>

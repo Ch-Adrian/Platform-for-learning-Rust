@@ -11,8 +11,9 @@ import pl.edu.agh.backend.exceptions.LessonNotSavedException;
 import pl.edu.agh.backend.exceptions.LessonsNameConflictException;
 import pl.edu.agh.backend.lesson.Lesson;
 import pl.edu.agh.backend.lesson.LessonFile;
-import pl.edu.agh.backend.lesson.LessonInfoDTO;
+import pl.edu.agh.backend.lesson.dto.LessonInfoDTO;
 import pl.edu.agh.backend.lesson.cells.Cell;
+import pl.edu.agh.backend.lesson.dto.LessonRenameDTO;
 import pl.edu.agh.backend.serialization.PolymorphDeserializer;
 
 import java.io.*;
@@ -90,15 +91,19 @@ public class LessonServiceImpl implements LessonService {
         this.saveLesson(new LessonFile(lessonName, lesson));
     }
 
-    public void renameLesson(String oldName, String newName) {
+    public void renameLesson(String oldName, LessonRenameDTO lessonRenameDTO) {
+        String newName = lessonRenameDTO.newLessonName();
         if (oldName.equals(newName)) {
             return;
         }
         if (!this.existsLesson(oldName)) {
             throw new LessonNotFoundException(oldName);
         }
-        if (this.existsLesson(newName)) {
+        if (this.existsLesson(newName) && !lessonRenameDTO.override()) {
             throw new LessonsNameConflictException(newName);
+        }
+        if (this.existsLesson(newName)) {
+            this.deleteLesson(newName);
         }
         File oldFile = new File(rootDir + File.separator + oldName);
         File newFile = new File(rootDir + File.separator + newName);

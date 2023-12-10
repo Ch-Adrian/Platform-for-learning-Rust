@@ -2,7 +2,8 @@ package pl.edu.agh.backend.services;
 
 import pl.edu.agh.backend.lesson.Lesson;
 import pl.edu.agh.backend.lesson.LessonFile;
-import pl.edu.agh.backend.lesson.LessonInfoDTO;
+import pl.edu.agh.backend.lesson.dto.LessonInfoDTO;
+import pl.edu.agh.backend.lesson.dto.LessonRenameDTO;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface LessonService {
 
     void saveLesson(String lessonName, Lesson lesson);
 
-    void renameLesson(String oldName, String newName);
+    void renameLesson(String oldName, LessonRenameDTO lessonRenameDTO);
 
     void deleteLesson(String name);
 

@@ -17,7 +17,6 @@
 }
 
 code {
-    /* color: var(--code-color); */
     color: var(--font_color) !important;
 }
 
@@ -38,6 +37,10 @@ td {
     background-color: var(--semi_black) !important;
 }
 
+.w-md-editor-toolbar li {
+    background-color: var(--semi_black) !important;
+}
+
 @media (max-width: 767px) {
     .markdown-body {
         padding: 15px;
@@ -47,6 +50,6 @@ td {
 @media (prefers-color-scheme: dark) {
     .wmde-markdown,
     .wmde-markdown-var {
-        --color-canvas-default: var(--background-cell-color) !important;
+        --color-canvas-default: var(--semi_black) !important;
     }
 }

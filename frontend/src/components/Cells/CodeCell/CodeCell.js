@@ -94,7 +94,7 @@ const CodeCell = memo(function CodeCell(props) {
   };
 
   return (
-    <div data-cy="code-cell" ref={containerRef} className={"code-cell-container "}>
+    <div data-cy="code-cell" ref={containerRef} className={"code-cell-container"}>
       {props.userType === UserType.teacher ?
       // TEACHER VERSION
       <React.Fragment>

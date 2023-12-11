@@ -3,7 +3,9 @@
 :root{
   --background-color: #c9d1d9;
   --background-color-hover: #e9ecef;
-  --text-button-color: #555555;
+  --text-button-color: #ffffff;
+  --add-button-color: #555555;
+  --add-button-color-hover: #6b6b6b;
 }
 
 
@@ -12,25 +14,25 @@
   }
 
 .dropdown-toggle {
-    background-color: var(--background-color) !important; 
-    border-color: var(--background-color) !important; 
+    background-color: var(--add-button-color) !important; 
+    border-color: var(--add-button-color) !important; 
     color: var(--text-button-color) !important;
     min-width: 12rem !important;
     height: 1.8rem !important;
 }
 
 .dropdown-toggle:hover {
-    background-color: var(--background-color-hover) !important;
+    background-color: var(--add-button-color-hover) !important;
 }
 
 .dropdown-menu {
     width: inherit !important;
-    border-color: var(--background-color) !important;
+    border-color: var(--add-button-color) !important;
     border-radius: 0 !important;
     border-bottom-left-radius: 5px !important;
     border-bottom-right-radius: 5px !important;
     top: -4px !important;
-    background-color: var(--background-color) !important;
+    background-color: var(--add-button-color) !important;
     position: absoulte;
     min-width: 12rem !important;
 }
@@ -38,6 +40,15 @@
 .dropdown-button {
     grid-area: 1 / 1 / 2 / 2;
     text-align: center;
+}
+
+.dropdown-item {
+    font-style: normal !important;
+    color: var(--text-button-color) !important;
+}
+
+.dropdown-item:hover {
+    background-color: var(--add-button-color-hover) !important;
 }
 
 .dropdown-button-wrapper {
@@ -69,20 +80,20 @@
     justify-self: center;
     width: 18rem;
     height: 3px;
-    background-color: var(--background-color); 
+    background-color: var(--add-button-color); 
 }
 
 .section-button {
     z-index: 200;
     align-self: center;
     justify-self: center;
-    background-color: var(--background-color) !important; 
-    border-color: var(--background-color) !important; 
+    background-color: var(--add-button-color) !important; 
+    border-color: var(--add-button-color) !important; 
     color: var(--text-button-color) !important;
     min-width: 12rem !important;
     height: 1.8rem;
 }
 
 .section-button:hover {
-    background-color: var(--background-color-hover) !important;
+    background-color: var(--add-button-color-hover) !important;
 }

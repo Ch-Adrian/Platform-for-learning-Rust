@@ -2,7 +2,7 @@ import React, {useContext} from 'react'
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { LessonContext } from '../../../../contexts/LessonContext/LessonContextProvider';
-import "./AddCellButton.css";
+import "../AddButton.css";
 
 const BACKEND_PATH = "pl.edu.agh.backend.lesson.cells."
 const cellTypes = ["Tekst", "Kod", "Niemutowalny kod", "Quiz"];

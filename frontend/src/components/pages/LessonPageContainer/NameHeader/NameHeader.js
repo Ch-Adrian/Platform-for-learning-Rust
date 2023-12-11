@@ -16,6 +16,7 @@ const NameHeader = ({lessonName, setLessonName, lessonDefinition, setStatusInfo,
         if (response.data.some(lesson => lesson.name === oldName + ".json")) {
           try {
             await LessonFileSaveService.renameLesson(oldName, newName);
+            await LessonFileSaveService.saveLesson(lessonDefinition, newName);
             setStatusInfo("Nazwa zmieniona");
             setLessonName(newName);
           } catch(e) {
@@ -24,6 +25,8 @@ const NameHeader = ({lessonName, setLessonName, lessonDefinition, setStatusInfo,
               setOverwriteLessonModalOpen(true);
             }
           }
+        } else {
+          setLessonName(newName);
         }
       } catch (error) {
         console.error(error);

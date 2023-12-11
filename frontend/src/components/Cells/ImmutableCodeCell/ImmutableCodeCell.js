@@ -67,7 +67,7 @@ const ImmutableCodeCell = memo(function ImmutableCodeCell(props) {
         const immutablePhrases = props.cell.reference.split(props.cell.mutableString);
         regExp = createValidationRegex(immutablePhrases);
       }
-      if (props.cell.reference === null || regExp.exec(value) === null){
+      if (props.cell.reference === undefined || props.cell.reference.length === 0 || regExp.exec(value) === null){
         const oldValue = props.cell.value;
         let oldCursorPosition = editorRef.current.getPosition();
         oldCursorPosition.column -= (value.length - oldValue.length);

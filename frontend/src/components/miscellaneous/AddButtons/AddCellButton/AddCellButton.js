@@ -15,7 +15,7 @@ const AddCellButton = (props) => {
         if (event.target.innerHTML === "Kod"){
             newCell.profileType = BACKEND_PATH + "CodeCell"
             newCell.type = "CodeCell";
-            newCell.value = "";
+            newCell.value = "fn main() {\r\n\t\r\n}";
         } else if (event.target.innerHTML === "Tekst"){
             newCell.profileType = BACKEND_PATH + "TextCell"
             newCell.type = "TextCell";

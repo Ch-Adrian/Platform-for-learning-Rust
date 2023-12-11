@@ -1,14 +1,18 @@
+@import url('../../../values/colors.css');
+
 .background {
+    color: var(--font_color);
     width: 97%;
-    background-color: white;
+    background-color: var(--dark_gray);
     display: flex;
     justify-content: space-between;
     margin: 10px;
     border-radius: 10px;
 }
 .background-red {
+    color: var(--font_color);
     width: 97%;
-    background-color: white;
+    background-color: var(--dark_gray);
     display: flex;
     justify-content: space-between;
     margin: 10px;
@@ -17,8 +21,9 @@
 }
 
 .background-green {
+    color: var(--font_color);
     width: 97%;
-    background-color: white;
+    background-color: var(--dark_gray);
     display: flex;
     justify-content: space-between;
     margin: 10px;
@@ -43,14 +48,19 @@
 .management {
     display: flex;
     flex-direction: row;
-    width: 200px;
+    width: 250px;
 }
 
 .checkbox {
     padding-right: 30px;
+    border-color: var(--font_color);
 }
 
 .option-text {
     margin-left: 5px;
-    margin-top: 6px;
+    margin-top: 10px;
+}
+
+.button-x {
+    
 }

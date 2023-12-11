@@ -44,7 +44,7 @@ const OptionText = (props) => {
             onKeyDown={handleHeaderChange} 
             suppressContentEditableWarning={true} 
             spellCheck="false" 
-            style={{color: 'black', 'fontSize': '20px'}}> 
+            style={{color: "#D4D4D4", 'fontSize': '20px'}}> 
             
                 {props.option.text}
             </div>
@@ -144,8 +144,8 @@ const QuizOption = (props) => {
                 </div>
                 <div className='management'>
                     <div className='checkbox'>
-                        <Checkbox checked={checked} onChange={handleChange}></Checkbox>poprawna</div>
-                        { props.userType === UserType.teacher ? <React.Fragment><Button onClick={handleClickOnDelete} className='button-x'>X</Button></React.Fragment>:
+                        <Checkbox color='success' checked={checked} onChange={handleChange}></Checkbox>poprawna</div>
+                        { props.userType === UserType.teacher ? <React.Fragment><Button variant="light" onClick={handleClickOnDelete} className='button-x'>X</Button></React.Fragment>:
                         <React.Fragment></React.Fragment>}
                     </div>
             </div>

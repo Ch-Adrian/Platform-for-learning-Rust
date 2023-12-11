@@ -8,7 +8,7 @@ import lombok.Setter;
 public class TextCell extends Cell {
     public static TextCell getDefault() {
         TextCell textCell = new TextCell();
-        textCell.setValue("To jest komórka tekstowa. Kliknij na nią dwa razy, aby edytować zawartość.");
+        textCell.setValue("Nowa komórka z tekstem");
         return textCell;
     }
 }

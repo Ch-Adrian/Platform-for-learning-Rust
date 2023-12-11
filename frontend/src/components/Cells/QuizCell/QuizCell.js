@@ -105,6 +105,7 @@ const QuizCell = memo(function QuizCell(props) {
 
       {props.userType === UserType.teacher && focus ? 
         <MDEditor
+        className='markdown'
         value={value}
         onChange={updateTextValue}
         />
@@ -127,7 +128,7 @@ const QuizCell = memo(function QuizCell(props) {
             }
 
           <div className='editor-button-container'>
-          <Button onClick={addOption} className='editor-button' variant="success">{'Add option'}</Button>
+          <Button onClick={addOption} className='editor-button' variant="dark">{'Add option'}</Button>
           </div>  
 
           {isConnectionError ? <div style={{color: 'red'}}>There was some error connecting to the compiler. Please check if all app components are running</div> : null}

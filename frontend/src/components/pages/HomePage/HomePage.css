@@ -1,3 +1,5 @@
+@import url('../../../values/colors.css');
+
 :root{
     --backgroud-color: #524B4B;
     --text-color: #bdbdbd;
@@ -14,7 +16,7 @@
 .list-lesson-container {
     position: relative;
     align-items: center;
-    width: 60vw;
+    width: 70vw;
 }
 
 .file-picker-container {
@@ -23,7 +25,7 @@
     flex-direction: row;
     justify-content: space-between;
     width: 50vw;
-    top: 5vh;
+    top: 0vh;
 }
 
 .default-lesson-button > p {
@@ -31,11 +33,11 @@
 }
 
 .default-lesson-button:hover {
-    border-color: rgba(159, 255, 223, 0.559);
+    border-color: var(--font_color);
 }
 
 .default-lesson-button:active {
-    border-color: rgb(81, 255, 90);
+    border-color: white;
 }
 
 .default-lesson-button {
@@ -51,7 +53,7 @@
     border-radius: 2;
     border-color: var(--border-color);
     border-style: solid;
-    background-color: var(--backgroud-color); 
+    background-color: var(--dark_gray);
     color: var(--text-color); 
     outline: none;
     transition: border .24s ease-in-out;
@@ -72,8 +74,8 @@
     border-width: 4;
     border-radius: 2;
     border-color: var(--border-color);
-    border-style: dashed;
-    background-color: var(--backgroud-color); 
+    border-style: solid;
+    background-color: var(--dark_gray);
     color: var(--text-color); 
     outline: none;
     transition: border .24s ease-in-out;
@@ -87,9 +89,9 @@
 }
 
 .file-picker-box:hover {
-    border-color: rgba(159, 255, 223, 0.559);
+    border-color: var(--font_color);
 }
 
 .file-picker-box:active {
-    border-color: rgb(81, 255, 90);
+    border-color: white;
 }

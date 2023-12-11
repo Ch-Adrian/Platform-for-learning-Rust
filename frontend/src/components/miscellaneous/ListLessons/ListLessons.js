@@ -72,7 +72,7 @@ const ListLessons = (props) => {
         <h2 className='title'>Rozpocznij swoją przygodę z językiem Rust</h2>
       ) : (
         <>
-          <h2 className='title'>Wybierz lekcję</h2>
+          <h2 className='title'>Twoje lekcje</h2>
           
           <ul data-cy="lesson-list" className='lesson-table'>
             <li className='lesson-header'>

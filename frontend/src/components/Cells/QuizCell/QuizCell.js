@@ -7,6 +7,8 @@ import QuizOption from '../../miscellaneous/QuizOptions/QuizOption';
 import MDEditor from '@uiw/react-md-editor'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import { IoAddCircle } from "react-icons/io5";
+import { FiCheckSquare } from "react-icons/fi";
 
 function useForceUpdate(){
   const [value, setValue] = useState(0); // integer state
@@ -45,7 +47,6 @@ const QuizCell = memo(function QuizCell(props) {
         setOptions(props.content);
       }
     }, [props.text, props.content]);
-
 
     const addOption = async () => {
       let newId = 0;
@@ -127,7 +128,7 @@ const QuizCell = memo(function QuizCell(props) {
             }
 
           <div className='editor-button-container'>
-          <Button onClick={addOption} className='editor-button' variant="success">{'Add option'}</Button>
+              <button onClick={addOption} className='editor-button' variant="success"><IoAddCircle color="white" /></button>
           </div>  
 
           {isConnectionError ? <div style={{color: 'red'}}>There was some error connecting to the compiler. Please check if all app components are running</div> : null}
@@ -147,7 +148,7 @@ const QuizCell = memo(function QuizCell(props) {
           <div style={{color: 'red'}}>There was some error connecting to the compiler. Please check if all app components are running</div> :
            null}
           <div className='editor-button-container'>
-            <Button onClick={checkAnswer} className='editor-button' variant="success">{'Sprawdź'}</Button>
+            <button onClick={checkAnswer} className='editor-button' variant="success"  style={{color: 'white'}}><FiCheckSquare color="white"/></button>
           </div>
           </React.Fragment>
         }

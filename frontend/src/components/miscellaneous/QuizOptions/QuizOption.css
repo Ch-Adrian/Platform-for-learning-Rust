@@ -1,3 +1,13 @@
+@import url('../../../values/colors.css');
+
+:root{
+    --background-cell-color: #111111;
+    --buttons-color-hovered: rgba(39, 36, 51, 50%);
+    --buttons-color-active: white;
+    --background-buttons-color: transparent;
+    --editor-color: rgb(30, 30, 30);
+}
+
 .background {
     width: 97%;
     background-color: white;
@@ -6,6 +16,7 @@
     margin: 10px;
     border-radius: 10px;
 }
+
 .background-red {
     width: 97%;
     background-color: white;
@@ -26,16 +37,6 @@
     border: 3px solid green;
 }
 
-/* .background {
-    width: 97%;
-    background-color: white;
-    display: flex;
-    justify-content: space-between;
-    margin: 10px;
-    border-radius: 10px;
-    border
-} */
-
 .text-field {
     margin: 10px;
 }
@@ -44,6 +45,8 @@
     display: flex;
     flex-direction: row;
     width: 200px;
+    background-color: var(--editor-color);
+    border-radius: 10px;
 }
 
 .checkbox {
@@ -53,4 +56,21 @@
 .option-text {
     margin-left: 5px;
     margin-top: 6px;
+    padding-top: 0.1rem;
+    background-color: var(--editor-color);
+}
+
+#topDiv {
+    background-color: var(--editor-color);
+}
+
+.button-x {
+    background-color: rgb(30, 30, 30);
+    color: white;
+    border: none;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    padding-right: 0.5rem;
 }

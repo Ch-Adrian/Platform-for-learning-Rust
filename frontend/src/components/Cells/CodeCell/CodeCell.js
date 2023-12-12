@@ -11,8 +11,6 @@ import { GrDocumentTest } from "react-icons/gr";
 import { IoMdAdd, IoIosRemove } from "react-icons/io";
 import { VscReferences } from "react-icons/vsc";
 
-
-
 const CodeCell = memo(function CodeCell(props) {
   const editorRef = useRef(null);
   const testEditorRef = useRef(null);
@@ -94,7 +92,7 @@ const CodeCell = memo(function CodeCell(props) {
   };
 
   return (
-    <div data-cy="code-cell" ref={containerRef} className={"code-cell-container "}>
+    <div data-cy="code-cell" ref={containerRef} className={"code-cell-container"}>
       {props.userType === UserType.teacher ?
       // TEACHER VERSION
       <React.Fragment>
@@ -103,18 +101,18 @@ const CodeCell = memo(function CodeCell(props) {
        <button title="Uruchom" data-cy="code-run-button" onClick={compile} className='editor-button' disabled={isExecuting}>{!isExecuting ? <FaPlay color='white'/> : <HiOutlineDotsHorizontal color="white" />}</button>
        {props.cell.test === undefined ? <button data-cy="add-tests-button" title="Dodaj testy" onClick={() => {addEditor("test")}} className='editor-button' variant="success"><IoMdAdd color="white" /><GrDocumentTest className='grIcon' /></button> : null}
        {props.cell.reference === undefined ? <button data-cy="add-reference-button" title="Dodaj kod referencyjny" onClick={() => {addEditor("reference")}} className='editor-button' variant="success"><IoMdAdd color="white" /><VscReferences color="white" /></button> : null}
-      </div>  
+      </div>
       {isConnectionError ? <div style={{color: 'red'}}>There was some error connecting to the compiler. Please check if all app components are running</div> : null}
       {props.cell.output ? <div data-cy="code-output"> <OutputCell className='output-cell' titleValue="Rezultat wykonania" clearOutputHandler={clearCodeOutput} output={props.cell.output}></OutputCell></div> : null}
       {props.cell.outputTest ? <div data-cy="test-output"> <OutputCell className='output-cell' titleValue="Rezultat testów" clearOutputHandler={clearTestOutput} output={props.cell.outputTest}></OutputCell></div> : null}
-      {props.cell.test !== undefined ? 
-      <div className={"code-cell-container"}> 
+      {props.cell.test !== undefined ?
+      <div className={"code-cell-container"}>
         <div className='editor-caption'>Testy</div>
         <MonacoEditor ref={{containerRef: containerRef, editorRef: testEditorRef}} updateEditorValueHandler={updateTestEditorValueHandler} text={props.cell.test}></MonacoEditor>
         <div className='editor-button-container'>
           <button data-cy="remove-tests-button" title="Usuń testy" onClick={() => {removeEditor("test")}} className='editor-button' variant="danger"><IoIosRemove color="white" /><GrDocumentTest className='grIcon' /></button>
         </div>  
-      </div>: null}
+      </div> : null}
       {props.cell.reference !== undefined ? 
       <div className={"code-cell-container"}> 
         <div className='editor-caption'>Kod referencyjny</div>
@@ -123,7 +121,7 @@ const CodeCell = memo(function CodeCell(props) {
           <button data-cy="remove-reference-button" title="Usuń kod referencyjny" onClick={() => {removeEditor("reference")}} className='editor-button' variant="danger"><IoIosRemove color="white" /><VscReferences color="white" /></button>
         </div>  
       </div>: null}
-      </React.Fragment> 
+      </React.Fragment>
       : 
       // STUDENT VERSION
       <React.Fragment>
@@ -142,4 +140,4 @@ const CodeCell = memo(function CodeCell(props) {
   )
 })
 
-export default CodeCell
+export default CodeCell;

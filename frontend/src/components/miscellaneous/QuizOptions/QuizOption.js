@@ -1,14 +1,13 @@
 import { Checkbox } from "@mui/material";
 import "./QuizOption.css"
-import Button from 'react-bootstrap/Button';
 import React, { useRef, useContext, useState } from 'react';
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
 import UserType from '../../../models/UserType';
+import { RiDeleteBin2Fill } from "react-icons/ri";
 
 const OptionText = (props) => {
     const headerInput = useRef(null);
     const {updateCell} = useContext(LessonContext);
-
 
     const changeOptionHandler = (newOptionText) =>{
         let findId = -1;
@@ -36,7 +35,7 @@ const OptionText = (props) => {
     }
 
     return (
-        <div>
+        <div style={{'background-color': 'rgb(30, 30, 30)', color: 'white', fontSize: '20px'}}> 
             <div ref={headerInput} 
             contentEditable={props.userType === UserType.teacher}
             className='section-header' 
@@ -44,39 +43,16 @@ const OptionText = (props) => {
             onKeyDown={handleHeaderChange} 
             suppressContentEditableWarning={true} 
             spellCheck="false" 
-            style={{color: 'black', 'fontSize': '20px'}}> 
-            
+            style={{'background-color': 'rgb(30, 30, 30)', 'text-wrap': 'wrap', color: 'white', 'font-size': '1rem'}}>
                 {props.option.text}
             </div>
         </div>
     );
 }
 
-
 const QuizOption = (props) => {
     const {updateCell} = useContext(LessonContext);
     const [checked, setChecked] = useState(props.option.valid);
-
-
-    // const handleChange = () => {
-    //     setChecked(!checked);
-    //     let findId = -1;
-    //     for(let i = 0; i<props.options.length; i++){
-    //         if (props.options[i].id === props.option.id ) {
-    //             findId = i;
-    //             break;
-    //         }
-    //     }
-        
-    //     if(findId !== -1){
-            
-    //         let newOption = props.cell.options[findId];
-    //         newOption.valid = !checked;
-    //         props.cell.options[findId] = newOption;
-    //         updateCell(props.cell, props.cellIdx, props.currentPage, props.sectionIdx);
-    //     }
-    //   };
-
 
     const handleChange = () => {
         setChecked(!checked);
@@ -102,7 +78,7 @@ const QuizOption = (props) => {
 
         }
         else{
-            
+
             props.chOpt.forEach((option) => {
                 if(option.id === props.option.id){
                     option.valid = !checked;
@@ -138,17 +114,18 @@ const QuizOption = (props) => {
     };
 
     return (
-            <div className={ props.resultColor === -1 ? 'background-red' : props.resultColor === 0 ? 'background' : 'background-green'}>
-                <div className='option-text'>
-                    <OptionText cell={props.cell} options={props.options} option={props.option} userType={props.userType} currentPage={props.currentPage} page={props.page} sectionIdx={props.sectionIdx}/>
-                </div>
-                <div className='management'>
-                    <div className='checkbox'>
-                        <Checkbox checked={checked} onChange={handleChange}></Checkbox>poprawna</div>
-                        { props.userType === UserType.teacher ? <React.Fragment><Button onClick={handleClickOnDelete} className='button-x'>X</Button></React.Fragment>:
-                        <React.Fragment></React.Fragment>}
-                    </div>
+        <div id="topDiv" className={ props.resultColor === -1 ? 'background-red' : props.resultColor === 0 ? 'background' : 'background-green'}>
+            <div className='option-text'>
+                <OptionText cell={props.cell} options={props.options} option={props.option} userType={props.userType} currentPage={props.currentPage} page={props.page} sectionIdx={props.sectionIdx}/>
             </div>
+            <div className='management'>
+                <div className='checkbox'>
+                    <Checkbox color="success" checked={checked} onChange={handleChange}></Checkbox>
+                </div>
+                    { props.userType === UserType.teacher ? <React.Fragment><button onClick={handleClickOnDelete} className='button-x'><RiDeleteBin2Fill font-size='10px'/></button></React.Fragment>:
+                    <React.Fragment></React.Fragment>}
+            </div>
+        </div>
     );
 }
 

@@ -120,7 +120,7 @@ const QuizOption = (props) => {
             <div className='option-text'>
                 <OptionText cell={props.cell} options={props.options} option={props.option} userType={props.userType} currentPage={props.currentPage} page={props.page} sectionIdx={props.sectionIdx}/>
             </div>
-            
+
             <div className="right-side">
                 <div className='management'>
                     { props.userType === UserType.teacher ? <div className="text-label-info">poprawna</div>:<div></div>}

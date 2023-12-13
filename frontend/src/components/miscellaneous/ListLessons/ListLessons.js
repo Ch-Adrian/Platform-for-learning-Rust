@@ -3,6 +3,8 @@ import DateService from '../../../services/DateService';
 import React, { useEffect, useState } from 'react';
 import "./ListLessons.css";
 import {BsTrash3} from 'react-icons/bs';
+import { Checkbox } from "@mui/material";
+import { COLORS } from '../../../values/colors.js' 
 
 const ListLessons = (props) => {
   const [lessons, setLessons] = useState([]);
@@ -73,38 +75,35 @@ const ListLessons = (props) => {
       ) : (
         <>
           <h2 className='title'>Twoje lekcje</h2>
-          
+          <div className='manage-buttons-container'>
+            <button data-cy="delete-lessons-button" className='delete-lessons-button' onClick={handleDeleteSelectedLessons} disabled={selectedLessons.length === 0}><BsTrash3/></button>
+          </div>
           <ul data-cy="lesson-list" className='lesson-table'>
             <li className='lesson-header'>
               <div className='lesson-name' onClick={() => handleHeaderClick('name')}>
                 Nazwa Lekcji
                 {sortBy.column === 'name' && (sortBy.order === 'asc' ? ' ▲' : ' ▼')}
               </div>
-              <div className='lesson-date' onClick={() => handleHeaderClick('lastModified')}>
+              <div className='lesson-date-header' onClick={() => handleHeaderClick('lastModified')}>
                 {sortBy.column === 'lastModified' && (sortBy.order === 'asc' ? '▲ ' : '▼ ')}
                 Zmodyfikowano
               </div>
             </li>
             {sortedLessons.map((lesson, index) => (
               <li key={index} className='lesson-item'>
-                <input
-                  data-cy="list-checkbox"
-                  type="checkbox"
-                  onChange={() => toggleLessonSelection(lesson.name)}
-                  checked={selectedLessons.includes(lesson.name)}
-                />
+                
                 <div data-cy="list-lesson-item" className='lesson-name' onClick={() => openLesson(lesson.name)}>
                   {lesson.name.split('.json')[0]}
                 </div>
                 <div className='lesson-date'>
                   {DateService.formatLocalDateTime(lesson.lastModified)}
                 </div>
+                <div className='checkbox'>
+                    <Checkbox className="checkbox" style= {{color: COLORS.font_color}} checked={selectedLessons.includes(lesson.name)} onChange={() => toggleLessonSelection(lesson.name)}></Checkbox>
+                </div>
               </li>
             ))}
           </ul>
-          <div className='manage-buttons-container'>
-            <button data-cy="delete-lessons-button" className='delete-lessons-button' onClick={handleDeleteSelectedLessons} disabled={selectedLessons.length === 0}><BsTrash3/></button>
-          </div>
         </>
       )}
     </div>

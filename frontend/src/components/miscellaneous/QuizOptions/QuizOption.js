@@ -120,7 +120,7 @@ const QuizOption = (props) => {
             </div>
             <div className='management'>
                 <div className='checkbox'>
-                    <Checkbox color="success" checked={checked} onChange={handleChange}></Checkbox>
+                    <Checkbox color="success" style={{"color": "white"}} checked={checked} onChange={handleChange}></Checkbox>
                 </div>
                     { props.userType === UserType.teacher ? <React.Fragment><button onClick={handleClickOnDelete} className='button-x'><RiDeleteBin2Fill font-size='10px'/></button></React.Fragment>:
                     <React.Fragment></React.Fragment>}

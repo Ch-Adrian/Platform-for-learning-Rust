@@ -10,6 +10,7 @@ import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { GrDocumentTest } from "react-icons/gr";
 import { IoMdAdd, IoIosRemove } from "react-icons/io";
 import { VscReferences } from "react-icons/vsc";
+import { COLORS } from '../../../values/colors.js' 
 
 const CodeCell = memo(function CodeCell(props) {
   const editorRef = useRef(null);
@@ -98,7 +99,7 @@ const CodeCell = memo(function CodeCell(props) {
       <React.Fragment>
       <MonacoEditor ref={{containerRef: containerRef, editorRef: editorRef}} updateEditorValueHandler={updateEditorValueHandler} text={props.text}/>  
       <div className='editor-button-container'>
-       <button title="Uruchom" data-cy="code-run-button" onClick={compile} className='editor-button' disabled={isExecuting}>{!isExecuting ? <FaPlay color='white'/> : <HiOutlineDotsHorizontal color="white" />}</button>
+       <button title="Uruchom" data-cy="code-run-button" onClick={compile} className='editor-button' disabled={isExecuting}>{!isExecuting ? <FaPlay color={COLORS.font_color}/> : <HiOutlineDotsHorizontal color="white" />}</button>
        {props.cell.test === undefined ? <button data-cy="add-tests-button" title="Dodaj testy" onClick={() => {addEditor("test")}} className='editor-button' variant="success"><IoMdAdd color="white" /><GrDocumentTest className='grIcon' /></button> : null}
        {props.cell.reference === undefined ? <button data-cy="add-reference-button" title="Dodaj kod referencyjny" onClick={() => {addEditor("reference")}} className='editor-button' variant="success"><IoMdAdd color="white" /><VscReferences color="white" /></button> : null}
       </div>

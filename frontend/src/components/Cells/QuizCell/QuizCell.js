@@ -94,7 +94,7 @@ const QuizCell = memo(function QuizCell(props) {
       modifiedCell.value = value;
       updateCell(modifiedCell, props.cellIdx, props.currentPage, props.sectionIdx);
     }
-    
+
     return (
       <div data-cy="quiz-cell" ref={containerRef} className={"code-cell-container"} >
 
@@ -123,12 +123,12 @@ const QuizCell = memo(function QuizCell(props) {
             {
               options.map((option, idx) => (
                 <QuizOption resultColor={resultColor[idx]} key={option.id} option={option} cell={props.cell} userType={props.userType} options={options}
-                cellIdx={props.cellIdx} currentPage={props.currentPage} sectionIdx={props.sectionIdx} chOpt={chOpt}></QuizOption>
+                  cellIdx={props.cellIdx} currentPage={props.currentPage} sectionIdx={props.sectionIdx} chOpt={chOpt}></QuizOption>
               ))
             }
 
           <div className='editor-button-container'>
-              <button onClick={addOption} className='editor-button' variant="success"><IoAddCircle color="white" /></button>
+              <button onClick={addOption} className='editor-button' variant="success" ><IoAddCircle color="white" /></button>
           </div>  
 
           {isConnectionError ? <div style={{color: 'red'}}>There was some error connecting to the compiler. Please check if all app components are running</div> : null}

@@ -45,7 +45,7 @@ const OptionText = (props) => {
             onKeyDown={handleHeaderChange} 
             suppressContentEditableWarning={true} 
             spellCheck="false" 
-            style={{'background-color': 'rgb(30, 30, 30)', 'text-wrap': 'wrap', color: 'white', 'font-size': '1rem'}}>
+            style={{'background-color': 'rgb(30, 30, 30)', "inline-size": "67rem", "overflow-wrap": "break-word", color: 'white', 'font-size': '1rem'}}>
                 {props.option.text}
             </div>
         </div>

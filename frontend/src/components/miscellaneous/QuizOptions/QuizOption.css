@@ -10,7 +10,7 @@
 
 .background {
     color: var(--font_color);
-    width: 97%;
+    width: 99%;
     background-color: var(--dark_gray);
     display: flex;
     justify-content: space-between;
@@ -44,12 +44,21 @@
     margin: 10px;
 }
 
+.right-side {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
 .management {
+    height: 2rem;
     display: flex;
     flex-direction: row;
-    width: 250px;
+    width: 260px;
     background-color: var(--editor-color);
     border-radius: 10px;
+    padding-left: 1rem;
 }
 
 .checkbox {

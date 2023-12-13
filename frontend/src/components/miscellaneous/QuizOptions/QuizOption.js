@@ -45,7 +45,7 @@ const OptionText = (props) => {
             onKeyDown={handleHeaderChange} 
             suppressContentEditableWarning={true} 
             spellCheck="false" 
-            style={{'background-color': 'rgb(30, 30, 30)', 'text-wrap': 'wrap', color: 'white', 'font-size': '1rem'}}>
+            style={{'background-color': 'rgb(30, 30, 30)', "inline-size": "60rem", "overflow-wrap": "break-word", color: 'white', 'font-size': '1rem'}}>
                 {props.option.text}
             </div>
         </div>
@@ -121,13 +121,15 @@ const QuizOption = (props) => {
                 <OptionText cell={props.cell} options={props.options} option={props.option} userType={props.userType} currentPage={props.currentPage} page={props.page} sectionIdx={props.sectionIdx}/>
             </div>
             
-            <div className='management'>
-                { props.userType === UserType.teacher ? <div className="text-label-info">poprawna</div>:<div></div>}
-                <div className='checkbox'>
-                    <Checkbox style= {{color: COLORS.font_color}} checked={checked} onChange={handleChange}></Checkbox>
+            <div className="right-side">
+                <div className='management'>
+                    { props.userType === UserType.teacher ? <div className="text-label-info">poprawna</div>:<div></div>}
+                    <div className='checkbox'>
+                        <Checkbox style= {{color: COLORS.font_color}} checked={checked} onChange={handleChange}></Checkbox>
+                    </div>
+                        { props.userType === UserType.teacher ? <React.Fragment><button onClick={handleClickOnDelete} className='button-x'><BsTrash3/></button></React.Fragment>:
+                        <React.Fragment></React.Fragment>}
                 </div>
-                    { props.userType === UserType.teacher ? <React.Fragment><button onClick={handleClickOnDelete} className='button-x'><BsTrash3/></button></React.Fragment>:
-                    <React.Fragment></React.Fragment>}
             </div>
         </div>
     );

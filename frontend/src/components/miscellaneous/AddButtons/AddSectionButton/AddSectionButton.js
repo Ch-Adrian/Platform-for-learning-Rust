@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { LessonContext } from '../../../../contexts/LessonContext/LessonContextProvider';
 import Button from 'react-bootstrap/Button';
-import "./AddSectionButton.css";
+import "../AddButton.css";
 
 const AddSectionButton = (props) => {
     const {addSection} = useContext(LessonContext);

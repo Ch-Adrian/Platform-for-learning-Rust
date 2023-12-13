@@ -4,7 +4,7 @@
     color: var(--code_color);
     font-size: inherit;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    background-color: var(--code_background_color) !important;
+    background-color: var(--dark_gray) !important;
     margin: .5em 1em .5em 1em;
     padding: 0.2em;
     white-space: pre-wrap;

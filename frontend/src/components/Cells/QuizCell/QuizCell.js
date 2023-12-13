@@ -1,5 +1,4 @@
 import React, { useRef, useContext, useState, useEffect, memo } from 'react';
-import Button from 'react-bootstrap/Button';
 import "./QuizCell.css"
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
 import UserType from '../../../models/UserType';
@@ -106,6 +105,7 @@ const QuizCell = memo(function QuizCell(props) {
 
       {props.userType === UserType.teacher && focus ? 
         <MDEditor
+        className='markdown'
         value={value}
         onChange={updateTextValue}
         />

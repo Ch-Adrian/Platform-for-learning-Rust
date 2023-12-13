@@ -72,10 +72,8 @@ const ListLessons = (props) => {
         <h2 className='title'>Rozpocznij swoją przygodę z językiem Rust</h2>
       ) : (
         <>
-          <h2 className='title'>Wybierz lekcję</h2>
-          <div className='manage-buttons-container'>
-            <button data-cy="delete-lessons-button" className='delete-lessons-button' onClick={handleDeleteSelectedLessons} disabled={selectedLessons.length === 0}><BsTrash3/></button>
-          </div>
+          <h2 className='title'>Twoje lekcje</h2>
+          
           <ul data-cy="lesson-list" className='lesson-table'>
             <li className='lesson-header'>
               <div className='lesson-name' onClick={() => handleHeaderClick('name')}>
@@ -96,7 +94,7 @@ const ListLessons = (props) => {
                   checked={selectedLessons.includes(lesson.name)}
                 />
                 <div data-cy="list-lesson-item" className='lesson-name' onClick={() => openLesson(lesson.name)}>
-                  {lesson.name}
+                  {lesson.name.split('.json')[0]}
                 </div>
                 <div className='lesson-date'>
                   {DateService.formatLocalDateTime(lesson.lastModified)}
@@ -104,6 +102,9 @@ const ListLessons = (props) => {
               </li>
             ))}
           </ul>
+          <div className='manage-buttons-container'>
+            <button data-cy="delete-lessons-button" className='delete-lessons-button' onClick={handleDeleteSelectedLessons} disabled={selectedLessons.length === 0}><BsTrash3/></button>
+          </div>
         </>
       )}
     </div>

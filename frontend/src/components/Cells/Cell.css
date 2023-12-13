@@ -13,7 +13,7 @@
     margin-left: auto;
     display: flex;
     flex-direction: row;
-    padding: 0 1em 1em 1em;
+    padding: 0rem 0rem 1rem 1rem;
 }
 
 .cell-misc-buttons-container > * {
@@ -35,7 +35,7 @@
 .cell-container {
     display: flex;
     flex-direction: column;
-    padding: 1em 10px 1em 10px;
+    padding: 1rem 2rem 1rem 2rem;
     transition: .2s background-color box-shadow;
     border-radius: 20px;
 }

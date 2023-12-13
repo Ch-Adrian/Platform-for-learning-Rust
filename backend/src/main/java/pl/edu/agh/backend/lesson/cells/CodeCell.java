@@ -11,12 +11,10 @@ public class CodeCell extends Cell {
 
     public static CodeCell getDefault() {
         CodeCell codeCell = new CodeCell();
-        codeCell.setValue(
-                """
-                        // To jest komórka z kodem. Możesz dodać kod, dodatkowy edytor do pisania testów, oraz \r
-                        // edytor w którym zapiszesz swoje modelowe rozwiązanie, do którego tylko nauczyciel \r
-                        // będzie miał dostęp
-                        """);
+        codeCell.setValue("""
+                fn main() {
+
+                }""");
         return codeCell;
     }
 }

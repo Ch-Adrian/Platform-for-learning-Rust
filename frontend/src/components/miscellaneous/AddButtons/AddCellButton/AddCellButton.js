@@ -2,7 +2,7 @@ import React, {useContext} from 'react'
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { LessonContext } from '../../../../contexts/LessonContext/LessonContextProvider';
-import "./AddCellButton.css";
+import "../AddButton.css";
 
 const BACKEND_PATH = "pl.edu.agh.backend.lesson.cells."
 const cellTypes = ["Tekst", "Kod", "Niemutowalny kod", "Quiz"];
@@ -15,7 +15,7 @@ const AddCellButton = (props) => {
         if (event.target.innerHTML === "Kod"){
             newCell.profileType = BACKEND_PATH + "CodeCell"
             newCell.type = "CodeCell";
-            newCell.value = "";
+            newCell.value = "fn main() {\r\n\t\r\n}";
         } else if (event.target.innerHTML === "Tekst"){
             newCell.profileType = BACKEND_PATH + "TextCell"
             newCell.type = "TextCell";

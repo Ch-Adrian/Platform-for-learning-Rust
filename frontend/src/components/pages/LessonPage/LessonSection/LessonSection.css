@@ -15,7 +15,7 @@
     flex-direction: column;
     width: 100%;
     padding: 2.5em;
-    background-color: var(--semi_black);
+    background-color: var(--gray_8);
     gap: 2em;
     border-radius: 5px;
 }

@@ -1,7 +1,6 @@
 @import url('../../../values/colors.css');
 
 :root{
-  /* --background-cell-color: --semi_black; */
   --markdown-color: white;
   --buttons-color: grey;
   --buttons-color-active: white;
@@ -28,17 +27,17 @@ th,
 td {
     padding: 6px 13px;
     border: 1px solid var(--border-color-td); 
-    background-color: var(--semi_black) !important;
+    background-color: var(--gray_8) !important;
 }
 
 .markdown-body {
     font-size: 1rem;
     padding: 2rem;
-    background-color: var(--semi_black) !important;
+    background-color: var(--gray_8) !important;
 }
 
 .w-md-editor-toolbar li {
-    background-color: var(--semi_black) !important;
+    background-color: var(--gray_8) !important;
 }
 
 @media (max-width: 767px) {
@@ -50,6 +49,6 @@ td {
 @media (prefers-color-scheme: dark) {
     .wmde-markdown,
     .wmde-markdown-var {
-        --color-canvas-default: var(--semi_black) !important;
+        --color-canvas-default: var(--gray_8) !important;
     }
 }

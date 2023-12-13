@@ -4,6 +4,8 @@ import React, { useRef, useContext, useState } from 'react';
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
 import UserType from '../../../models/UserType';
 import { RiDeleteBin2Fill } from "react-icons/ri";
+import { COLORS } from '../../../values/colors.js' 
+import {BsTrash3} from 'react-icons/bs';
 
 const OptionText = (props) => {
     const headerInput = useRef(null);
@@ -118,11 +120,13 @@ const QuizOption = (props) => {
             <div className='option-text'>
                 <OptionText cell={props.cell} options={props.options} option={props.option} userType={props.userType} currentPage={props.currentPage} page={props.page} sectionIdx={props.sectionIdx}/>
             </div>
+            
             <div className='management'>
+                { props.userType === UserType.teacher ? <div className="text-label-info">poprawna</div>:<div></div>}
                 <div className='checkbox'>
-                    <Checkbox color="success" checked={checked} onChange={handleChange}></Checkbox>
+                    <Checkbox style= {{color: COLORS.font_color}} checked={checked} onChange={handleChange}></Checkbox>
                 </div>
-                    { props.userType === UserType.teacher ? <React.Fragment><button onClick={handleClickOnDelete} className='button-x'><RiDeleteBin2Fill font-size='10px'/></button></React.Fragment>:
+                    { props.userType === UserType.teacher ? <React.Fragment><button onClick={handleClickOnDelete} className='button-x'><BsTrash3/></button></React.Fragment>:
                     <React.Fragment></React.Fragment>}
             </div>
         </div>

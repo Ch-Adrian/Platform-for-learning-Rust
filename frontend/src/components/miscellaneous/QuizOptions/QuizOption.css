@@ -47,19 +47,20 @@
 .management {
     display: flex;
     flex-direction: row;
-    width: 200px;
+    width: 250px;
     background-color: var(--editor-color);
     border-radius: 10px;
 }
 
 .checkbox {
-    padding-right: 30px;
     border-color: var(--font_color);
+    margin-left: 10px;
+    margin-right: 50px;
 }
 
 .option-text {
-    margin-left: 5px;
-    margin-top: 6px;
+    margin-left: 10px;
+    margin-top: 7px;
     padding-top: 0.1rem;
     background-color: var(--editor-color);
 }
@@ -69,13 +70,24 @@
 }
 
 .button-x {
-    background-color: rgb(30, 30, 30);
-    color: white;
+    background-color: var(--dark_gray);
+    color: var(--font_color);
     border: none;
-    font-size: 2rem;
     display: flex;
     align-items: center;
-    border-radius: 10px;
-    padding-right: 0.5rem;
-    margin-top: 10px;
+    border-radius: 0.1rem;
+    text-align: center;
+    margin-right: 0.5rem;
+    padding: 0.1rem;
+}
+
+.button-x:hover {
+    background-color: var(--light_gray);
+    color: white !important;
+}
+
+.text-label-info {
+    display: flex;
+    flex-direction: row;
+    margin-top: 7px;
 }

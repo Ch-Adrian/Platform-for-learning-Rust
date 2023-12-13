@@ -1,5 +1,7 @@
+@import url('../../../values/colors.css');
+
 :root{
-  --background-cell-color: #524B4B;
+  /* --background-cell-color: --semi_black; */
   --markdown-color: white;
   --buttons-color: grey;
   --buttons-color-active: white;
@@ -10,12 +12,12 @@
 }
 
 .markdown {
-    color: var(--markdown-color); 
+    color: var(--font_color) !important;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 code {
-    color: var(--code-color); 
+    color: var(--font_color) !important;
 }
 
 tr {
@@ -26,12 +28,17 @@ th,
 td {
     padding: 6px 13px;
     border: 1px solid var(--border-color-td); 
-    background-color: var(--background-cell-color) !important;
+    background-color: var(--semi_black) !important;
 }
 
 .markdown-body {
     font-size: 1rem;
-    background-color: var(--background-cell-color) !important;
+    padding: 2rem;
+    background-color: var(--semi_black) !important;
+}
+
+.w-md-editor-toolbar li {
+    background-color: var(--semi_black) !important;
 }
 
 @media (max-width: 767px) {
@@ -43,6 +50,6 @@ td {
 @media (prefers-color-scheme: dark) {
     .wmde-markdown,
     .wmde-markdown-var {
-        --color-canvas-default: var(--background-cell-color) !important;
+        --color-canvas-default: var(--semi_black) !important;
     }
 }

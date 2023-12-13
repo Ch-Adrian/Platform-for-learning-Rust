@@ -26,7 +26,8 @@ public class CompilationResponse {
     }
 
     private String getOutput() {
-        StringBuilder stringBuilder = new StringBuilder("\n### **Compiled successfully**\n");
+//        StringBuilder stringBuilder = new StringBuilder("\n### **Compiled successfully**\n");
+        StringBuilder stringBuilder = new StringBuilder("");
         if (this.compilerMessage != null && !this.compilerMessage.isEmpty()) {
             stringBuilder.append(String.format("### **Compiler message:**\n%s\n", this.compilerMessage));
         }

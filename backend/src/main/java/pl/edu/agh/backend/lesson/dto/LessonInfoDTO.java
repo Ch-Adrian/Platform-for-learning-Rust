@@ -1,4 +1,4 @@
-package pl.edu.agh.backend.lesson;
+package pl.edu.agh.backend.lesson.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

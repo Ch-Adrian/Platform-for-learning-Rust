@@ -1,0 +1,14 @@
+:root {
+    /* --code_color: #d4d4d4; */
+    /* --code_background_color: #1e1e1e; */
+
+    --code_color: #EEEEEE;
+    --code_background_color: #222831;
+
+    --black: #111111;
+    --semi_black: #383838;
+    --dark_gray: #1e1e1e;
+    --gray: #3c3c3c;
+    --light_gray: #4d4d4d;
+    --font_color: #D4D4D4;
+}

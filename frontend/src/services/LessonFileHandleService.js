@@ -20,14 +20,13 @@ const LessonFileSaveService = {
             return response;
         }
     },
-    renameLesson: async (oldName, newLessonName) => { 
-        let config = {
-            headers: {
-                "Content-Type": "text/plain"
-            }
-          }
+    renameLesson: async (oldName, newLessonName, override) => { 
+        const request = {
+            newLessonName: newLessonName + ".json",
+            override: override === undefined ? false : override
+        };
         const response = await axios
-        .put(RUST_COMPILER_REST_API_URL + "/" + oldName + ".json", newLessonName + ".json", config);
+        .put(RUST_COMPILER_REST_API_URL + "/" + oldName + ".json", request);
         if (response.status !== 200) {
             throw new Error(response.data);
         } else {

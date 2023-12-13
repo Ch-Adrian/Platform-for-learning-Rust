@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useContext, useState, useRef, useEffect, useCallback } from 'react'
+import React, { useContext, useState, useEffect, useCallback } from 'react'
 import * as FaIcons from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import './LessonPageContainer.css'
@@ -23,8 +23,8 @@ import { ImFolderDownload } from "react-icons/im";
 import DescriptionIcon from '@mui/icons-material/Description';
 import { IoMdAdd, IoIosRemove } from "react-icons/io";
 import SettingsIcon from '@mui/icons-material/Settings';
-
-
+import ConfirmPageDeleteModal from '../../Modals/ConfirmPageDeleteModal/ConfirmPageDeleteModal';
+import NameHeader from './NameHeader/NameHeader';
 
 const ErrorFallback = ({ error }) => (
   <div item-cy="render-errror-message" style={{color: "red"}}>
@@ -33,60 +33,19 @@ const ErrorFallback = ({ error }) => (
   </div>
 );
 
-
 const DEFINED_USER_TYPE = currentUser;
-
-const NameHeader = ({lessonName, setLessonName, lessonDefinition}) => {
-  const nameInput = useRef(null);
-  const handleNameSubmit = async (e) => {
-    const oldName = lessonName;
-    const newName = e.currentTarget.textContent;
-    try {
-
-      const response = await LessonFileSaveService.getAllLessons();
-      console.log(response.data)
-      if (response.data.some(lesson => lesson.name === oldName + ".json")) {
-        try {
-          await LessonFileSaveService.renameLesson(oldName, newName);
-        } catch(e) {
-          console.log(e)
-        }
-      }
-      setLessonName(newName);
-    } catch (error) {
-      console.error(error);
-    }
-  
-  if (nameInput.current) {
-      nameInput.current.scrollLeft = 0;
-    }
-    
-
-  }
-
-  const handleNameChange = (e) => {
-    nameInput.current.textContent = e.target.textContent;
-    if (e.key === 'Enter'){
-      nameInput.current.blur();
-    }
-    
-  }
-
-  return (
-    <div data-cy="lesson-name" title={lessonName} ref={nameInput} contentEditable="true" className='name-header general-button-item' onKeyDown={handleNameChange} onBlur={handleNameSubmit} suppressContentEditableWarning={true} spellCheck="false"> 
-      {lessonName}
-    </div>
-  );
-}
 
 const LessonPageContainer = () => {
   const [userType, setUserType] = useState(currentUser);
   const [sidebar, setSidebar] = useState(false);
   const [configModalOpen, setConfigModalOpen] = useState(false);
   const [saveLessonModalOpen, setSaveLessonModalOpen] = useState(false);
+  const [confirmPageDeletionModalOpen, setConfirmPageDeletionModalOpen] = useState(false);
   const [isCargoCompiled, setIsCargoCompiled] = useState(true);
   const [isCargoError, setIsCargoError] = useState(false);
+  const [isSaveLessonError, setIsSaveLessonError] = useState(false);
   const [hasLoaded, setHasLoaded] = useState(false);
+  const [statusInfo, setStatusInfo] = useState("Gotowe");
   const navigate = useNavigate();
 
   const {lessonDefinition, lessonName, setLessonName, addPage, removePage, updateCargoToml} = useContext(LessonContext);
@@ -145,17 +104,27 @@ const LessonPageContainer = () => {
     let newList = currentList;
     newList.push({type: 'PAGE', pIdx: lessonDefinition.pages.length, sIdx: 0, title: ""});
     setCurrentList(newList);
+    navigate(url.pathname+'/'+newList[newList.length-1].pIdx);
   }
 
   const deletePageEvent = () => {
+    setConfirmPageDeletionModalOpen(false);
     removePage(currPg);
     if(lessonDefinition.pages.length >= 1) navigate(url.pathname+'/0');
     else navigate(url.pathname);
   }
 
   const handleSave = async () => {
+    setIsSaveLessonError(false);
+    console.log(lessonName);
     LessonFileSaveService.saveLesson(lessonDefinition, lessonName)
-    .catch((e) => console.log(e));
+    .then((res) => {
+      setStatusInfo("Zapisano!");
+    })
+    .catch((e) => {
+      console.log(e)
+      setIsSaveLessonError(true);
+    });
   }
 
   const handleDownload = () => {
@@ -205,6 +174,13 @@ const LessonPageContainer = () => {
     handleOpen();
   }
 
+  useEffect(() => {
+    if (isCargoError) setStatusInfo("Error building project! Check cargo file");
+    else if (!isCargoCompiled) setStatusInfo("Budowanie projektu...");
+    else if (isSaveLessonError) setStatusInfo("Nie udało się zapisać lekcji");
+    else if (isCargoCompiled && !isCargoError && !isSaveLessonError) setStatusInfo("Gotowe");
+  }, [isCargoCompiled, isCargoError, isSaveLessonError])
+
   url.pathname = path.join("/")
   localStorage.setItem(lessonDefinition, lessonDefinition);
 
@@ -217,20 +193,18 @@ const LessonPageContainer = () => {
           </Link>
           <div className='general-buttons'>
             <div style={{display: 'flex'}} className='left-side-buttons'>
-              <NameHeader lessonName={lessonName} setLessonName={setLessonName} lessonDefinition={lessonDefinition}></NameHeader>
+              <NameHeader lessonName={lessonName} setLessonName={setLessonName} lessonDefinition={lessonDefinition} setStatusInfo={setStatusInfo} setIsSaveLessonError={setIsSaveLessonError}></NameHeader>
               <button data-cy="back-button" title="Wróć" className='general-button-item' onClick={() => setSaveLessonModalOpen(true)}><HiArrowUturnLeft/></button>
               <button data-cy="save-button" title="Zapisz" className='general-button-item' onClick={handleSave}><FaSave /></button>
               <button className='general-button-item' title="Pobierz" onClick={handleDownload}><ImFolderDownload /></button>
               <div className='status-info' title="Status">
-                {isCargoError ? <p>Error building project! Check cargo file</p> : null}
-                {!isCargoCompiled ? <p>Budowanie projektu...</p> : null}
-                {isCargoCompiled && !isCargoError ? <p>Gotowe</p> : null}
+                <p>{statusInfo}</p>
               </div>
             </div>
             <div style={{display: 'flex', marginRight: '1rem'}} className='right-side-buttons'>
               {DEFINED_USER_TYPE === UserType.teacher && <UserTypeSwitch handleSwitchUserType={handleSwitchUserType}/>}
               {DEFINED_USER_TYPE === UserType.teacher && <button data-cy="add-page-button" title="Dodaj stronę" className='general-button-item' variant='light' onClick={newPageEvent}><IoMdAdd color="white" /><DescriptionIcon/></button>}
-              {DEFINED_USER_TYPE === UserType.teacher && <button data-cy="remove-page-button"  title="Usuń stronę" className='general-button-item' variant='light' disabled={lessonDefinition && lessonDefinition.pages && lessonDefinition.pages.length === 1} onClick={deletePageEvent}><IoIosRemove /><DescriptionIcon/></button>}
+              {DEFINED_USER_TYPE === UserType.teacher && <button data-cy="remove-page-button"  title="Usuń stronę" className='general-button-item' variant='light' disabled={lessonDefinition && lessonDefinition.pages && lessonDefinition.pages.length === 1} onClick={() => setConfirmPageDeletionModalOpen(true)}><IoIosRemove /><DescriptionIcon/></button>}
               <button data-cy="config-button" className='general-button-item' variant='light'  title="Konfiguracja Cargo.toml" onClick={() => setConfigModalOpen(true)}><SettingsIcon /></button>
             </div>
           </div>
@@ -277,6 +251,7 @@ const LessonPageContainer = () => {
         </div>
         {lessonDefinition ? <ConfigModal open={configModalOpen} configFileContent={lessonDefinition.cargoToml} handleCloseModal={() => setConfigModalOpen(false)} handleSaveConfig={handleSaveConfig}/> : null}
         {lessonDefinition ? <LessonSaveModal open={saveLessonModalOpen} handleCloseModal={() => setSaveLessonModalOpen(false)} handleSaveLesson={handleSaveAndExit} handleExitLesson={handleOpen}/> : null}
+        {lessonDefinition ? <ConfirmPageDeleteModal open={confirmPageDeletionModalOpen} handleCloseModal={() => setConfirmPageDeletionModalOpen(false)} handleRemovePage={deletePageEvent}/> : null}
         </div>
       
   );

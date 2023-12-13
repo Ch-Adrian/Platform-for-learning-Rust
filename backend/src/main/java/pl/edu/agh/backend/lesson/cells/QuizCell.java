@@ -18,14 +18,8 @@ public class QuizCell extends Cell {
 
     public static QuizCell getDefault() {
         QuizCell quizCell = new QuizCell();
-        quizCell.setValue("To jest komórka typu quiz! W tym miejscu możesz wpisać pytanie.");
+        quizCell.setValue("Tutaj możesz dodać pytanie.");
 
-        Option option1 = new Option(1, "Niepoprawna odpowiedz.", false);
-        Option option2 = new Option(2, "Poprawna odpowiedz.", true);
-        Option option3 = new Option(3, "Niepoprawna odpowiedz.", false);
-        quizCell.addOption(option1);
-        quizCell.addOption(option2);
-        quizCell.addOption(option3);
         return quizCell;
     }
 }

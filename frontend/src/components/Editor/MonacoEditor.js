@@ -1,5 +1,6 @@
 import React, { useState, useEffect, memo, forwardRef, useRef } from 'react'; 
 import Editor from '@monaco-editor/react';
+import { COLORS } from '../../values/colors.js'
 
 const MonacoEditor = memo(forwardRef(function MonacoEditor(props, ref) {
     const {editorRef, containerRef} = ref;
@@ -18,7 +19,8 @@ const MonacoEditor = memo(forwardRef(function MonacoEditor(props, ref) {
           inherit: true,
           rules: [],
           colors: {
-            'editor.background': '#262335',
+            'editor.foreground': COLORS.code_color,
+            'editor.background': COLORS.dark_gray,
           },
         });
         monaco.editor.setTheme('rustafariapp');
@@ -95,7 +97,7 @@ const MonacoEditor = memo(forwardRef(function MonacoEditor(props, ref) {
             },
             fontSize: fontSize,
             wordWrap: "on",
-            lineNumbers: "off",
+            lineNumbers: "on",
             automaticLayout: true,
             scrollBeyondLastLine: false
         }}

@@ -4,3 +4,7 @@
     --buttons-color-active: white;
     --background-buttons-color: transparent;
   }
+
+.editor {
+  padding-left: 1rem;
+}

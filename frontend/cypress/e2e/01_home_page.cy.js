@@ -7,15 +7,19 @@ const lessonName = '[data-cy="lesson-name"]';
 const backButton = '[data-cy="back-button"]';
 const deleteLessonsButton = '[data-cy="delete-lessons-button"]';
 
+Cypress.on('window:before:load', (win) => {
+  cy.stub(win.console, 'error').as('consoleError')
+});
+
 describe('Home Page lesson management', () => {
-  it.skip('should create and open a new lesson on create lesson button', () => {
+  it('should create and open a new lesson on create lesson button', () => {
     cy.visit('/')
     cy.get(newLessonButton).click();
     cy.get(lessonPage).should('exist');
     cy.get(lessonPage).find(lessonSection).should('have.length', 1);
   })
 
-  it.skip('should display error on loading invalid lesson file', () => {
+  it('should display error on loading invalid lesson file', () => {
     cy.on('uncaught:exception', (err, runnable) => {
        return false
        })
@@ -23,10 +27,10 @@ describe('Home Page lesson management', () => {
     cy.visit('/')
     cy.get('[data-cy="upload-lesson-button"]')
       .attachFile('invalid_lesson.json');
-    cy.get('[item-cy="render-errror-message"]').contains('Błąd podczas renderowania lekcji');
+    cy.get('@consoleError').should('be.calledOnce')
   })
 
-  it.skip('should open a lesson from the list', () => {
+  it('should open a lesson from the list', () => {
     cy.visit('/')
     cy.contains('CypressTestLesson.json').click()
     cy.get(lessonPage).should('exist');
@@ -34,7 +38,7 @@ describe('Home Page lesson management', () => {
     cy.get(lessonName).should('have.text', 'CypressTestLesson')
   })
 
-  it.skip('should delete selected lesson', () => {
+  it('should delete selected lesson', () => {
     // First, create a lesson, and save it
     cy.visit('/')
     cy.get(newLessonButton).click();

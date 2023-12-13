@@ -1,27 +1,19 @@
 @import url('../../../values/colors.css');
 
-:root {
-  --background-cell-color: #111111;
-  --buttons-color-hovered: rgba(39, 36, 51, 50%);
-  --buttons-color-active: white;
-  --background-buttons-color: transparent;
-  --editor-color: rgb(39, 36, 51);
-}
-
 .editor-button-container {
     display: flex;
     flex-direction: row;
     gap: 1rem;
     margin-bottom: 1rem;
-    background-color: var(--gray_8);
+    background-color: var(--gray_8) !important;
     padding: 0.3em;
     padding-right: 0px;
     padding-left: 1rem;
     height: 2.3rem;
 }
 
-.grIcon path{
-    stroke: white;
+.grIcon path {
+    stroke: var(--font_color) !important;
 }
 
 .editor-button {
@@ -31,11 +23,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--gray_8);
+    background-color: var(--gray_8) !important;
 }
 
 .editor-button:hover {
-    background-color: var(--dark_gray);
+    background-color: var(--dark_gray) !important;
 }
 
 .editor-caption {

@@ -100,7 +100,7 @@ li {
     color: var(--font_color);
     text-align: center;
     font-size: 3rem;
-    top: 0;
+    margin-bottom: -1rem;
 }
 
 .lesson-table {
@@ -122,14 +122,11 @@ li {
     border-radius: 0.1rem;
     border-width: 0;
     text-align: center;
-    padding: 0.4rem;
+    padding: 0.3rem;
     justify-content: center;
     align-items: center;
-    color: var(--dark_gray);
     transition: background-color 0.2s, color 0.2s, transform 0.2s;
-    height: 1vh;
-    padding-bottom: 2vh;
-    padding-right: 1.3rem;
+    margin-right: 1.3rem;
 }
 
 .delete-lessons-button:disabled {
@@ -142,8 +139,8 @@ li {
 }
 
 .delete-lessons-button:hover:enabled {
-    background-color: var(--gray_8);
-    color: var(--font_color);
+    background-color: var(--light_gray);
+    color: white !important;
 }
 
 .delete-lessons-button > svg {
@@ -153,5 +150,4 @@ li {
 .checkbox {
     padding: 0 !important;
     padding-right: 0.3rem !important;
-    border-color: var(--font_color);
 }

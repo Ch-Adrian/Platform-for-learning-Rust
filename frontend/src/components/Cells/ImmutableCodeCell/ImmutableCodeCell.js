@@ -10,6 +10,7 @@ import { FaPlay } from "react-icons/fa";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { GrDocumentTest } from "react-icons/gr";
 import { IoMdAdd, IoIosRemove } from "react-icons/io";
+import { COLORS } from '../../../values/colors.js'
 
 const createValidationRegex = (immutablePhrases) => {
   immutablePhrases = immutablePhrases.map(phrase => escapeRegExp(phrase.trim()));
@@ -135,7 +136,7 @@ const ImmutableCodeCell = memo(function ImmutableCodeCell(props) {
         <React.Fragment>
         <MonacoEditor ref={{containerRef: containerRef, editorRef: editorRef}} updateEditorValueHandler={updateEditorValueHandler} text={props.text}/>  
         <div className='editor-button-container'>
-         <button title="Uruchom" data-cy="code-run-button" onClick={compile} className='editor-button' disabled={isExecuting}>{!isExecuting ? <FaPlay color='white'/> : <HiOutlineDotsHorizontal color="white" />}</button>
+         <button title="Uruchom" data-cy="code-run-button" onClick={compile} className='editor-button' disabled={isExecuting}>{!isExecuting ? <FaPlay color={COLORS.font_color}/> : <HiOutlineDotsHorizontal color="white" />}</button>
          {props.cell.test === undefined ? <button title="Dodaj testy" data-cy="add-tests-button" onClick={() => {addEditor("test")}} className='editor-button' variant="success"><IoMdAdd color="white" /><GrDocumentTest className='grIcon' /></button> : null}
         </div>  
         {isConnectionError ? <div style={{color: 'red'}}>There was some error connecting to the compiler. Please check if all app components are running</div> : null}

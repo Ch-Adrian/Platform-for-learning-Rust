@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import "./ListLessons.css";
 import {BsTrash3} from 'react-icons/bs';
 import { Checkbox } from "@mui/material";
+import { COLORS } from '../../../values/colors.js' 
 
 const ListLessons = (props) => {
   const [lessons, setLessons] = useState([]);
@@ -97,14 +98,8 @@ const ListLessons = (props) => {
                 <div className='lesson-date'>
                   {DateService.formatLocalDateTime(lesson.lastModified)}
                 </div>
-                {/* <input
-                  data-cy="list-checkbox"
-                  type="checkbox"
-                  onChange={() => toggleLessonSelection(lesson.name)}
-                  checked={selectedLessons.includes(lesson.name)}
-                /> */}
                 <div className='checkbox'>
-                    <Checkbox className="checkbox" color="success" checked={selectedLessons.includes(lesson.name)} onChange={() => toggleLessonSelection(lesson.name)}></Checkbox>
+                    <Checkbox className="checkbox" style= {{color: COLORS.font_color}} checked={selectedLessons.includes(lesson.name)} onChange={() => toggleLessonSelection(lesson.name)}></Checkbox>
                 </div>
               </li>
             ))}

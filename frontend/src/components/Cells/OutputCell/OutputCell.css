@@ -28,3 +28,8 @@
 .clear-output-editor-button:hover > .grIcon path {
     stroke: white;
 }
+
+.output-title {
+    color: var(--font_color);
+    text-align: center;
+}

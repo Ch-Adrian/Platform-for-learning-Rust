@@ -10,7 +10,7 @@ import { GrClear } from "react-icons/gr";
 const OutputCell = (props) => {
   return (
     <div className='output-container'>
-      <div className='title'>{props.titleValue}</div>
+      <div className='output-title'>{props.titleValue}</div>
       <ReactMarkdown className={'markdown-output markdown-body'} remarkPlugins={[remarkGfm]}>
           {String(props.output)}
       </ReactMarkdown>

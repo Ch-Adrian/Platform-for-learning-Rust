@@ -24,7 +24,7 @@ const AddCellButton = (props) => {
             newCell.profileType = BACKEND_PATH + "ImmutableCodeCell"
             newCell.type = "ImmutableCodeCell";
             newCell.value = "fn main() {\r\n\t/*TO_FILL*/\r\n}";
-            newCell.reference = "fn main() {\r\n\t/*TO_FILL*/\r\n}";
+            newCell.template = "fn main() {\r\n\t/*TO_FILL*/\r\n}";
             newCell.mutableString = "/*TO_FILL*/";
         } else if (event.target.innerHTML === "Quiz"){
             newCell.profileType = BACKEND_PATH + "QuizCell"

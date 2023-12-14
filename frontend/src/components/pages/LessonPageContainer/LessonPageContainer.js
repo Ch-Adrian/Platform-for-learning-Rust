@@ -246,7 +246,7 @@ const LessonPageContainer = () => {
             </IconContext.Provider>
         <div className={sidebar ? 'page active' : 'page'} onClick={() => setSidebar(false)}>     
           <ErrorBoundary FallbackComponent={ErrorFallback}>
-            <LessonPage userType={userType} setUserType={setUserType}/> 
+            <LessonPage userType={userType} setUserType={setUserType} sidebar={sidebar}/> 
           </ErrorBoundary>
         </div>
         {lessonDefinition ? <ConfigModal open={configModalOpen} configFileContent={lessonDefinition.cargoToml} handleCloseModal={() => setConfigModalOpen(false)} handleSaveConfig={handleSaveConfig}/> : null}

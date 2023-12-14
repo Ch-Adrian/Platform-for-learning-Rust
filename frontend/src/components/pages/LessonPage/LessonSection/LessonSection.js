@@ -97,7 +97,7 @@ const LessonSection = (props) => {
                                     cellToAdd =
                                         (
                                             <Cell key={"cell" + idx + "quiz" + props.sectionIdx} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}>
-                                                <QuizCell key={idx + "quiz" + props.sectionIdx} profileType={cell.profileType} text={cell.value} content={cell.options} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></QuizCell>
+                                                <QuizCell key={idx + "quiz" + props.sectionIdx} profileType={cell.profileType} text={cell.value} content={cell.options} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType} sidebar={props.sidebar}></QuizCell>
                                             </Cell>
                                         )
                                 } 
@@ -151,7 +151,7 @@ const LessonSection = (props) => {
                 }  else if (cell.type === "QuizCell") {
                     return (
                         <Cell key={"cell" + idx + "quiz" + props.sectionIdx} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}>
-                            <QuizCell key={idx} text={cell.value} content={cell.options} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></QuizCell>
+                            <QuizCell key={idx} text={cell.value} content={cell.options} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType} sidebar={props.sidebar}></QuizCell>
                         </Cell>
                     )
                 } else if (cell.type === "Empty") {

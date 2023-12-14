@@ -48,7 +48,7 @@ root{
       cursor: grab !important;
   }
 
-  .editor-button {
+  .editor-button-quiz {
     padding: 0.1rem 0.2rem 0.1rem 0.2rem !important;
     border-radius: 0.1rem;
     border-width: 0px;
@@ -58,7 +58,7 @@ root{
     background-color: rgb(30, 30, 30);
 }
 
-.editor-button svg {
-    width: 1.7rem;
-    height: 1.7rem;
+.editor-button-quiz svg {
+    width: 1.5rem;
+    height: 1.5rem;
 }

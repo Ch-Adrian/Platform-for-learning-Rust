@@ -129,7 +129,7 @@ const QuizCell = memo(function QuizCell(props) {
             }
 
           <div className='editor-button-container'>
-              <button onClick={addOption} className='editor-button' variant="success" ><IoAddCircle color="white" /></button>
+              <button onClick={addOption} className='editor-button-quiz' variant="success" ><IoAddCircle color="white" /></button>
           </div>  
 
           {isConnectionError ? <div style={{color: 'red'}}>There was some error connecting to the compiler. Please check if all app components are running</div> : null}
@@ -149,7 +149,7 @@ const QuizCell = memo(function QuizCell(props) {
           <div style={{color: 'red'}}>There was some error connecting to the compiler. Please check if all app components are running</div> :
            null}
           <div className='editor-button-container'>
-            <button onClick={checkAnswer} className='editor-button' variant="success"  style={{color: 'white'}}><FiCheckSquare color="white"/></button>
+            <button onClick={checkAnswer} className='editor-button-quiz' variant="success"  style={{color: 'white'}}><FiCheckSquare color="white"/></button>
           </div>
           </React.Fragment>
         }

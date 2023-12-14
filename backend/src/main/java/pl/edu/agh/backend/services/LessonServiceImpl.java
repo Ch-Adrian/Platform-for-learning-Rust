@@ -34,7 +34,7 @@ public class LessonServiceImpl implements LessonService {
     private static final Logger logger = LogManager.getLogger();
 
     public String createNewLesson(LessonFile lessonFile) {
-        String lessonName = lessonFile.getName().replaceAll("\\.json$", "");
+        String lessonName = lessonFile.getName();
         if (this.existsLesson(lessonName)) {
             lessonFile.setName(findAvailableName(lessonName.substring(0, lessonName.length() - 5)));
         }
@@ -70,6 +70,8 @@ public class LessonServiceImpl implements LessonService {
     public List<LessonInfoDTO> getAllLessonsInfo() {
         File currentDir = new File(rootDir);
         FilenameFilter filter = (file, name) -> name.endsWith(".json");
+
+
 
         return Arrays
                 .stream(Objects.requireNonNull(currentDir.listFiles(filter)))
@@ -153,6 +155,14 @@ public class LessonServiceImpl implements LessonService {
     private List<String> getAllLessonsNames() {
         File currentDir = new File(rootDir);
         FilenameFilter filter = (file, name) -> name.endsWith(".json");
+
+        List<String> lessonInfoList = Arrays.stream(Objects.requireNonNull(currentDir.list(filter))).toList();
+
+        for (String lessonInfo : lessonInfoList) {
+            System.out.println(lessonInfo);
+        }
+
+        System.out.println("DUPAAAAAAAAAAAAAAAAAAAA");
         return Arrays.stream(Objects.requireNonNull(currentDir.list(filter))).toList();
     }
 

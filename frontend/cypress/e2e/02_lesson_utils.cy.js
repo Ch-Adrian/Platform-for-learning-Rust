@@ -64,7 +64,7 @@ describe('Opened lesson management utilities', () => {
     const curDate = Date.now();
 
     cy.visit('/')
-    cy.contains("CypressTestLesson.json").click();
+    cy.contains("CypressTestLesson").click();
     cy.get(textCell).first().dblclick();
     cy.get(textCell).find('textarea').clear({force: true}).type(curDate, {force: true});
     cy.wait(1000)
@@ -72,31 +72,31 @@ describe('Opened lesson management utilities', () => {
     cy.get(backButton).click();
     cy.contains("Nie").click();
 
-    cy.contains("CypressTestLesson.json").click();
+    cy.contains("CypressTestLesson").click();
     cy.get(textCell).first().should('have.text', curDate);
   })
 
-  it.skip('should successfully save a lesson after code cell modification', () => {
+  it('should successfully save a lesson after code cell modification', () => {
     const curDate = Date.now();
 
     cy.visit('/')
-    cy.contains("CypressTestLesson.json").click();
+    cy.contains("CypressTestLesson").click();
     cy.get(codeCell).first().find('.monaco-editor').first().click()
                     .focused().clear({force: true}).type(curDate, {force: true});
     cy.wait(1000);
     cy.get(saveButton).click();
     cy.get(backButton).click();
-    cy.contains("Nie").click();
+    cy.contains("Tak").click({force: true});
 
-    cy.contains("CypressTestLesson.json").click();
-    cy.get(codeCell).first().find('.monaco-editor').first().should('have.text', curDate);
+    cy.contains("CypressTestLesson").click();
+    cy.get(codeCell).first().find('.monaco-editor').first().should('contain.text', curDate);
   })
 
   it.skip('should successfully save a lesson after immutable code cell modification', () => {
     const curDate = Date.now();
 
     cy.visit('/')
-    cy.contains("CypressTestLesson.json").click();
+    cy.contains("CypressTestLesson").click();
     cy.get(immutableCodeCell).first().find('.monaco-editor').last().click()
                              .focused().clear({force: true}).type(curDate, {force: true});
     cy.wait(1000);
@@ -104,12 +104,12 @@ describe('Opened lesson management utilities', () => {
     cy.get(backButton).click();
     cy.contains("Nie").click();
 
-    cy.contains("CypressTestLesson.json").click();
+    cy.contains("CypressTestLesson").click();
     cy.get(immutableCodeCell).first().find('.monaco-editor').last().should('have.text', curDate);
   })
 
   it.skip('should fail building a project when a Cargo.toml with error is provided', () => {
-    cy.initializeLesson("CypressTestLesson.json");
+    cy.initializeLesson("CypressTestLesson");
     cy.get(configButton).click();
     cy.get(configTextarea).clear({force: true}).type("WRONG VALUE - SHOULD FAIL", {force: true});
     cy.get('[data-cy="config-save-button"]').click();
@@ -118,7 +118,7 @@ describe('Opened lesson management utilities', () => {
   })
 
   it.skip('should succesfully build a project with a valid Cargo.toml file', () => {
-    cy.initializeLesson("CypressTestLesson.json");
+    cy.initializeLesson("CypressTestLesson");
     cy.get(configButton).click();
     cy.get(configTextarea).clear({force: true}).type(defaultCargoToml, {force: true});
     cy.get('[data-cy="config-save-button"]').click();
@@ -127,7 +127,7 @@ describe('Opened lesson management utilities', () => {
   })
 
   it.skip('should hide lesson content management utilities accessible only to teacher on \'switch mode\' switch', () => {
-    cy.initializeLesson("CypressTestLesson.json");
+    cy.initializeLesson("CypressTestLesson");
 
     cy.get('[data-cy="mode-switch"]').find('.react-switch').click();
 

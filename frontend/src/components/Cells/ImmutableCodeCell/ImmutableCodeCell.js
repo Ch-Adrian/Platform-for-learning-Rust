@@ -10,7 +10,8 @@ import { FaPlay } from "react-icons/fa";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { GrDocumentTest } from "react-icons/gr";
 import { IoMdAdd, IoIosRemove } from "react-icons/io";
-import { COLORS } from '../../../values/colors.js'
+import { COLORS } from '../../../values/colors.js';
+import { VscReferences } from "react-icons/vsc";
 
 const createValidationRegex = (immutablePhrases) => {
   immutablePhrases = immutablePhrases.map(phrase => escapeRegExp(phrase.trim()));
@@ -28,6 +29,7 @@ const ImmutableCodeCell = memo(function ImmutableCodeCell(props) {
     const editorRef = useRef(null);
     const testEditorRef = useRef(null);
     const referenceEditorRef = useRef(null);
+    const templateEditorRef = useRef(null);
     const containerRef = useRef(null);
     const {updateCell} = useContext(LessonContext);
     const [isExecuting, setIsExecuting] = useState(false);
@@ -64,11 +66,11 @@ const ImmutableCodeCell = memo(function ImmutableCodeCell(props) {
       let modifiedCell = props.cell;
       let regExp = null;
       if (modifiedCell.value === value) return;
-      if (props.cell.reference){
-        const immutablePhrases = props.cell.reference.split(props.cell.mutableString);
+      if (props.cell.template){
+        const immutablePhrases = props.cell.template.split(props.cell.mutableString);
         regExp = createValidationRegex(immutablePhrases);
       }
-      if (props.cell.reference === undefined || props.cell.reference.length === 0 || regExp.exec(value) === null){
+      if (props.cell.template === undefined || props.cell.template.length === 0 || regExp.exec(value) === null){
         const oldValue = props.cell.value;
         let oldCursorPosition = editorRef.current.getPosition();
         oldCursorPosition.column -= (value.length - oldValue.length);
@@ -87,11 +89,18 @@ const ImmutableCodeCell = memo(function ImmutableCodeCell(props) {
       modifiedCell.test = value;
       updateCell(modifiedCell, props.cellIdx, props.currentPage, props.sectionIdx);
     }, [props.cell, props.cellIdx, props.currentPage, props.sectionIdx, updateCell])
-  
+
     const updateReferenceEditorValueHandler = useCallback((value) => {
       let modifiedCell = props.cell;
       if (modifiedCell.reference === value) return;
       modifiedCell.reference = value;
+      updateCell(modifiedCell, props.cellIdx, props.currentPage, props.sectionIdx);
+    }, [props.cell, props.cellIdx, props.currentPage, props.sectionIdx, updateCell])
+
+    const updateTemplateEditorValueHandler = useCallback((value) => {
+      let modifiedCell = props.cell;
+      if (modifiedCell.template === value) return;
+      modifiedCell.template = value;
       updateCell(modifiedCell, props.cellIdx, props.currentPage, props.sectionIdx);
     }, [props.cell, props.cellIdx, props.currentPage, props.sectionIdx, updateCell])
 
@@ -138,6 +147,7 @@ const ImmutableCodeCell = memo(function ImmutableCodeCell(props) {
         <div className='editor-button-container'>
          <button title="Uruchom" data-cy="code-run-button" onClick={compile} className='editor-button' disabled={isExecuting}>{!isExecuting ? <FaPlay color={COLORS.font_color}/> : <HiOutlineDotsHorizontal color="white" />}</button>
          {props.cell.test === undefined ? <button title="Dodaj testy" data-cy="add-tests-button" onClick={() => {addEditor("test")}} className='editor-button' variant="success"><IoMdAdd color="white" /><GrDocumentTest className='grIcon' /></button> : null}
+         {props.cell.reference === undefined ? <button data-cy="add-reference-button" title="Dodaj kod referencyjny" onClick={() => {addEditor("reference")}} className='editor-button' variant="success"><IoMdAdd color="white" /><VscReferences color="white" /></button> : null}
         </div>  
         {isConnectionError ? <div style={{color: 'red'}}>There was some error connecting to the compiler. Please check if all app components are running</div> : null}
         {props.cell.output && <div><OutputCell titleValue="Rezultat wykonania" clearOutputHandler={clearCodeOutput} output={props.cell.output}></OutputCell></div>}
@@ -151,12 +161,21 @@ const ImmutableCodeCell = memo(function ImmutableCodeCell(props) {
           <button title="Usuń testy" data-cy="remove-tests-button" onClick={() => {removeEditor("test")}} className='editor-button' variant="danger"><IoIosRemove color="white" /><GrDocumentTest className='grIcon' /></button>
           </div>  
         </div>: null}
-        
-        {// REFERENCE EDITOR
+        {// REFERENCE EDITOR 
         props.cell.reference !== undefined ? 
+      <div className={"code-cell-container"}> 
+        <div className='editor-caption'>Kod referencyjny</div>
+        <MonacoEditor ref={{containerRef: containerRef, editorRef: referenceEditorRef}} updateEditorValueHandler={updateReferenceEditorValueHandler} text={props.cell.reference}></MonacoEditor>
+        <div className='editor-button-container'>
+          <button data-cy="remove-reference-button" title="Usuń kod referencyjny" onClick={() => {removeEditor("reference")}} className='editor-button' variant="danger"><IoIosRemove color="white" /><VscReferences color="white" /></button>
+        </div>  
+      </div>: null}
+        
+        {// TEMPLATE EDITOR
+        props.cell.template !== undefined ? 
         <div className={"code-cell-container"}> 
           <div className='editor-caption'>Kod ze wzorcem początkowym - tu zdefiniuj, gdzie student powinien mieć możliwość edycji kodu</div>
-          <MonacoEditor ref={{containerRef: containerRef, editorRef: referenceEditorRef}} updateEditorValueHandler={updateReferenceEditorValueHandler} text={props.cell.reference}></MonacoEditor>
+          <MonacoEditor ref={{containerRef: containerRef, editorRef: templateEditorRef}} updateEditorValueHandler={updateTemplateEditorValueHandler} text={props.cell.template}></MonacoEditor>
         </div>: null}
         <MutableStringPicker initialMutableString={props.cell.mutableString} updateMutableStringHandler={updateMutableStringHandler}></MutableStringPicker>
         </React.Fragment> 
@@ -170,6 +189,12 @@ const ImmutableCodeCell = memo(function ImmutableCodeCell(props) {
         {isConnectionError ? <div style={{color: 'red'}}>There was some error connecting to the compiler. Please check if all app components are running</div> : null}
         {props.cell.output && <div><OutputCell titleValue="Rezultat wykonania" clearOutputHandler={clearCodeOutput} output={props.cell.output}></OutputCell></div>}
         {props.cell.outputTest && <div><OutputCell titleValue="Rezultat testów" clearOutputHandler={clearTestOutput} output={props.cell.outputTest}></OutputCell></div>}
+        {// TEMPLATE EDITOR
+        props.cell.template !== undefined ? 
+        <div className={"code-cell-container"}> 
+          <div className='editor-caption'>Kod ze wzorcem początkowym</div>
+          <MonacoEditor ref={{containerRef: containerRef, editorRef: templateEditorRef}} updateEditorValueHandler={updateTemplateEditorValueHandler} text={props.cell.template} readOnly={true}></MonacoEditor>
+        </div>: null}
         </React.Fragment>
         }
       </div>

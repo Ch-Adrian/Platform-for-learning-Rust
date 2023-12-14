@@ -99,7 +99,8 @@ const MonacoEditor = memo(forwardRef(function MonacoEditor(props, ref) {
             wordWrap: "on",
             lineNumbers: "on",
             automaticLayout: true,
-            scrollBeyondLastLine: false
+            scrollBeyondLastLine: false,
+            readOnly: props.readOnly === undefined ? false : props.readOnly
         }}
         width="100%"
         defaultLanguage="rust" 

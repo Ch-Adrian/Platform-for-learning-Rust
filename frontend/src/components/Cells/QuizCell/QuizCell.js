@@ -123,7 +123,7 @@ const QuizCell = memo(function QuizCell(props) {
             {
               options.map((option, idx) => (
                 <QuizOption resultColor={resultColor[idx]} key={option.id} option={option} cell={props.cell} userType={props.userType} options={options}
-                  cellIdx={props.cellIdx} currentPage={props.currentPage} sectionIdx={props.sectionIdx} chOpt={chOpt}></QuizOption>
+                  cellIdx={props.cellIdx} currentPage={props.currentPage} sectionIdx={props.sectionIdx} chOpt={chOpt} sidebar={props.sidebar}></QuizOption>
               ))
             }
 
@@ -140,7 +140,7 @@ const QuizCell = memo(function QuizCell(props) {
             {
               chOpt.map((option, idx) => (
                   <QuizOption resultColor={resultColor[idx]} key={option.id} option={option} cell={props.cell} userType={props.userType} options={options}
-                    cellIdx={props.cellIdx} currentPage={props.currentPage} sectionIdx={props.sectionIdx} chOpt={chOpt}></QuizOption>
+                    cellIdx={props.cellIdx} currentPage={props.currentPage} sectionIdx={props.sectionIdx} chOpt={chOpt} sidebar={props.sidebar}></QuizOption>
               ))
             }
 

@@ -8,7 +8,7 @@ import AddSectionButton from '../../miscellaneous/AddButtons/AddSectionButton/Ad
 import { DragDropContext, Draggable } from 'react-beautiful-dnd';
 import StrictModeDroppable from '../../miscellaneous/Droppable/StrictModeDroppable';
 
-const LessonPage = ({userType, setUserType}) => {
+const LessonPage = ({userType, setUserType, sidebar}) => {
     const { page } = useParams();
     const {lessonDefinition, setLessonDefinition} = useContext(LessonContext);
 
@@ -44,7 +44,7 @@ const LessonPage = ({userType, setUserType}) => {
                                             {(provided) => {
                                                 return (
                                                 <div {...provided.draggableProps}  ref={provided.innerRef}>
-                                                    <LessonSection  key={idx} section={section} sectionIdx={idx} page={page} userType={userType} handleDrag={provided.dragHandleProps}></LessonSection>
+                                                    <LessonSection  key={idx} section={section} sectionIdx={idx} page={page} userType={userType} handleDrag={provided.dragHandleProps} sidebar={sidebar}></LessonSection>
                                                     <AddSectionButton key={idx+"addSection"+page} sectionIdx={idx} page={page}/>
                                                 </div>)}}
                             </Draggable>
@@ -56,7 +56,7 @@ const LessonPage = ({userType, setUserType}) => {
             </DragDropContext>
             {userType === UserType.student && lessonDefinition && lessonDefinition.pages[page].sections.map((section, idx) => {
             return (<React.Fragment key={idx}>
-            <LessonSection  key={idx} section={section} sectionIdx={idx} page={page} userType={userType}></LessonSection>
+            <LessonSection  key={idx} section={section} sectionIdx={idx} page={page} userType={userType} sidebar={sidebar}></LessonSection>
             </React.Fragment>)
         })}
         </div>

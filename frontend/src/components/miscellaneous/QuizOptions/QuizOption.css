@@ -109,7 +109,15 @@
     overflow-wrap: break-word;
     color: 'white';
     font-size: 1rem;
-    inline-size: 10rem;
+    border-radius: 5px;
+    min-inline-size: 3rem;
+}
+
+#option-text-sidebar {
+    background-color: rgb(30, 30, 30); 
+    overflow-wrap: break-word;
+    color: 'white';
+    font-size: 1rem;
     border-radius: 5px;
     min-inline-size: 3rem;
 }
@@ -118,11 +126,17 @@
     #option-text {
         inline-size: 60rem;
     }
+    #option-text-sidebar {
+        inline-size: 40rem;
+    }
 }
 
 @media screen and (min-width: 1500px) and (max-width: 1800px) {
     #option-text {
         inline-size: 68rem;
+    }
+    #option-text-sidebar {
+        inline-size: 48rem;
     }
 }
 
@@ -130,11 +144,17 @@
     #option-text {
         inline-size: 57rem;
     }
+    #option-text-sidebar {
+        inline-size: 37rem;
+    }
 }
 
 @media screen and (min-width: 1200px) and (max-width: 1300px) {
     #option-text {
         inline-size: 50rem;
+    }
+    #option-text-sidebar {
+        inline-size: 30rem;
     }
 }
 
@@ -142,11 +162,17 @@
     #option-text {
         inline-size: 45rem;
     }
+    #option-text-sidebar {
+        inline-size: 25rem;
+    }
 }
 
 @media screen and (min-width: 1000px) and (max-width: 1100px) {
     #option-text {
         inline-size: 40rem;
+    }
+    #option-text-sidebar {
+        inline-size: 20rem;
     }
 }
 
@@ -154,11 +180,17 @@
     #option-text {
         inline-size: 49rem;
     }
+    #option-text-sidebar {
+        inline-size: 29rem;
+    }
 }
 
 @media screen and (min-width: 800px) and (max-width: 900px) {
     #option-text {
         inline-size: 40rem;
+    }
+    #option-text-sidebar {
+        inline-size: 20rem;
     }
 }
 
@@ -166,11 +198,17 @@
     #option-text {
         inline-size: 35rem;
     }
+    #option-text-sidebar {
+        inline-size: 15rem;
+    }
 }
 
 @media screen and (min-width: 600px) and (max-width: 700px) {
     #option-text {
         inline-size: 25rem;
+    }
+    #option-text-sidebar {
+        inline-size: 10rem;
     }
 }
 
@@ -178,10 +216,16 @@
     #option-text {
         inline-size: 20rem;
     }
+    #option-text-sidebar {
+        inline-size: 10rem;
+    }
 }
 
 @media screen and (min-width: 400px) and (max-width: 500px) {
     #option-text {
         inline-size: 17rem;
+    }
+    #option-text-sidebar {
+        inline-size: 10rem;
     }
 }

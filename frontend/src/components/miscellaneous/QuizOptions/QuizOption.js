@@ -41,7 +41,7 @@ const OptionText = (props) => {
             <div ref={headerInput} 
             contentEditable={props.userType === UserType.teacher}
             className='section-header='
-            id="option-text" 
+            id={props.sidebar ? "option-text-sidebar" : 'option-text'}
             onBlur={e => changeOptionHandler(e.currentTarget.textContent) } 
             onKeyDown={handleHeaderChange} 
             suppressContentEditableWarning={true} 
@@ -119,7 +119,7 @@ const QuizOption = (props) => {
     return (
         <div id="topDiv" className={ props.resultColor === -1 ? 'background-red' : props.resultColor === 0 ? 'background' : 'background-green'}>
             <div className='option-text'>
-                <OptionText cell={props.cell} options={props.options} option={props.option} userType={props.userType} currentPage={props.currentPage} page={props.page} sectionIdx={props.sectionIdx}/>
+                <OptionText cell={props.cell} options={props.options} option={props.option} userType={props.userType} currentPage={props.currentPage} page={props.page} sectionIdx={props.sectionIdx} sidebar={props.sidebar}/>
             </div>
 
             <div className={ props.userType === UserType.teacher ? "right-side" : "right-side-student" }>

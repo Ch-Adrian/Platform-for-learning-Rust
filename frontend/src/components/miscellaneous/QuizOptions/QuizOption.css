@@ -10,7 +10,7 @@
 
 .background {
     color: var(--font_color);
-    width: 97%;
+    width: 99%;
     background-color: var(--dark_gray);
     display: flex;
     justify-content: space-between;
@@ -44,38 +44,188 @@
     margin: 10px;
 }
 
+.right-side {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+}
+
 .management {
+    height: 2rem;
     display: flex;
     flex-direction: row;
-    width: 200px;
+    justify-content: center;
+    align-items: center;
+    width: auto;
     background-color: var(--editor-color);
     border-radius: 10px;
+    padding-left: 1rem;
 }
 
 .checkbox {
-    padding-right: 30px;
     border-color: var(--font_color);
-}
-
-.option-text {
-    margin-left: 5px;
-    margin-top: 6px;
-    padding-top: 0.1rem;
-    background-color: var(--editor-color);
 }
 
 #topDiv {
     background-color: var(--editor-color);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 0.2rem;
+    width: 100%;
 }
 
 .button-x {
-    background-color: rgb(30, 30, 30);
-    color: white;
+    background-color: var(--dark_gray);
+    color: var(--font_color);
     border: none;
-    font-size: 2rem;
     display: flex;
     align-items: center;
-    border-radius: 10px;
-    padding-right: 0.5rem;
-    margin-top: 10px;
+    border-radius: 0.1rem;
+    text-align: center;
+    margin-right: 0.5rem;
+    padding: 0.1rem;
+}
+
+.button-x:hover {
+    background-color: var(--light_gray);
+    color: white !important;
+}
+
+.text-label-info {
+    display: flex;
+    flex-direction: row;
+}
+
+.option-text-box {
+    background-color: rgb(30, 30, 30);
+    color: 'white';
+    font-size: 2rem;
+}
+
+#option-text {
+    background-color: rgb(30, 30, 30);
+    overflow-wrap: break-word;
+    color: 'white';
+    font-size: 1rem;
+    border-radius: 5px;
+    min-inline-size: 3rem;
+}
+
+#option-text-sidebar {
+    background-color: rgb(30, 30, 30); 
+    overflow-wrap: break-word;
+    color: 'white';
+    font-size: 1rem;
+    border-radius: 5px;
+    min-inline-size: 3rem;
+}
+
+@media screen and (min-width: 1800px) {
+    #option-text {
+        inline-size: 60rem;
+    }
+    #option-text-sidebar {
+        inline-size: 40rem;
+    }
+}
+
+@media screen and (min-width: 1500px) and (max-width: 1800px) {
+    #option-text {
+        inline-size: 68rem;
+    }
+    #option-text-sidebar {
+        inline-size: 48rem;
+    }
+}
+
+@media screen and (min-width: 1300px) and (max-width: 1500px) {
+    #option-text {
+        inline-size: 57rem;
+    }
+    #option-text-sidebar {
+        inline-size: 37rem;
+    }
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1300px) {
+    #option-text {
+        inline-size: 50rem;
+    }
+    #option-text-sidebar {
+        inline-size: 30rem;
+    }
+}
+
+@media screen and (min-width: 1100px) and (max-width: 1200px) {
+    #option-text {
+        inline-size: 45rem;
+    }
+    #option-text-sidebar {
+        inline-size: 25rem;
+    }
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1100px) {
+    #option-text {
+        inline-size: 40rem;
+    }
+    #option-text-sidebar {
+        inline-size: 20rem;
+    }
+}
+
+@media screen and (min-width: 900px) and (max-width: 1000px) {
+    #option-text {
+        inline-size: 49rem;
+    }
+    #option-text-sidebar {
+        inline-size: 29rem;
+    }
+}
+
+@media screen and (min-width: 800px) and (max-width: 900px) {
+    #option-text {
+        inline-size: 40rem;
+    }
+    #option-text-sidebar {
+        inline-size: 20rem;
+    }
+}
+
+@media screen and (min-width: 700px) and (max-width: 800px) {
+    #option-text {
+        inline-size: 35rem;
+    }
+    #option-text-sidebar {
+        inline-size: 15rem;
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width: 700px) {
+    #option-text {
+        inline-size: 25rem;
+    }
+    #option-text-sidebar {
+        inline-size: 10rem;
+    }
+}
+
+@media screen and (min-width: 500px) and (max-width: 600px) {
+    #option-text {
+        inline-size: 20rem;
+    }
+    #option-text-sidebar {
+        inline-size: 10rem;
+    }
+}
+
+@media screen and (min-width: 400px) and (max-width: 500px) {
+    #option-text {
+        inline-size: 17rem;
+    }
+    #option-text-sidebar {
+        inline-size: 10rem;
+    }
 }

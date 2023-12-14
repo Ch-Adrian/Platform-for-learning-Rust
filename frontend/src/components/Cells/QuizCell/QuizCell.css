@@ -55,5 +55,10 @@ root{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(30, 30, 30)
+    background-color: rgb(30, 30, 30);
+}
+
+.editor-button svg {
+    width: 1.7rem;
+    height: 1.7rem;
 }

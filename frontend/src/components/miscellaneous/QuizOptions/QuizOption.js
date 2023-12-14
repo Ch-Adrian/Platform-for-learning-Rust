@@ -4,6 +4,8 @@ import React, { useRef, useContext, useState } from 'react';
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
 import UserType from '../../../models/UserType';
 import { RiDeleteBin2Fill } from "react-icons/ri";
+import { COLORS } from '../../../values/colors.js' 
+import {BsTrash3} from 'react-icons/bs';
 
 const OptionText = (props) => {
     const headerInput = useRef(null);
@@ -35,15 +37,16 @@ const OptionText = (props) => {
     }
 
     return (
-        <div style={{'background-color': 'rgb(30, 30, 30)', color: 'white', fontSize: '20px'}}> 
+        <div className='option-text-box'>
             <div ref={headerInput} 
             contentEditable={props.userType === UserType.teacher}
-            className='section-header' 
+            className='section-header='
+            id={props.sidebar ? "option-text-sidebar" : 'option-text'}
             onBlur={e => changeOptionHandler(e.currentTarget.textContent) } 
             onKeyDown={handleHeaderChange} 
             suppressContentEditableWarning={true} 
             spellCheck="false" 
-            style={{'background-color': 'rgb(30, 30, 30)', 'text-wrap': 'wrap', color: 'white', 'font-size': '1rem'}}>
+            >
                 {props.option.text}
             </div>
         </div>
@@ -116,14 +119,18 @@ const QuizOption = (props) => {
     return (
         <div id="topDiv" className={ props.resultColor === -1 ? 'background-red' : props.resultColor === 0 ? 'background' : 'background-green'}>
             <div className='option-text'>
-                <OptionText cell={props.cell} options={props.options} option={props.option} userType={props.userType} currentPage={props.currentPage} page={props.page} sectionIdx={props.sectionIdx}/>
+                <OptionText cell={props.cell} options={props.options} option={props.option} userType={props.userType} currentPage={props.currentPage} page={props.page} sectionIdx={props.sectionIdx} sidebar={props.sidebar}/>
             </div>
-            <div className='management'>
-                <div className='checkbox'>
-                    <Checkbox color="success" style={{"color": "white"}} checked={checked} onChange={handleChange}></Checkbox>
+
+            <div className={ props.userType === UserType.teacher ? "right-side" : "right-side-student" }>
+                <div className='management'>
+                    { props.userType === UserType.teacher ? <div className="text-label-info">poprawna</div>:<div></div>}
+                    <div className='checkbox'>
+                        <Checkbox style= {{color: COLORS.font_color}} checked={checked} onChange={handleChange}></Checkbox>
+                    </div>
+                        { props.userType === UserType.teacher ? <React.Fragment><button onClick={handleClickOnDelete} className='button-x'><BsTrash3/></button></React.Fragment>:
+                        <React.Fragment></React.Fragment>}
                 </div>
-                    { props.userType === UserType.teacher ? <React.Fragment><button onClick={handleClickOnDelete} className='button-x'><RiDeleteBin2Fill font-size='10px'/></button></React.Fragment>:
-                    <React.Fragment></React.Fragment>}
             </div>
         </div>
     );

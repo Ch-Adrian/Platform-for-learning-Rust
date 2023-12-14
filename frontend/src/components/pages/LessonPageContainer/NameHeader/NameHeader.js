@@ -66,7 +66,7 @@ const NameHeader = ({lessonName, setLessonName, lessonDefinition, setStatusInfo,
   
     return (
       <div>
-        <div data-cy="lesson-name" title={lessonName} ref={nameInput} contentEditable="true" className='name-header general-button-item' onKeyDown={handleNameChange} onBlur={handleNameSubmit} suppressContentEditableWarning={true} spellCheck="false"> 
+        <div data-cy="lesson-name" style={{"minWidth": "2rem"}} title={lessonName} ref={nameInput} contentEditable="true" className='name-header general-button-item' onKeyDown={handleNameChange} onBlur={handleNameSubmit} suppressContentEditableWarning={true} spellCheck="false"> 
           {lessonName}
         </div>
         {lessonDefinition ? <OverwriteLessonNameModal open={overwriteLessonModalOpen} handleCloseModal={handleCloseOverwriteModal} handleOverwriteLesson={handleOverwriteLesson}/> : null}

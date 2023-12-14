@@ -106,6 +106,7 @@ const QuizCell = memo(function QuizCell(props) {
       {props.userType === UserType.teacher && focus ? 
         <MDEditor
         className='markdown'
+        highlightEnable={false}
         value={value}
         onChange={updateTextValue}
         />

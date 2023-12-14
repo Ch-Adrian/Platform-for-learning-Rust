@@ -55,6 +55,16 @@ root{
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: transparent;
+}
+
+.editor-button-quiz:hover {
+    padding: 0.1rem 0.2rem 0.1rem 0.2rem !important;
+    border-radius: 0.1rem;
+    border-width: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: rgb(30, 30, 30);
 }
 

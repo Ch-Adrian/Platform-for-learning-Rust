@@ -37,15 +37,16 @@ const OptionText = (props) => {
     }
 
     return (
-        <div style={{'background-color': 'rgb(30, 30, 30)', color: 'white', fontSize: '20px'}}> 
+        <div className='option-text-box'>
             <div ref={headerInput} 
             contentEditable={props.userType === UserType.teacher}
-            className='section-header' 
+            className='section-header='
+            id="option-text" 
             onBlur={e => changeOptionHandler(e.currentTarget.textContent) } 
             onKeyDown={handleHeaderChange} 
             suppressContentEditableWarning={true} 
             spellCheck="false" 
-            style={{'background-color': 'rgb(30, 30, 30)', "inline-size": "60rem", "overflow-wrap": "break-word", color: 'white', 'font-size': '1rem'}}>
+            >
                 {props.option.text}
             </div>
         </div>
@@ -121,7 +122,7 @@ const QuizOption = (props) => {
                 <OptionText cell={props.cell} options={props.options} option={props.option} userType={props.userType} currentPage={props.currentPage} page={props.page} sectionIdx={props.sectionIdx}/>
             </div>
 
-            <div className="right-side">
+            <div className={ props.userType === UserType.teacher ? "right-side" : "right-side-student" }>
                 <div className='management'>
                     { props.userType === UserType.teacher ? <div className="text-label-info">poprawna</div>:<div></div>}
                     <div className='checkbox'>

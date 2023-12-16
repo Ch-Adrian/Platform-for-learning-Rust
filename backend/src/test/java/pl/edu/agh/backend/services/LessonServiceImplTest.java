@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -148,9 +149,7 @@ class LessonServiceImplTest {
         LessonRenameDTO lessonRenameDTO = new LessonRenameDTO(secondName, false);
 
         // When & Then
-        assertThrows(LessonsNameConflictException.class, () -> {
-            lessonService.renameLesson(firstName, lessonRenameDTO);
-        });
+        assertThrows(LessonsNameConflictException.class, () -> lessonService.renameLesson(firstName, lessonRenameDTO));
     }
 
     @Test
@@ -171,6 +170,39 @@ class LessonServiceImplTest {
         assertTrue(lessonNameList.contains(secondName));
     }
 
+    @Test
+    public void testDeleteLesson() {
+        // Given
+        Lesson firstLesson = new Lesson();
+        lessonService.saveLesson(firstName, firstLesson);
+
+        // When
+        lessonService.deleteLesson(firstName);
+
+        // Then
+        List<String> lessonNameList = lessonService.getAllLessonsInfo().stream().map(LessonInfoDTO::getName).toList();
+        assertFalse(lessonNameList.contains(firstName));
+    }
+
+    @Test
+    public void testDeleteLessons() {
+        // Given
+        Lesson firstLesson = new Lesson();
+        lessonService.saveLesson(firstName, firstLesson);
+        Lesson secondLesson = new Lesson();
+        lessonService.saveLesson(secondName, secondLesson);
+        Lesson thirdLesson = new Lesson();
+        lessonService.saveLesson(thirdName, thirdLesson);
+
+        // When
+        lessonService.deleteLessons(Arrays.asList(firstName, secondName, thirdName));
+
+        // Then
+        List<String> lessonNameList = lessonService.getAllLessonsInfo().stream().map(LessonInfoDTO::getName).toList();
+        assertFalse(lessonNameList.contains(firstName));
+        assertFalse(lessonNameList.contains(secondName));
+        assertFalse(lessonNameList.contains(thirdName));
+    }
 
 
     private void deleteLessonIfExists(String name) {

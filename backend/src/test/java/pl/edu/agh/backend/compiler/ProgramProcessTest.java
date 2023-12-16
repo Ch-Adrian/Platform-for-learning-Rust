@@ -121,7 +121,6 @@ class ProgramProcessTest {
         CompilationResponse compilationResponse = new ProgramProcess(rustFile).runProcess();
         String actualOutput = compilationResponse.getCompilerMessage();
 
-        System.out.println(compilationResponse.getCompilerMessage());
         // Then
         assertTrue(actualOutput.contains("thread 'main' panicked at 'attempt to divide by zero"));
     }

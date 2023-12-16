@@ -1,5 +1,6 @@
 package pl.edu.agh.backend.lesson;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +9,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@EqualsAndHashCode
 public class Lesson {
     private String cargoToml;
     private final List<Page> pages = new ArrayList<>();

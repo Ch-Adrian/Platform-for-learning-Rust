@@ -34,7 +34,7 @@ public class LessonServiceImpl implements LessonService {
     private static final Logger logger = LogManager.getLogger();
 
     public String createNewLesson(LessonFile lessonFile) {
-        String lessonName = lessonFile.getName().replaceAll("\\.json$", "");
+        String lessonName = lessonFile.getName();
         if (this.existsLesson(lessonName)) {
             lessonFile.setName(findAvailableName(lessonName.substring(0, lessonName.length() - 5)));
         }

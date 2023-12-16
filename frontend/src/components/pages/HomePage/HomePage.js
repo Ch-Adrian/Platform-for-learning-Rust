@@ -33,7 +33,7 @@ function HomePage() {
             });
         });
 
-        const uniqueLessonName = await LessonFileSaveService.createLesson(lessonFile, lessonName);
+        const uniqueLessonName = await LessonFileSaveService.createLesson(lessonFile, lessonName.split('.json')[0]);
         loadLesson(lessonFile, uniqueLessonName.data);
     }
 

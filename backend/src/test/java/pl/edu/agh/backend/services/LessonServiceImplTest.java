@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class LessonServiceImplTest {
 
     @Autowired
-    LessonService lessonService;
+    private LessonService lessonService;
 
     private static final String rootDir = "lessons";
     private static final String firstName = "test__test__test.json";

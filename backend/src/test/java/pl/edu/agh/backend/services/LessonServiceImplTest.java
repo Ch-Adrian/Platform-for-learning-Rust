@@ -1,9 +1,7 @@
 package pl.edu.agh.backend.services;
 
-import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,13 +9,17 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import pl.edu.agh.backend.exceptions.LessonsNameConflictException;
 import pl.edu.agh.backend.lesson.Lesson;
 import pl.edu.agh.backend.lesson.LessonFile;
+import pl.edu.agh.backend.lesson.dto.LessonInfoDTO;
+import pl.edu.agh.backend.lesson.dto.LessonRenameDTO;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,7 +31,9 @@ class LessonServiceImplTest {
     LessonService lessonService;
 
     private static final String rootDir = "lessons";
-    private static final String newLessonName = "NewLesson";
+    private static final String firstName = "test__test__test.json";
+    private static final String secondName = "test__test__test(1).json";
+    private static final String thirdName = "test__test__test(2).json";
 
     private static final Logger logger = LogManager.getLogger();
 
@@ -37,33 +41,137 @@ class LessonServiceImplTest {
     @AfterEach
     @BeforeEach
     public void cleanUp() {
-        String firstName = "test__test__test.json";
         this.deleteLessonIfExists(firstName);
-        String secondName = "test__test__test(1).json";
         this.deleteLessonIfExists(secondName);
+        this.deleteLessonIfExists(thirdName);
+        this.deleteLessonIfExists("NewLesson.json");
     }
 
     @Test
     public void testCreateNewLesson() {
         // Given
-        String expectedFirstLessonName = "test__test__test.json";
-        String expectedSecondLessonName = "test__test__test(1).json";
-
-        // when
         LessonFile lessonFile1 = new LessonFile();
-        lessonFile1.setName("test__test__test.json");
+        lessonFile1.setName(firstName);
+        LessonFile lessonFile2 = new LessonFile();
+        lessonFile2.setName(firstName);
+
+        // When
         String actualFirstLessonName = lessonService.createNewLesson(lessonFile1);
         lessonService.saveLesson(actualFirstLessonName, lessonFile1.getLesson());
-        LessonFile lessonFile2 = new LessonFile();
-        lessonFile2.setName("test__test__test.json");
         String actualSecondLessonName = lessonService.createNewLesson(lessonFile2);
 
         // Then
-        assertEquals(expectedFirstLessonName, actualFirstLessonName);
-        System.out.println(actualFirstLessonName);
-        System.out.println(actualSecondLessonName);
-        assertEquals(expectedSecondLessonName, actualSecondLessonName);
+        assertEquals(firstName, actualFirstLessonName);
+        assertEquals(secondName, actualSecondLessonName);
     }
+
+    @Test
+    public void testGetLessonByName() {
+        // Given
+        Lesson createdLesson = new Lesson();
+        lessonService.saveLesson(firstName, createdLesson);
+
+        // When
+        Lesson savedLesson = lessonService.getLessonByName(firstName);
+
+        // Then
+        assertEquals(createdLesson, savedLesson);
+    }
+
+    @Test
+    public void testGetAllLessonsInfo() {
+        // Given
+        Lesson createdLesson = new Lesson();
+        lessonService.saveLesson(firstName, createdLesson);
+        lessonService.saveLesson(secondName, createdLesson);
+        lessonService.saveLesson(thirdName, createdLesson);
+
+        // When
+        List<LessonInfoDTO> lessonInfoDTOList = lessonService.getAllLessonsInfo();
+
+        // Then
+        List<String> lessonNameList = lessonInfoDTOList.stream().map(LessonInfoDTO::getName).toList();
+        assertTrue(lessonNameList.contains(firstName));
+        assertTrue(lessonNameList.contains(secondName));
+        assertTrue(lessonNameList.contains(thirdName));
+    }
+
+    @Test
+    public void testGetDefaultLesson() {
+        // Given
+        String newLessonName = "NewLesson.json";
+
+        // When
+        LessonFile lessonFile = lessonService.getDefaultLesson();
+
+        // Then
+        assertNotNull(lessonFile.getLesson());
+        assertEquals(newLessonName, lessonFile.getName());
+    }
+
+    @Test
+    public void testSaveLesson() {
+        // Given
+        Lesson createdLesson = new Lesson();
+
+        // When
+        lessonService.saveLesson(firstName, createdLesson);
+
+        // Then
+        Lesson savedLesson = lessonService.getLessonByName(firstName);
+        assertEquals(createdLesson, savedLesson);
+    }
+
+    @Test
+    public void testRenameLesson() {
+        // Given
+        Lesson lesson = new Lesson();
+        lessonService.saveLesson(firstName, lesson);
+        LessonRenameDTO lessonRenameDTO = new LessonRenameDTO(secondName, false);
+
+        // When
+        lessonService.renameLesson(firstName, lessonRenameDTO);
+
+        // Then
+        List<String> lessonNameList = lessonService.getAllLessonsInfo().stream().map(LessonInfoDTO::getName).toList();
+        assertFalse(lessonNameList.contains(firstName));
+        assertTrue(lessonNameList.contains(secondName));
+    }
+
+    @Test
+    public void testRenameLessonFailedWhenNameConflict() {
+        // Given
+        Lesson firstLesson = new Lesson();
+        lessonService.saveLesson(firstName, firstLesson);
+        Lesson secondLesson = new Lesson();
+        lessonService.saveLesson(secondName, secondLesson);
+        LessonRenameDTO lessonRenameDTO = new LessonRenameDTO(secondName, false);
+
+        // When & Then
+        assertThrows(LessonsNameConflictException.class, () -> {
+            lessonService.renameLesson(firstName, lessonRenameDTO);
+        });
+    }
+
+    @Test
+    public void testRenameLessonForced() {
+        // Given
+        Lesson firstLesson = new Lesson();
+        lessonService.saveLesson(firstName, firstLesson);
+        Lesson secondLesson = new Lesson();
+        lessonService.saveLesson(secondName, secondLesson);
+        LessonRenameDTO lessonRenameDTO = new LessonRenameDTO(secondName, true);
+
+        // When
+        lessonService.renameLesson(firstName, lessonRenameDTO);
+
+        // Then
+        List<String> lessonNameList = lessonService.getAllLessonsInfo().stream().map(LessonInfoDTO::getName).toList();
+        assertFalse(lessonNameList.contains(firstName));
+        assertTrue(lessonNameList.contains(secondName));
+    }
+
+
 
     private void deleteLessonIfExists(String name) {
         try {

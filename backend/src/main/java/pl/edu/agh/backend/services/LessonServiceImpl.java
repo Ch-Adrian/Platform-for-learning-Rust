@@ -71,8 +71,6 @@ public class LessonServiceImpl implements LessonService {
         File currentDir = new File(rootDir);
         FilenameFilter filter = (file, name) -> name.endsWith(".json");
 
-
-
         return Arrays
                 .stream(Objects.requireNonNull(currentDir.listFiles(filter)))
                 .map(file -> new LessonInfoDTO(file.getName(), LocalDateTime.ofInstant(
@@ -155,14 +153,6 @@ public class LessonServiceImpl implements LessonService {
     private List<String> getAllLessonsNames() {
         File currentDir = new File(rootDir);
         FilenameFilter filter = (file, name) -> name.endsWith(".json");
-
-        List<String> lessonInfoList = Arrays.stream(Objects.requireNonNull(currentDir.list(filter))).toList();
-
-        for (String lessonInfo : lessonInfoList) {
-            System.out.println(lessonInfo);
-        }
-
-        System.out.println("DUPAAAAAAAAAAAAAAAAAAAA");
         return Arrays.stream(Objects.requireNonNull(currentDir.list(filter))).toList();
     }
 

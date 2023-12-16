@@ -13,7 +13,7 @@ const ConfigModal = ({open, configFileContent, handleCloseModal, handleSaveConfi
             <div className='modal-container' onClick={(e) => e.stopPropagation()}>
                 <textarea data-cy="config-textarea" value={configContent} onChange={(e) => setConfigContent(e.target.value)}/>
                 <div className='button-container'>
-                    <Button data-cy="config-save-button" variant='light' onClick={() => handleSaveConfig(configContent)}>Zapisz</Button>
+                    <Button data-cy="config-save-button" variant='light' onClick={() => handleSaveConfig(configContent)}>Zastosuj</Button>
                     <Button variant='light' onClick={handleCloseModal}>Anuluj</Button>
                 </div>
             </div>

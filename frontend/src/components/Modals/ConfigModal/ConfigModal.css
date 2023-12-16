@@ -1,6 +1,10 @@
+@import url('../../../values/colors.css');
+
 textarea {
     min-height: 70vh;
     resize: none;
+    background-color: var(--dark_gray);
+    color: var(--font_color);
 }
 
 .button-container {
@@ -10,6 +14,6 @@ textarea {
 }
 
 .button-container Button {
-    background-color: #292525 !important;
-    color: var(--text-color) !important;
+    background-color: var(--dark_gray) !important;
+    color: var(--font_color) !important;
 }

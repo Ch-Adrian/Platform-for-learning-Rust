@@ -6,7 +6,7 @@
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     background-color: var(--dark_gray) !important;
     margin: .5em 0em .5em 0em;
-    padding: 0.2em;
+    padding: 1.5em 2em 1.5em 2rem;
     white-space: pre-wrap;
 }
 

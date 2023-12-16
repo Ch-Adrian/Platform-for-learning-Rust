@@ -14,33 +14,34 @@
   }
 
 .dropdown-toggle {
-    background-color: var(--dark_gray) !important;
-    border-color: var(--dark_gray) !important; 
+    background-color: var(--black) !important;
+    border-color: var(--black) !important; 
     border-bottom-color: var(--black) !important; 
     color: var(--font_color) !important;
     min-width: 12rem !important;
     height: 2.2rem !important;
     padding-top: 0.1em !important;
     font-size: 1.1em !important;
-    /* border-radius: 0 !important; */
 }
 
 .dropdown-toggle:hover {
-    background-color: var(--black) !important;
+    background-color: var(--dark_gray) !important;
 }
 
 .dropdown-menu {
     width: inherit !important;
-    border-color: var(--dark_gray) !important;
+    border-color: var(--black) !important;
     border-radius: 0 !important;
     border-bottom-left-radius: 5px !important;
     border-bottom-right-radius: 5px !important;
-    border-top-width: 10em;
-    border-top-color: var(--black);
     top: -4px !important;
-    background-color: var(--dark_gray) !important;
+    background-color: var(--black) !important;
     position: absoulte;
     min-width: 12rem !important;
+    border-top-color: var(--black);
+    border-top-width: 20px;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
 }
 
 .dropdown-button {
@@ -51,11 +52,11 @@
 .dropdown-item {
     font-style: normal !important;
     color: var(--font_color) !important;
-    font-size: 0.9em;
+    font-size: 0.95em;
 }
 
 .dropdown-item:hover {
-    background-color: var(--black) !important;
+    background-color: var(--dark_gray) !important;
 }
 
 .dropdown-button-wrapper {
@@ -87,23 +88,32 @@
     justify-self: center;
     width: 18rem;
     height: 3px;
-    background-color: var(--dark_gray); 
+    background-color: var(--dark_gray);
 }
 
 .section-button {
     z-index: 200;
     align-self: center;
     justify-self: center;
-    background-color: var(--add-button-color) !important; 
-    border-color: var(--add-button-color) !important; 
+    background-color: var(--gray_8) !important; 
+    border-color: var(--gray_8) !important; 
     color: var(--font_color) !important;
     min-width: 12rem !important;
     height: 2.2rem !important;
     padding-top: 0.1em !important;
     font-size: 1.1em !important;
-    /* border-radius: 0 !important; */
 }
 
 .section-button:hover {
-    background-color: var(--add-button-color-hover) !important;
+    background-color: var(--gray) !important;
+    border-color: var(--gray) !important; 
+}
+
+.dropdown-button-line-section {
+    grid-area: 1 / 1 / 2 / 2 !important;
+    align-self: center;
+    justify-self: center;
+    width: 18rem;
+    height: 3px;
+    background-color: var(--gray);
 }

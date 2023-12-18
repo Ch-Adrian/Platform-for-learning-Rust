@@ -23,7 +23,7 @@ import { ImFolderDownload } from "react-icons/im";
 import DescriptionIcon from '@mui/icons-material/Description';
 import { IoMdAdd, IoIosRemove } from "react-icons/io";
 import SettingsIcon from '@mui/icons-material/Settings';
-import ConfirmPageDeleteModal from '../../Modals/ConfirmPageDeleteModal/ConfirmPageDeleteModal';
+import ConfirmActionModal from '../../Modals/ConfirmPageDeleteModal/ConfirmActionModal';
 import NameHeader from './NameHeader/NameHeader';
 
 const ErrorFallback = ({ error }) => (
@@ -40,7 +40,8 @@ const LessonPageContainer = () => {
   const [sidebar, setSidebar] = useState(false);
   const [configModalOpen, setConfigModalOpen] = useState(false);
   const [saveLessonModalOpen, setSaveLessonModalOpen] = useState(false);
-  const [confirmPageDeletionModalOpen, setConfirmPageDeletionModalOpen] = useState(false);
+  const [confirmActionModalOpen, setConfirmActionModalOpen] = useState(false);
+  const [confirmActionModalConfig, setConfirmActionModalConfig] = useState({});
   const [isCargoCompiled, setIsCargoCompiled] = useState(true);
   const [isCargoError, setIsCargoError] = useState(false);
   const [isSaveLessonError, setIsSaveLessonError] = useState(false);
@@ -107,12 +108,22 @@ const LessonPageContainer = () => {
     navigate(url.pathname+'/'+newList[newList.length-1].pIdx);
   }
 
+  const openConfirmPageDeletionModal = () => {
+    setConfirmActionModalConfig({
+      handleCloseModal: () => setConfirmActionModalOpen(false),
+      handleConfirmAction: deletePageEvent,
+      confirmationText: "Czy na pewno chcesz usunąć tę stronę?"
+    })
+    setConfirmActionModalOpen(true);
+  }
+
   const deletePageEvent = () => {
-    setConfirmPageDeletionModalOpen(false);
+    setConfirmActionModalOpen(false);
     removePage(currPg);
     if(lessonDefinition.pages.length >= 1) navigate(url.pathname+'/0');
     else navigate(url.pathname);
   }
+  
 
   const handleSave = async () => {
     setIsSaveLessonError(false);
@@ -201,10 +212,10 @@ const LessonPageContainer = () => {
                 <p>{statusInfo}</p>
               </div>
             </div>
-            <div style={{display: 'flex', marginRight: '1rem'}} className='right-side-buttons'>
+            <div style={{display: 'flex', marginRight: '1rem'}} className={DEFINED_USER_TYPE === userType.teacher ? 'right-side-buttons right-side-buttons' : 'right-side-buttons'}>
               {DEFINED_USER_TYPE === UserType.teacher && <UserTypeSwitch handleSwitchUserType={handleSwitchUserType}/>}
               {DEFINED_USER_TYPE === UserType.teacher && <button data-cy="add-page-button" title="Dodaj stronę" className='general-button-item' variant='light' onClick={newPageEvent}><IoMdAdd color="white" /><DescriptionIcon/></button>}
-              {DEFINED_USER_TYPE === UserType.teacher && <button data-cy="remove-page-button"  title="Usuń stronę" className='general-button-item' variant='light' disabled={lessonDefinition && lessonDefinition.pages && lessonDefinition.pages.length === 1} onClick={() => setConfirmPageDeletionModalOpen(true)}><IoIosRemove /><DescriptionIcon/></button>}
+              {DEFINED_USER_TYPE === UserType.teacher && <button data-cy="remove-page-button"  title="Usuń stronę" className='general-button-item' variant='light' disabled={lessonDefinition && lessonDefinition.pages && lessonDefinition.pages.length === 1} onClick={openConfirmPageDeletionModal}><IoIosRemove /><DescriptionIcon/></button>}
               <button data-cy="config-button" className='general-button-item' variant='light'  title="Konfiguracja Cargo.toml" onClick={() => setConfigModalOpen(true)}><SettingsIcon /></button>
             </div>
           </div>
@@ -251,7 +262,7 @@ const LessonPageContainer = () => {
         </div>
         {lessonDefinition ? <ConfigModal open={configModalOpen} configFileContent={lessonDefinition.cargoToml} handleCloseModal={() => setConfigModalOpen(false)} handleSaveConfig={handleSaveConfig}/> : null}
         {lessonDefinition ? <LessonSaveModal open={saveLessonModalOpen} handleCloseModal={() => setSaveLessonModalOpen(false)} handleSaveLesson={handleSaveAndExit} handleExitLesson={handleOpen}/> : null}
-        {lessonDefinition ? <ConfirmPageDeleteModal open={confirmPageDeletionModalOpen} handleCloseModal={() => setConfirmPageDeletionModalOpen(false)} handleRemovePage={deletePageEvent}/> : null}
+        {lessonDefinition ? <ConfirmActionModal open={confirmActionModalOpen} {...confirmActionModalConfig} /> : null}
         </div>
       
   );

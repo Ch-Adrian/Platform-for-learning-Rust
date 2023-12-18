@@ -8,8 +8,11 @@ import { LessonContext } from '../../../contexts/LessonContext/LessonContextProv
 import LessonFileSaveService from '../../../services/LessonFileHandleService';
 import ListLessons from '../../miscellaneous/ListLessons/ListLessons';
 import defaultCargoToml from '../../../config/cargoToml';
+import currentUser from '../../../config/userConfig';
+import UserType from '../../../models/UserType';
 
 const BACKEND_PATH = "pl.edu.agh.backend.lesson.cells."
+const DEFINED_USER_TYPE = currentUser;
 
 function HomePage() {
     const navigate = useNavigate();
@@ -57,7 +60,7 @@ function HomePage() {
             </div>
             <div className='file-picker-container'>
                 <FilePicker openLesson={loadImportedLesson}/>
-                <div data-cy="new-lesson-button" className='default-lesson-button' onClick={loadNewLesson}>Stwórz nową lekcję</div>
+                {DEFINED_USER_TYPE === UserType.teacher && <div data-cy="new-lesson-button" className='default-lesson-button' onClick={loadNewLesson}>Stwórz nową lekcję</div>}
             </div>
         </div>
         

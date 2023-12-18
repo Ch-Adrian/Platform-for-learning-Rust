@@ -15,7 +15,7 @@ const AddSectionButton = (props) => {
     } 
 
     return (
-        <div className="dropdown-button-wrapper">
+        <div className={props.alwaysVisible ? "dropdown-button-wrapper dropdown-button-wrapper-visible" : "dropdown-button-wrapper"}>
             <Button data-cy="add-section-button" onClick={addSectionHandler} className={'section-button dropdown-button'} variant="success" size="sm">Dodaj sekcję</Button>
             <div className="dropdown-button-line-section"></div>
         </div>

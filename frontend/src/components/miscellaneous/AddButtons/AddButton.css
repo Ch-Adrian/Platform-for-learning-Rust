@@ -117,3 +117,9 @@
     height: 3px;
     background-color: var(--gray);
 }
+
+.dropdown-button-wrapper-visible * {
+    visibility: visible !important;
+    opacity: 1 !important;
+    transition: 0s visibility !important;
+}

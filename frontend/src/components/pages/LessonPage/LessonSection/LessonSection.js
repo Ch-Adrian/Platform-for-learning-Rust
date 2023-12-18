@@ -1,4 +1,4 @@
-import React, {useContext, useRef} from 'react'
+import React, {useContext, useRef, useState} from 'react'
 import TextCell from '../../../Cells/TextCell/TextCell'
 import CodeCell from '../../../Cells/CodeCell/CodeCell'
 import EmptyCell from '../../../Cells/EmptyCell/EmptyCell'
@@ -14,6 +14,7 @@ import MovableMenuContext from '../../../miscellaneous/MenuContext/Movable/Movab
 import ImmutableCodeCell from '../../../Cells/ImmutableCodeCell/ImmutableCodeCell'
 import Cell from '../../../Cells/Cell'
 import QuizCell from '../../../Cells/QuizCell/QuizCell'
+import ConfirmActionModal from '../../../Modals/ConfirmPageDeleteModal/ConfirmActionModal'
 
 const SectionHeader = ({userType, page, sectionIdx}) => {
     const { getTitle, changeTitle } = useContext(LessonContext);
@@ -50,10 +51,22 @@ const SectionHeader = ({userType, page, sectionIdx}) => {
 
 const LessonSection = (props) => {
     const {removeSection } = useContext(LessonContext);
+    const [confirmActionModalOpen, setConfirmActionModalOpen] = useState(false);
+    const [confirmActionModalConfig, setConfirmActionModalConfig] = useState({});
 
     const removeSectionHandler = () => {
+        setConfirmActionModalOpen(false);
         removeSection(props.page, props.sectionIdx);
     }
+
+    const openConfirmSectionDeletionModal = () => {
+        setConfirmActionModalConfig({
+          handleCloseModal: () => setConfirmActionModalOpen(false),
+          handleConfirmAction: removeSectionHandler,
+          confirmationText: "Czy na pewno chcesz usunąć tę sekcję?"
+        })
+        setConfirmActionModalOpen(true);
+      }
 
     return (
         <div className='section-container' id={"section"+props.sectionIdx} data-cy="lesson-section" >
@@ -61,7 +74,7 @@ const LessonSection = (props) => {
               <SectionHeader userType={props.userType} page={props.page} sectionIdx={props.sectionIdx}/>
               <div className='section-misc-buttons-container'>
                   {props.userType === UserType.teacher && <div data-cy="section-drag" className='section-grab' {...props.handleDrag} ><TbGridDots/></div>}
-                  {props.userType === UserType.teacher && <button data-cy="section-delete-button" className='section-delete-button' onClick={removeSectionHandler}><BsTrash3/></button>}
+                  {props.userType === UserType.teacher && <button data-cy="section-delete-button" className='section-delete-button' onClick={props.section?.cells.length > 0 ? openConfirmSectionDeletionModal : removeSectionHandler}><BsTrash3/></button>}
                   {props.userType === UserType.teacher && <div> <MovableMenuContext pageID={props.page} sectionID={props.sectionIdx} isSection={true}> <TbArrowsMove/> </MovableMenuContext> </div> }
               </div>
             </div>
@@ -129,6 +142,7 @@ const LessonSection = (props) => {
                     }}
                 </StrictModeDroppable>
             }
+            <ConfirmActionModal open={confirmActionModalOpen} {...confirmActionModalConfig} />
             {props.userType === "STUDENT" && props.section?.cells.map((cell, idx) => {
                 if (cell.type === "TextCell") {
                     return (

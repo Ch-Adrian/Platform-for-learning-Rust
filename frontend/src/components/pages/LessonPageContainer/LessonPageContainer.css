@@ -298,8 +298,11 @@ span {
 }
 
 .right-side-buttons {
-  min-width: 30rem;
   padding-left: 1rem;
+}
+
+.right-side-buttons-padding {
+  min-width: 30rem;
 }
 
 .user-type-switch-container {
@@ -310,4 +313,5 @@ span {
   .name-header {
     max-width: 10rem;
   }
+
 }

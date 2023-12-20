@@ -19,13 +19,11 @@ public class LessonController {
 
     @PostMapping
     public String createNewLesson(@RequestBody LessonFile lessonFile) {
-        System.out.println("CONTROLLER: " + lessonFile.getName());
         return lessonService.createNewLesson(lessonFile);
     }
 
     @GetMapping("/{lessonName}")
     public Lesson getLessonByName(@PathVariable String lessonName) {
-        System.out.println("CONTROLLER: " + lessonName);
         return lessonService.getLessonByName(lessonName);
     }
 
@@ -41,21 +39,16 @@ public class LessonController {
 
     @PostMapping("/{lessonName}")
     public void saveLesson(@PathVariable String lessonName, @RequestBody Lesson lesson) {
-        System.out.println("CONTROLLER: " + lessonName);
         lessonService.saveLesson(lessonName, lesson);
     }
 
     @PutMapping("/{lessonName}")
     public void renameLesson(@PathVariable String lessonName, @RequestBody LessonRenameDTO lessonRenameDTO) {
-        System.out.println("CONTROLLER: " + lessonName);
-        System.out.println("CONTROLLER: " + lessonRenameDTO.override());
-        System.out.println("CONTROLLER: " + lessonRenameDTO.newLessonName());
         lessonService.renameLesson(lessonName, lessonRenameDTO);
     }
 
     @DeleteMapping("/{lessonName}")
     public void deleteLesson(@PathVariable String lessonName) {
-        System.out.println("CONTROLLER: " + lessonName);
         lessonService.deleteLesson(lessonName);
     }
 

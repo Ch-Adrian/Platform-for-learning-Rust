@@ -252,6 +252,8 @@
 .name-header {
   margin: 0;
   padding: auto;
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
   font-size: 1.5rem;
   color: white;
   color: var(--code_color);

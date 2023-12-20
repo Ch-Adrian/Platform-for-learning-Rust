@@ -1,13 +1,5 @@
 @import url('../../../values/colors.css');
 
-:root{
-    --background-cell-color: #111111;
-    --buttons-color-hovered: rgba(39, 36, 51, 50%);
-    --buttons-color-active: white;
-    --background-buttons-color: transparent;
-    --editor-color: rgb(30, 30, 30);
-}
-
 .background {
     color: var(--font_color);
     width: 99%;
@@ -41,6 +33,7 @@
 }
 
 .text-field {
+    padding: 1rem;
     margin: 10px;
 }
 
@@ -58,7 +51,7 @@
     justify-content: center;
     align-items: center;
     width: auto;
-    background-color: var(--editor-color);
+    background-color: rgb(30, 30, 30);
     border-radius: 10px;
     padding-left: 1rem;
 }
@@ -68,7 +61,7 @@
 }
 
 #topDiv {
-    background-color: var(--editor-color);
+    background-color: rgb(30, 30, 30);
     border-radius: 10px;
     display: flex;
     align-items: center;

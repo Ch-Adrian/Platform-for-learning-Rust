@@ -45,6 +45,7 @@
 }
 
 .dropdown-button {
+    z-index: 10;
     grid-area: 1 / 1 / 2 / 2;
     text-align: center;
 }
@@ -83,6 +84,7 @@
 }
 
 .dropdown-button-line {
+    z-index: 9;
     grid-area: 1 / 1 / 2 / 2 !important;
     align-self: center;
     justify-self: center;
@@ -92,7 +94,7 @@
 }
 
 .section-button {
-    z-index: 200;
+    z-index: 10;
     align-self: center;
     justify-self: center;
     background-color: var(--gray_8) !important; 

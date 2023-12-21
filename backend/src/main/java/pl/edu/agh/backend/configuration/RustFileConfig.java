@@ -1,17 +1,15 @@
 package pl.edu.agh.backend.configuration;
 
+import lombok.AllArgsConstructor;
 import pl.edu.agh.backend.compiler.files.RustConfigFile;
 import pl.edu.agh.backend.compiler.files.RustFile;
 import pl.edu.agh.backend.compiler.files.RustTestsFile;
 import pl.edu.agh.backend.factories.CommandsFactory;
 
+@AllArgsConstructor
 public class RustFileConfig {
 
     private final CommandsFactory commandsFactory;
-
-    public RustFileConfig(CommandsFactory commandsFactory) {
-        this.commandsFactory = commandsFactory;
-    }
 
     public RustFile createRustFile(String content) {
         return RustFile.builder()

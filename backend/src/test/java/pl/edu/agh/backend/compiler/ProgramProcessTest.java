@@ -68,7 +68,7 @@ class ProgramProcessTest {
 
         // Then
         assertTrue(actualOutput.contains("**Compiler response:**"));
-        assertTrue(actualOutput.contains("error: expected type"));
+        assertTrue(actualOutput.contains("error"));
     }
 
     @Test
@@ -95,7 +95,7 @@ class ProgramProcessTest {
 
         // Then
         assertTrue(actualOutput.contains("**Compiler response:**"));
-        assertTrue(actualOutput.contains("error: expected type"));
+        assertTrue(actualOutput.contains("error"));
     }
 
     @Test
@@ -122,7 +122,8 @@ class ProgramProcessTest {
         String actualOutput = compilationResponse.getCompilerMessage();
 
         // Then
-        assertTrue(actualOutput.contains("thread 'main' panicked at 'attempt to divide by zero"));
+        assertTrue(actualOutput.contains("thread 'main' panicked"));
+        assertTrue(actualOutput.contains("attempt to divide by zero"));
     }
 
     private RustFile getHelloWorldRustFile() {

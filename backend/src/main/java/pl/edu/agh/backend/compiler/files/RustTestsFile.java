@@ -3,8 +3,6 @@ package pl.edu.agh.backend.compiler.files;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
-import java.io.File;
-import java.nio.file.Paths;
 import java.util.List;
 
 @Getter
@@ -16,8 +14,7 @@ public class RustTestsFile extends RustFile {
     @Override
     public String[] getCompilationCommand() {
         return new String[]{
-                "cargo", "test", "--manifest-path=" + Paths.get(this.directory) + File.separator +
-                "Cargo.toml", "--no-run"
+                "cargo", "test", commandsFactory.getManifestPath(this.directory), "--no-run"
         };
     }
 
@@ -29,7 +26,7 @@ public class RustTestsFile extends RustFile {
     @Override
     public String[] getExecutionCommand() {
         return new String[]{
-                "cargo", "test", "--manifest-path=" + Paths.get(this.directory) + File.separator + "Cargo.toml"
+                "cargo", "test", commandsFactory.getManifestPath(this.directory)
         };
     }
 

@@ -22,7 +22,7 @@ public class RustFile {
 
     public String[] getCompilationCommand() {
         return new String[]{
-                "cargo", "build", "--manifest-path=" + Paths.get(this.directory) + File.separator + "Cargo.toml"
+                "cargo", "build", commandsFactory.getManifestPath(this.directory)
         };
     }
 

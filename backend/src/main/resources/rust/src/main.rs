@@ -1,3 +1,3 @@
 fn main() {
-  //YOUR CODE HERE
+	let num = if true { 1 } else { "two" };
 }

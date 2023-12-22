@@ -1,0 +1,36 @@
+@import url('../../../values/colors.css');
+
+.editor-button-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    background-color: var(--gray_8) !important;
+    padding: 0.3em;
+    padding-right: 0px;
+    padding-left: 1rem;
+    height: 2.3rem;
+}
+
+.grIcon path {
+    stroke: var(--font_color) !important;
+}
+
+.editor-button {
+    padding: 0.1rem 0.2rem 0.1rem 0.2rem !important;
+    border-radius: 0.1rem;
+    border-width: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--gray_8) !important;
+}
+
+.editor-button:hover {
+    background-color: var(--dark_gray) !important;
+}
+
+.editor-caption {
+    color: var(--font_color);
+    margin-bottom: 0.2rem;
+}

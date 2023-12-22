@@ -1,0 +1,127 @@
+@import url('../../../values/colors.css');
+
+:root{
+  --background-color: #c9d1d9;
+  --background-color-hover: #e9ecef;
+  --text-button-color: #ffffff;
+  --add-button-color: #555555;
+  --add-button-color-hover: #6b6b6b;
+}
+
+
+.dropdown-toggle::after {
+    display: none !important; 
+  }
+
+.dropdown-toggle {
+    background-color: var(--black) !important;
+    border-color: var(--black) !important; 
+    border-bottom-color: var(--black) !important; 
+    color: var(--font_color) !important;
+    min-width: 12rem !important;
+    height: 2.2rem !important;
+    padding-top: 0.1em !important;
+    font-size: 1.1em !important;
+}
+
+.dropdown-toggle:hover {
+    background-color: var(--dark_gray) !important;
+}
+
+.dropdown-menu {
+    width: inherit !important;
+    border-color: var(--black) !important;
+    border-radius: 0 !important;
+    border-bottom-left-radius: 5px !important;
+    border-bottom-right-radius: 5px !important;
+    top: -4px !important;
+    background-color: var(--black) !important;
+    position: absoulte;
+    min-width: 12rem !important;
+    border-top-color: var(--black);
+    border-top-width: 20px;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.dropdown-button {
+    z-index: 10;
+    grid-area: 1 / 1 / 2 / 2;
+    text-align: center;
+}
+
+.dropdown-item {
+    font-style: normal !important;
+    color: var(--font_color) !important;
+    font-size: 0.95em;
+}
+
+.dropdown-item:hover {
+    background-color: var(--dark_gray) !important;
+}
+
+.dropdown-button-wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    align-items: center;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.dropdown-button-wrapper *{
+    visibility: hidden;
+    opacity: 0;
+    transition: 0s visibility !important;
+}
+
+.dropdown-button-wrapper:hover * {
+    visibility: visible;
+    opacity: 1;
+    transition-delay:.15s !important;
+}
+
+.dropdown-button-line {
+    z-index: 9;
+    grid-area: 1 / 1 / 2 / 2 !important;
+    align-self: center;
+    justify-self: center;
+    width: 18rem;
+    height: 3px;
+    background-color: var(--dark_gray);
+}
+
+.section-button {
+    z-index: 10;
+    align-self: center;
+    justify-self: center;
+    background-color: var(--gray_8) !important; 
+    border-color: var(--gray_8) !important; 
+    color: var(--font_color) !important;
+    min-width: 12rem !important;
+    height: 2.2rem !important;
+    padding-top: 0.1em !important;
+    font-size: 1.1em !important;
+}
+
+.section-button:hover {
+    background-color: var(--gray) !important;
+    border-color: var(--gray) !important; 
+}
+
+.dropdown-button-line-section {
+    grid-area: 1 / 1 / 2 / 2 !important;
+    align-self: center;
+    justify-self: center;
+    width: 18rem;
+    height: 3px;
+    background-color: var(--gray);
+}
+
+.dropdown-button-wrapper-visible * {
+    visibility: visible !important;
+    opacity: 1 !important;
+    transition: 0s visibility !important;
+}

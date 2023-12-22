@@ -1,0 +1,19 @@
+@import url('../../../values/colors.css');
+
+textarea {
+    min-height: 70vh;
+    resize: none;
+    background-color: var(--dark_gray);
+    color: var(--font_color);
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.button-container Button {
+    background-color: var(--dark_gray) !important;
+    color: var(--font_color) !important;
+}

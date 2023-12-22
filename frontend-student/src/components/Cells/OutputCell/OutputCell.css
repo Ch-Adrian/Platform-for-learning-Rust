@@ -1,0 +1,35 @@
+@import url('../../../values/colors.css');
+
+.markdown-output {
+    color: var(--code_color);
+    font-size: inherit;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: var(--dark_gray) !important;
+    margin: .5em 0em .5em 0em;
+    padding: 1.5em 2em 1.5em 2rem;
+    white-space: pre-wrap;
+}
+
+.output-container {
+    position: relative;
+}
+
+.clear-output-editor-button {
+    position: absolute;
+    top: 0.5em;
+    right: 1em;
+    background-color: transparent !important;
+}
+
+.clear-output-editor-button > .grIcon path {
+    stroke: grey;
+}
+
+.clear-output-editor-button:hover > .grIcon path {
+    stroke: white;
+}
+
+.output-title {
+    color: var(--font_color);
+    text-align: center;
+}

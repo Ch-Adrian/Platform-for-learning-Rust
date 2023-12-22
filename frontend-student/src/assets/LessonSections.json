@@ -1,0 +1,247 @@
+{
+    "pages": [
+        {
+            "sections": [
+                {
+                    "title": "sekcja 1",
+                    "cells": [
+                        {
+                            "type": "text",
+                            "value": "# Pętle w języku  \n \n \n ### Pętla for: \n \n ##### Poniżej znajduje się przykład liczenia sumy liczb od 1 do 10 używając pętli for"
+                        },
+                        {
+                            "type": "code",
+                            "value": "fn main() {\n  let mut sum = 0;  \n  for i in 1..10 {  \n    sum += i;  \n  }  \n  println!(\"sum: {}\", sum);  \n}"
+                        },
+                        {
+                            "type": "text",
+                            "value": "**Spróbuj piliczyć średnią z liczb parzystych od 10 do 20 włącznie**"
+                        },
+                        {
+                            "type": "code",
+                            "value": "fn main() {\n  //YOUR CODE HERE\n}"
+                        },
+                        {
+                            "type": "text",
+                            "value": "### Pętla while: \n \n ##### Poniżej znajduje się przykład liczenia sumy liczb od 1 do 10 używając pętli while"
+                        },
+                        {
+                            "type": "code",
+                            "value": "fn main() {\n  let mut sum = 0;  \n  let mut i = 1;  \n  while i <= 10 {  \n    sum += i;  \n  i+= 1  \n  }  \n  println!(\"sum: {}\", sum);  \n}"
+                        },
+                        {
+                            "type": "text",
+                            "value": "**Spróbuj piliczyć średnią z liczb parzystych od 10 do 20 włącznie**"
+                        },
+                        {
+                            "type": "code",
+                            "value": "fn main() {\n  //YOUR CODE HERE\n}"
+                        }]
+                },
+                {
+                    "title": "sekcja 2",
+                    "cells": [
+                        {
+                            "type": "text",
+                            "value": "**In following code something is missing. Try to find out what should be inside parenthesis to make code working.  \n  Pay attention to the compiler error output - it may be useful to find the solution.**"
+                        },
+                        {
+                            "type": "code",
+                            "value": "pub fn add(a: i32, b: i32) i32 {\n      a + b;\n  }\n  \n  fn main(){\n  \n      println!(\"{}\", add(1,2));\n  \n  }"
+                        },
+                        {
+                            "type": "text",
+                            "value": " # TESTY"
+                        },
+                        {
+                            "type": "code",
+                            "value": "fn main() {println!(\"TestTest!\");}\n fn testFunc() -> i8 {\n    return 5;\n}",
+                            "test": "#[test]\n  fn exploration() {\n      assert_eq!(testFunc(), 4);\n  }"
+                        },
+                        {
+                            "type": "text",
+                            "value": "# MISSING CODE TO IMPLEMENT"
+                        },
+                        {
+                            "type": "text",
+                            "value": "**In the code below, body of function `count_to_ten`, which sould print natural numbers from 1 to 10, is missing - try to implement it and run the code.**"
+                        },
+                        {
+                            "type": "code",
+                            "value": "pub fn count_to_ten() {\n    //TODO\n}\n\nfn main(){\n  count_to_ten();\n}"
+                        },
+                        {
+                            "type": "text",
+                            "value": "# MOŻLIWOŚĆI MARKDOWN"
+                        },
+                        {
+                            "type": "text",
+                            "value": "| żółć   | sd | sd |     |   |\n  |------|----|----|-----|---|\n  |      |    | dw |     |   |\n  | asdf |    |    |     |   |\n  |      |    |    | sdf |   |"
+                        },
+                        {
+                            "type": "code",
+                            "value": "pub fn add(a: i32, b: i32) i32 {\n      a + b;\n  }\n  \n  fn main(){\n  \n      println!(\"{}\", add(1,2));\n  \n  }"
+                        },
+                        {
+                            "type": "text",
+                            "value": "~~I love jamstack~~                 \n  https://www.thisbecomesalink.com\n  * [x] yet another\n  * [ ] to do"
+                        },
+                        {
+                            "type": "text",
+                            "value": "# MISSING CODE TO IMPLEMENT"
+                        },
+                        {
+                            "type": "text",
+                            "value": "**In following code something is missing. Try to find out what should be inside parenthesis to make code working.  \n  Pay attention to the compiler error output - it may be useful to find the solution.**"
+                        },
+                        {
+                            "type": "code",
+                            "value": "pub fn add(a: i32, b: i32) i32 {\n      a + b;\n  }\n  \n  fn main(){\n  \n      println!(\"{}\", add(1,2));\n  \n  }"
+                        }]
+                }
+        ]
+    },
+    {
+        "sections": [{
+            "title": "sekcja 1",
+            "cells": [
+                {
+                    "type": "code",
+                    "value": "fn main() {\n  //YOUR CODE HERE\n}"
+                }]
+        },
+        {
+            "title": "sekcja 2",
+            "cells": [
+                {
+                    "type": "text",
+                    "value": "**In following code something is missing. Try to find out what should be inside parenthesis to make code working.  \n  Pay attention to the compiler error output - it may be useful to find the solution.**"
+                },
+                {
+                    "type": "code",
+                    "value": "pub fn add(a: i32, b: i32) i32 {\n      a + b;\n  }\n  \n  fn main(){\n  \n      println!(\"{}\", add(1,2));\n  \n  }"
+                },
+                {
+                    "type": "text",
+                    "value": " # TESTY"
+                },
+                {
+                    "type": "code",
+                    "value": "fn main() {println!(\"TestTest!\");}\n fn testFunc() -> i8 {\n    return 5;\n}",
+                    "test": "#[test]\n  fn exploration() {\n      assert_eq!(testFunc(), 4);\n  }"
+                },
+                {
+                    "type": "text",
+                    "value": "# MISSING CODE TO IMPLEMENT"
+                },
+                {
+                    "type": "text",
+                    "value": "**In the code below, body of function `count_to_ten`, which sould print natural numbers from 1 to 10, is missing - try to implement it and run the code.**"
+                },
+                {
+                    "type": "code",
+                    "value": "pub fn count_to_ten() {\n    //TODO\n}\n\nfn main(){\n  count_to_ten();\n}"
+                },
+                {
+                    "type": "text",
+                    "value": "# MOŻLIWOŚĆI MARKDOWN"
+                },
+                {
+                    "type": "text",
+                    "value": "| żółć   | sd | sd |     |   |\n  |------|----|----|-----|---|\n  |      |    | dw |     |   |\n  | asdf |    |    |     |   |\n  |      |    |    | sdf |   |"
+                },
+                {
+                    "type": "code",
+                    "value": "pub fn add(a: i32, b: i32) i32 {\n      a + b;\n  }\n  \n  fn main(){\n  \n      println!(\"{}\", add(1,2));\n  \n  }"
+                },
+                {
+                    "type": "text",
+                    "value": "~~I love jamstack~~                 \n  https://www.thisbecomesalink.com\n  * [x] yet another\n  * [ ] to do"
+                },
+                {
+                    "type": "text",
+                    "value": "# MISSING CODE TO IMPLEMENT"
+                },
+                {
+                    "type": "text",
+                    "value": "**In following code something is missing. Try to find out what should be inside parenthesis to make code working.  \n  Pay attention to the compiler error output - it may be useful to find the solution.**"
+                },
+                {
+                    "type": "code",
+                    "value": "pub fn add(a: i32, b: i32) i32 {\n      a + b;\n  }\n  \n  fn main(){\n  \n      println!(\"{}\", add(1,2));\n  \n  }"
+                }]
+            }
+        ]
+    },
+    {
+        "sections": [{
+            "title": "sekcja 1",
+            "cells": [
+                {
+                    "type": "code",
+                    "value": "fn main() {\n  //YOUR CODE HERE\n}"
+                },
+                {
+                    "type": "text",
+                    "value": "### Pętla while: \n \n ##### Poniżej znajduje się przykład liczenia sumy liczb od 1 do 10 używając pętli while"
+                },
+                {
+                    "type": "code",
+                    "value": "fn main() {\n  let mut sum = 0;  \n  let mut i = 1;  \n  while i <= 10 {  \n    sum += i;  \n  i+= 1  \n  }  \n  println!(\"sum: {}\", sum);  \n}"
+                },
+                {
+                    "type": "text",
+                    "value": "**Spróbuj piliczyć średnią z liczb parzystych od 10 do 20 włącznie**"
+                },
+                {
+                    "type": "code",
+                    "value": "fn main() {\n  //YOUR CODE HERE\n}"
+                }]
+        },
+        {
+            "title": "sekcja 2",
+            "cells": [
+                {
+                    "type": "text",
+                    "value": "# MISSING CODE TO IMPLEMENT"
+                },
+                {
+                    "type": "text",
+                    "value": "**In the code below, body of function `count_to_ten`, which sould print natural numbers from 1 to 10, is missing - try to implement it and run the code.**"
+                },
+                {
+                    "type": "code",
+                    "value": "pub fn count_to_ten() {\n    //TODO\n}\n\nfn main(){\n  count_to_ten();\n}"
+                },
+                {
+                    "type": "text",
+                    "value": "# MOŻLIWOŚĆI MARKDOWN"
+                },
+                {
+                    "type": "text",
+                    "value": "| żółć   | sd | sd |     |   |\n  |------|----|----|-----|---|\n  |      |    | dw |     |   |\n  | asdf |    |    |     |   |\n  |      |    |    | sdf |   |"
+                },
+                {
+                    "type": "code",
+                    "value": "pub fn add(a: i32, b: i32) i32 {\n      a + b;\n  }\n  \n  fn main(){\n  \n      println!(\"{}\", add(1,2));\n  \n  }"
+                },
+                {
+                    "type": "text",
+                    "value": "~~I love jamstack~~                 \n  https://www.thisbecomesalink.com\n  * [x] yet another\n  * [ ] to do"
+                },
+                {
+                    "type": "text",
+                    "value": "# MISSING CODE TO IMPLEMENT"
+                },
+                {
+                    "type": "text",
+                    "value": "**In following code something is missing. Try to find out what should be inside parenthesis to make code working.  \n  Pay attention to the compiler error output - it may be useful to find the solution.**"
+                },
+                {
+                    "type": "code",
+                    "value": "pub fn add(a: i32, b: i32) i32 {\n      a + b;\n  }\n  \n  fn main(){\n  \n      println!(\"{}\", add(1,2));\n  \n  }"
+                }]
+            }
+        ]
+    }]
+}

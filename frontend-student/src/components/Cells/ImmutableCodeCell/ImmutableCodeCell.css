@@ -1,0 +1,10 @@
+:root{
+    --background-cell-color: #524B4B;
+    --buttons-color: grey;
+    --buttons-color-active: white;
+    --background-buttons-color: transparent;
+  }
+
+.editor {
+  padding-left: 1rem;
+}

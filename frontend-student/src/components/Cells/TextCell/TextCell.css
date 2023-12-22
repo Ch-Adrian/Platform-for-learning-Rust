@@ -1,0 +1,54 @@
+@import url('../../../values/colors.css');
+
+:root{
+  --markdown-color: white;
+  --buttons-color: grey;
+  --buttons-color-active: white;
+  --background-buttons-color: transparent;
+  --top-border-color: #c6cbd1;
+  --code-color: #c9d1d9;
+  --border-color-td: #dfe2e5;
+}
+
+.markdown {
+    color: var(--font_color) !important;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+code {
+    color: var(--font_color) !important;
+}
+
+tr {
+    border-top: 1px solid var(--top-border-color); 
+  }
+  
+th,
+td {
+    padding: 6px 13px;
+    border: 1px solid var(--border-color-td); 
+    background-color: var(--gray_8) !important;
+}
+
+.markdown-body {
+    font-size: 1rem;
+    padding: 2rem;
+    background-color: var(--gray_8) !important;
+}
+
+.w-md-editor-toolbar li {
+    background-color: var(--gray_8) !important;
+}
+
+@media (max-width: 767px) {
+    .markdown-body {
+        padding: 15px;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .wmde-markdown,
+    .wmde-markdown-var {
+        --color-canvas-default: var(--gray_8) !important;
+    }
+}

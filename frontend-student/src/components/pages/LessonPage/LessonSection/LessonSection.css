@@ -1,0 +1,89 @@
+@import url('../../../../values/colors.css');
+
+:root{
+   /* --background-section-color: #232935; */
+  --background-section-color: #524B4B;
+  --accent-color: white;
+  --buttons-color: grey;
+  --buttons-color-active: white;
+  --background-buttons-color: transparent;
+  --title-color: white;
+}
+
+.section-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 2.5em;
+    background-color: var(--gray_8);
+    gap: 2em;
+    border-radius: 5px;
+}
+
+.section-delete-button {
+    margin-left: auto;
+    padding: 0 1em 1em 1em;
+    color: var(--buttons-color);
+    opacity: 0.4;
+    background-color: var(--background-buttons-color);
+    border: 0;
+}
+
+.section-delete-button:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.section-delete-button:active {
+    color: var(--buttons-color-active);
+}
+
+.section-misc-buttons-container {
+    margin-left: auto;
+    display: flex;
+    flex-direction: row;
+    padding: 0 0 1em 1em;
+}
+
+.section-misc-buttons-container > * {
+    color: var(--buttons-color);
+    opacity: 0.4;
+    background-color: var(--background-buttons-color);
+    border: 0;
+}
+
+.section-misc-buttons-container > *:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.section-misc-buttons-container > *:active {
+    color: var(--buttons-color-active);
+}
+
+.section-grab {
+    cursor: grab !important;
+}
+
+.section-header{
+    color: var(--title-color);
+    font-size: 2rem;
+    padding-left: 2rem;
+    overflow: hidden;
+    overflow-wrap: break-word;
+}
+
+.header-name-container {
+    overflow: auto;
+    overflow-wrap: break-word;
+}
+
+.section-header-container {
+  display: flex;
+  border-bottom: solid var(--font_color) 3px;
+  padding-top: 0.7rem;
+}
+
+.section-header {
+    color: var(--font_color);
+  }

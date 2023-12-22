@@ -1,0 +1,74 @@
+root{
+    --background-cell-color: #524B4B;
+    --buttons-color: grey;
+    --buttons-color-active: white;
+    --background-buttons-color: transparent;
+    --editor-color: rgb(39, 36, 51);
+  }
+
+  .code-cell-container {
+      display: flex;
+      flex-direction: column;
+  }
+
+  .code-cell-container-teacher {
+      transition: .2s background-color box-shadow;
+      border-radius: 20px;
+  }
+
+  .code-cell-container-teacher:hover {
+      background-color: var(--background-cell-color); 
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  
+  .cell-misc-buttons-container {
+      margin-left: auto;
+      display: flex;
+      flex-direction: row;
+      padding: 0 1em 1em 1em;
+  }
+
+  .cell-misc-buttons-container > * {
+      color: var(--buttons-color); 
+      opacity: 0.4;
+      background-color: var(--background-buttons-color); 
+      border: 0;
+  }
+
+  .cell-misc-buttons-container > *:hover {
+      opacity: 1;
+      cursor: pointer;
+  }
+
+  .cell-misc-buttons-container > *:active {
+      color: var(--buttons-color-active); 
+  }
+
+  .text-cell-grab {
+      cursor: grab !important;
+  }
+
+  .editor-button-quiz {
+    padding: 0.1rem 0.2rem 0.1rem 0.2rem !important;
+    border-radius: 0.1rem;
+    border-width: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+}
+
+.editor-button-quiz:hover {
+    padding: 0.1rem 0.2rem 0.1rem 0.2rem !important;
+    border-radius: 0.1rem;
+    border-width: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(30, 30, 30);
+}
+
+.editor-button-quiz svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}

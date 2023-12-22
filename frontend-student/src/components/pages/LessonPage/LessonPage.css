@@ -1,0 +1,11 @@
+.page-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 4em;
+    gap: 2em;
+}
+
+.top-page-padding {
+    height: 1rem;
+}

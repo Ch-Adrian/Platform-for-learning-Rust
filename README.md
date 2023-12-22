@@ -26,11 +26,17 @@ system to run technologies specified above.
 If You want to use docker You have to install\
 only docker and run relevant command.
 
-### To run docker:
+### To run docker for student side:
 For the first time under windows or linux run:\
-`docker-compose up --build`\
+`docker-compose build backend frontend-student`\
 next time You can just run:\
-`docker-compose up`
+`docker-compose up backend frontend-student`
+
+### To run docker for teacher side:
+For the first time under windows or linux run:\
+`docker-compose build backend frontend`\
+next time You can just run:\
+`docker-compose up backend frontend`
 
 Afterwards open web browser and go to link:\
 http://localhost:3000

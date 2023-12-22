@@ -7,3 +7,6 @@ package-lock.json
 
 /frontend/node_modules
 /frontend/build
+
+/frontend-student/node_modules
+/frontend-student/build

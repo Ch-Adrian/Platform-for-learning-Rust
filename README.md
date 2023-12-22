@@ -26,17 +26,17 @@ system to run technologies specified above.
 If You want to use docker You have to install\
 only docker and run relevant command.
 
-### To run docker for student side:
-For the first time under windows or linux run:\
-`docker-compose build backend frontend-student`\
-next time You can just run:\
-`docker-compose up backend frontend-student`
-
-### To run docker for teacher side:
+### To run docker for teacher:
 For the first time under windows or linux run:\
 `docker-compose build backend frontend`\
-next time You can just run:\
+and next You can just run:\
 `docker-compose up backend frontend`
+
+### To run docker for student:
+For the first time under windows or linux run:\
+`docker-compose build backend frontend-student`\
+and next You can just run:\
+`docker-compose up backend frontend-student`
 
 Afterwards open web browser and go to link:\
 http://localhost:3000
@@ -54,8 +54,9 @@ inside backend directory run (for Windows):\
 for linux You have to replace `.\mvnw` with `mvn`.
 
 #### Frontend:
-You have to enter frontend\
-directory. Then if You run project\
+For teacher version You have to enter frontend\
+directory(for student this directory is frontend-student).\
+Then if You run project\
 for the first time please use command:\
 `npm install` to install packages
 

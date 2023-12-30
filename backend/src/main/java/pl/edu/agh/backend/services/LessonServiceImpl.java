@@ -17,6 +17,7 @@ import pl.edu.agh.backend.lesson.dto.LessonRenameDTO;
 import pl.edu.agh.backend.serialization.PolymorphDeserializer;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Instant;
@@ -74,8 +75,8 @@ public class LessonServiceImpl implements LessonService {
         return Arrays
                 .stream(Objects.requireNonNull(currentDir.listFiles(filter)))
                 .map(file -> new LessonInfoDTO(file.getName(), LocalDateTime.ofInstant(
-                        Instant.ofEpochMilli(file.lastModified()),
-                        TimeZone.getDefault().toZoneId())
+                                Instant.ofEpochMilli(file.lastModified()),
+                                TimeZone.getDefault().toZoneId())
                         )
                 )
                 .toList();
@@ -119,17 +120,18 @@ public class LessonServiceImpl implements LessonService {
         if (!existsLesson(name)) {
             logger.error("Lesson not found: " + name);
             throw new LessonNotFoundException(name);
-        }  else {
-        try {
-            Files.delete(Path.of(rootDir + File.separator + name));
-        } catch (IOException ex) {
-            logger.error("Failed to delete lesson: " + name);
+        } else {
+            try {
+                Files.delete(Path.of(rootDir + File.separator + name));
+            } catch (IOException ex) {
+                logger.error("Failed to delete lesson: " + name);
+            }
+            logger.info("Lesson deleted successfully: " + name);
         }
-        logger.info("Lesson deleted successfully: " + name);}
     }
 
     public void deleteLessons(List<String> names) {
-        for (String name: names) {
+        for (String name : names) {
             this.deleteLesson(name);
         }
     }
@@ -139,7 +141,12 @@ public class LessonServiceImpl implements LessonService {
     }
 
     private void saveLesson(LessonFile lessonFile) {
-        try (PrintWriter out = new PrintWriter(new FileWriter(rootDir + File.separator + lessonFile.getName()))) {
+        try (PrintWriter out = new PrintWriter(
+                new OutputStreamWriter(
+                        new FileOutputStream(rootDir + File.separator + lessonFile.getName()),
+                        StandardCharsets.UTF_8
+                ), true
+        )) {
             Gson gson = new Gson();
             String jsonString = gson.toJson(lessonFile.getLesson());
             out.write(jsonString);

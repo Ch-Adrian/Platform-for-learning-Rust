@@ -20,7 +20,6 @@ const NameHeader = ({lessonName, setLessonName, lessonDefinition, setStatusInfo,
             if (oldName !== newName) setStatusInfo("Nazwa zmieniona");
             setLessonName(newName);
           } catch(e) {
-            console.log(e.response.data)
             if (e.response.data.includes("There is already lesson with name")){
               setOverwriteLessonModalOpen(true);
             }
@@ -58,7 +57,6 @@ const NameHeader = ({lessonName, setLessonName, lessonDefinition, setStatusInfo,
     }
   
     const handleNameChange = (e) => {
-      nameInput.current.textContent = e.target.textContent;
       if (e.key === 'Enter'){
         nameInput.current.blur();
       }

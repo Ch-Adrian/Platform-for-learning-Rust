@@ -66,9 +66,9 @@ const MovableMenuContext = ({pageID, sectionID, cellID=null, children, isSection
           >
           {lessonDefinition.pages.map((content, idx) => {
             if(isSection === false && content.sections.length >= 1)
-              return <MenuItem key={idx} onClick={handleClose(idx)}>{"Page "+(idx+1)+" Section: 1"}</MenuItem>;
+              return <MenuItem key={idx} onClick={handleClose(idx)}>{"Strona "+(idx+1)+" Sekcja: 1"}</MenuItem>;
             else if (isSection === true)
-              return <MenuItem key={idx} onClick={handleClose(idx)}>{"Page "+(idx+1)+" Section: 1"}</MenuItem>;
+              return <MenuItem key={idx} onClick={handleClose(idx)}>{"Strona "+(idx+1)+" Sekcja: 1"}</MenuItem>;
             return null;
           })}
           </Menu>

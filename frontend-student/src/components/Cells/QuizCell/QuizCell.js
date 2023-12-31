@@ -8,6 +8,8 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { IoAddCircle } from "react-icons/io5";
 import { FiCheckSquare } from "react-icons/fi";
+import { GrPowerReset } from "react-icons/gr";
+import { MdOutlineRemoveDone } from "react-icons/md";
 
 function useForceUpdate(){
   const [value, setValue] = useState(0); // integer state
@@ -60,15 +62,43 @@ const QuizCell = memo(function QuizCell(props) {
     }
 
     const checkAnswer = async () => {
+      
+      let showAnswer = false;
+      chOpt.forEach((opt) => {
+        if(opt.valid){
+          showAnswer = true;
+        }
+      });
+      if(!showAnswer) return;
+      
       for(let i = 0; i< options.length; i++){
-        if(options[i].valid !== chOpt[i].valid){
-          resultColor[i] = -1;
-          setResultColor(resultColor);
+        if (options[i].valid) {
+          if(options[i].valid !== chOpt[i].valid){
+            resultColor[i] = 1;
+            setResultColor(resultColor);
+          }
+          else{
+            resultColor[i] = 1;
+            setResultColor(resultColor);
+          }
+        } else {
+          if(options[i].valid !== chOpt[i].valid){
+            resultColor[i] = -1;
+            setResultColor(resultColor);
+          }
+          else{
+            resultColor[i] = 0;
+            setResultColor(resultColor);
+          }
         }
-        else{
-          resultColor[i] = 1;
-          setResultColor(resultColor);
-        }
+      }
+      forceUpdate();
+    }
+
+    const resetAnswer = async () => {
+      for(let i = 0; i< options.length; i++){
+        resultColor[i] = 0;
+        setResultColor(resultColor);
       }
       forceUpdate();
     }
@@ -144,12 +174,12 @@ const QuizCell = memo(function QuizCell(props) {
                     cellIdx={props.cellIdx} currentPage={props.currentPage} sectionIdx={props.sectionIdx} chOpt={chOpt} sidebar={props.sidebar}></QuizOption>
               ))
             }
-
           {isConnectionError ? 
           <div style={{color: 'red'}}>There was some error connecting to the compiler. Please check if all app components are running</div> :
            null}
           <div className='editor-button-container'>
             <button onClick={checkAnswer} className='editor-button-quiz' variant="success"  style={{color: 'white'}}><FiCheckSquare color="white"/></button>
+            <button onClick={resetAnswer} className='editor-button-quiz' variant="success"  style={{color: 'white'}}><MdOutlineRemoveDone color="white"/></button>
           </div>
           </React.Fragment>
         }

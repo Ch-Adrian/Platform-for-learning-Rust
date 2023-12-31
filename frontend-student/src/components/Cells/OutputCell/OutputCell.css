@@ -33,3 +33,8 @@
     color: var(--font_color);
     text-align: center;
 }
+
+.output-font {
+    font-family: "Lucida Console", "Courier New", monospace;
+    font-size: 0.2em;
+}

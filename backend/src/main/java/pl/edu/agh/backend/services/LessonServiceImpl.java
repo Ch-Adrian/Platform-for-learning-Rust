@@ -141,12 +141,7 @@ public class LessonServiceImpl implements LessonService {
     }
 
     private void saveLesson(LessonFile lessonFile) {
-        try (PrintWriter out = new PrintWriter(
-                new OutputStreamWriter(
-                        new FileOutputStream(rootDir + File.separator + lessonFile.getName()),
-                        StandardCharsets.UTF_8
-                ), true
-        )) {
+        try (PrintWriter out = new PrintWriter(new FileWriter(rootDir + File.separator + lessonFile.getName())))  {
             Gson gson = new Gson();
             String jsonString = gson.toJson(lessonFile.getLesson());
             out.write(jsonString);

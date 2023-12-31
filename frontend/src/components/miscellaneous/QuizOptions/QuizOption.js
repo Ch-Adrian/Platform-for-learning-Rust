@@ -3,7 +3,6 @@ import "./QuizOption.css"
 import React, { useRef, useContext, useState } from 'react';
 import { LessonContext } from '../../../contexts/LessonContext/LessonContextProvider';
 import UserType from '../../../models/UserType';
-import { RiDeleteBin2Fill } from "react-icons/ri";
 import { COLORS } from '../../../values/colors.js' 
 import {BsTrash3} from 'react-icons/bs';
 

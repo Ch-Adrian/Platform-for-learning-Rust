@@ -8,23 +8,26 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { IoAddCircle } from "react-icons/io5";
 import { FiCheckSquare } from "react-icons/fi";
-import { GrPowerReset } from "react-icons/gr";
 import { MdOutlineRemoveDone } from "react-icons/md";
 
 function useForceUpdate(){
+  /* eslint-disable */
   const [value, setValue] = useState(0); // integer state
+   /* eslint-enable */
   return () => setValue(value => value + 1); // update state to force render
 }
 
 const QuizCell = memo(function QuizCell(props) {
     const containerRef = useRef(null);
     const {updateCell} = useContext(LessonContext);
+    /* eslint-disable */
     const [isConnectionError, setIsConnectionError] = useState(false);
     const [options, setOptions] = useState(props.content);
     const [chOpt, setChOpt] = useState(JSON.parse(JSON.stringify(props.cell.options)).map((val) => {
       val.valid = false;
       return val;
     }));
+    /* eslint-enable */
     const [resultColor, setResultColor] = useState(Array(props.cell.options.length).fill(0));
     const [focus, setFocus] = useState(false);
     const [value, setValue] = useState(props.text);

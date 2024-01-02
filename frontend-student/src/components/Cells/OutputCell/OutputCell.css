@@ -10,15 +10,19 @@
     white-space: pre-wrap;
 }
 
-.output-container {
-    position: relative;
+
+.output-misc {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center; 
+    margin-bottom: 0.4rem;
+    margin-top: 0.2rem;
 }
 
 .clear-output-editor-button {
-    position: absolute;
-    top: 0.5em;
-    right: 1em;
-    background-color: transparent !important;
+    margin-left: auto;
+    margin-right: 0.2rem;
 }
 
 .clear-output-editor-button > .grIcon path {
@@ -32,6 +36,7 @@
 .output-title {
     color: var(--font_color);
     text-align: center;
+    margin-left: auto;
 }
 
 .output-font {

@@ -23,7 +23,7 @@ import { ImFolderDownload } from "react-icons/im";
 import DescriptionIcon from '@mui/icons-material/Description';
 import { IoMdAdd, IoIosRemove } from "react-icons/io";
 import SettingsIcon from '@mui/icons-material/Settings';
-import ConfirmActionModal from '../../Modals/ConfirmPageDeleteModal/ConfirmActionModal';
+import ConfirmActionModal from '../../Modals/ConfirmActionModal/ConfirmActionModal';
 import NameHeader from './NameHeader/NameHeader';
 
 const ErrorFallback = ({ error }) => (

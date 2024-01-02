@@ -5,7 +5,7 @@ import UserType from '../../models/UserType';
 import MovableMenuContext from '../miscellaneous/MenuContext/Movable/MovableMenuContext';
 import { LessonContext } from '../../contexts/LessonContext/LessonContextProvider';
 import "./Cell.css"
-import ConfirmActionModal from '../Modals/ConfirmPageDeleteModal/ConfirmActionModal';
+import ConfirmActionModal from '../Modals/ConfirmActionModal/ConfirmActionModal';
 
 const Cell = (props) => {
     const [confirmActionModalOpen, setConfirmActionModalOpen] = useState(false);

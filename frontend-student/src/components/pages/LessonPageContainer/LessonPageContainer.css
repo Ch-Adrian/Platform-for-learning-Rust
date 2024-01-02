@@ -235,6 +235,8 @@
   justify-content: flex-start;
   align-items: center;
   font-size: 2rem;
+  list-style: none;
+  margin-bottom: 1rem;
   color: var(--text-color);
   color: var(--code_color);
 }

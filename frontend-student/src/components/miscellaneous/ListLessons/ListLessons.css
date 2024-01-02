@@ -21,7 +21,7 @@
     border-style: solid;
 }
   
-li {
+.lesson-table li {
     display: flex;
     flex-direction: row;
     justify-content: space-between;

@@ -36,6 +36,10 @@ td {
     background-color: var(--gray_8) !important;
 }
 
+.markdown-body pre {
+    font-size: 1rem !important;
+}
+
 .w-md-editor-toolbar li {
     background-color: var(--gray_8) !important;
 }

@@ -39,7 +39,7 @@ const OptionText = (props) => {
         <div className='option-text-box'>
             <div ref={headerInput} 
             contentEditable={props.userType === UserType.teacher}
-            className='section-header='
+            className='option-value'
             id={props.sidebar ? "option-text-sidebar" : 'option-text'}
             onBlur={e => changeOptionHandler(e.currentTarget.textContent) } 
             onKeyDown={handleHeaderChange} 

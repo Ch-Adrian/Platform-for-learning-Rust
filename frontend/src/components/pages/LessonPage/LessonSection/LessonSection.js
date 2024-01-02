@@ -14,7 +14,7 @@ import MovableMenuContext from '../../../miscellaneous/MenuContext/Movable/Movab
 import ImmutableCodeCell from '../../../Cells/ImmutableCodeCell/ImmutableCodeCell'
 import Cell from '../../../Cells/Cell'
 import QuizCell from '../../../Cells/QuizCell/QuizCell'
-import ConfirmActionModal from '../../../Modals/ConfirmPageDeleteModal/ConfirmActionModal'
+import ConfirmActionModal from '../../../Modals/ConfirmActionModal/ConfirmActionModal'
 
 const SectionHeader = ({userType, page, sectionIdx}) => {
     const { getTitle, changeTitle } = useContext(LessonContext);

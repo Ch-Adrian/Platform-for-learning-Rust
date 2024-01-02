@@ -17,7 +17,9 @@ COPY ./frontend-student/ ./
 
 RUN npm install -g npm@9.7.1
 RUN npm install
+RUN npm run build
+RUN npm install -g serve
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["serve", "-s", "build"]

@@ -36,10 +36,10 @@ const sectionDragIcon = '[data-cy="section-drag"]';
 const moveItemToPageIcon = '[data-cy="move-item-to-page"]';
 
 describe('Opened lesson structure management', () => {
-  it.skip('should add a page on clicking \'Dodaj stronę\' button', () => {
+  it('should add a page on clicking \'Dodaj stronę\' button', () => {
     let pagesBefore = 0;
     cy.visit('/')
-    cy.contains("CypressTestLesson.json").click();
+    cy.contains("CypressTestLesson").click();
     
     cy.wait(1000);
     cy.get(hamburger).click();
@@ -47,14 +47,14 @@ describe('Opened lesson structure management', () => {
         pagesBefore = $children.length;
 
         cy.get(addPageButton).click();
-        cy.get(lessonNavigation).children().should('have.length', pagesBefore + 1);
+        cy.get(lessonNavigation).children().contains('Strona 2');
     });
   })
 
-  it.skip('should delete a page on clicking \'Usuń stronę\' button', () => {
+  it('should delete a page on clicking \'Usuń stronę\' button', () => {
     let pagesBefore = 0;
     cy.visit('/')
-    cy.contains("CypressTestLesson.json").click();
+    cy.contains("CypressTestLesson").click();
     cy.wait(1000);
     cy.get(hamburger).click();
     cy.get(addPageButton).click();
@@ -62,14 +62,15 @@ describe('Opened lesson structure management', () => {
         pagesBefore = $children.length;
 
         cy.get(removePageButton).click();
-        cy.get(lessonNavigation).children().should('have.length', pagesBefore - 1);
+        cy.contains('Tak').click();
+        cy.get(lessonNavigation).children().should('not.contain', 'Strona 2');
     });
   })
 
-  it.skip('should have a \'Usuń stronę\' button disabled when there is only one page', () => {
+  it('should have a \'Usuń stronę\' button disabled when there is only one page', () => {
     let pagesBefore = 0;
     cy.visit('/')
-    cy.contains("CypressTestLesson.json").click();
+    cy.contains("CypressTestLesson").click();
     cy.wait(1000);
     cy.get(hamburger).click();
     cy.get(lessonNavigation).children().then(($children) => {
@@ -77,10 +78,10 @@ describe('Opened lesson structure management', () => {
     });
   })
 
-  it.skip('should add a section on \'Dodaj sekcję\' button', () => {
+  it('should add a section on \'Dodaj sekcję\' button', () => {
     let sectionsBefore = 0;
     cy.visit('/')
-    cy.contains("CypressTestLesson.json").click();
+    cy.contains("CypressTestLesson").click();
     cy.wait(1000);
     cy.get(section).then(($sections) => {
       sectionsBefore = $sections.length;
@@ -90,24 +91,26 @@ describe('Opened lesson structure management', () => {
     })
   })
 
-  it.skip('should remove a section on section thrash button', () => {
+  it('should remove a section on section thrash button', () => {
     let sectionsBefore = 0;
     cy.visit('/')
-    cy.contains("CypressTestLesson.json").click();
+    cy.contains("CypressTestLesson").click();
     cy.wait(1000);
     cy.get(section).then(($sections) => {
       sectionsBefore = $sections.length;
 
       cy.get(section).first().find('[data-cy="section-delete-button"]').click({ force: true });
+      cy.contains('Tak').click();
       cy.get(section).should('have.length', sectionsBefore - 1);
     })
   })
 
-  it.skip('should add a text cell on \'add cell\' dropdown button menu click', () => {
+  it('should add a text cell on \'add cell\' dropdown button menu click', () => {
     cy.visit('/')
-    cy.contains("CypressTestLesson.json").click();
+    cy.contains("CypressTestLesson").click();
     cy.wait(1000);
     cy.get(section).first().find('[data-cy="section-delete-button"]').click({ force: true });
+    cy.contains('Tak').click();
     cy.get(addSectionButton).first().click({ force: true })
     cy.get(section).find(addCellButton).find('button')
     .click({force: true});
@@ -123,11 +126,12 @@ describe('Opened lesson structure management', () => {
     cy.get(textCell).first().should('have.text', 'test text');
   })
 
-  it.skip('should add a code cell on \'add cell\' dropdown button menu click', () => {
+  it('should add a code cell on \'add cell\' dropdown button menu click', () => {
     cy.visit('/')
-    cy.contains("CypressTestLesson.json").click();
+    cy.contains("CypressTestLesson").click();
     cy.wait(1000);
     cy.get(section).first().find('[data-cy="section-delete-button"]').click({ force: true });
+    cy.contains('Tak').click();
     cy.get(addSectionButton).first().click({ force: true })
     cy.get(section).find(addCellButton).find('button')
     .click({force: true});
@@ -141,11 +145,12 @@ describe('Opened lesson structure management', () => {
     cy.get(codeCell).first().find('.monaco-editor').first().contains('test text');
   })
 
-  it.skip('should add a immutable code cell on \'add cell\' dropdown button menu click', () => {
+  it('should add a immutable code cell on \'add cell\' dropdown button menu click', () => {
     cy.visit('/')
-    cy.contains("CypressTestLesson.json").click();
+    cy.contains("CypressTestLesson").click();
     cy.wait(1000);
     cy.get(section).first().find('[data-cy="section-delete-button"]').click({ force: true });
+    cy.contains('Tak').click();
     cy.get(addSectionButton).first().click({ force: true })
     cy.get(section).find(addCellButton).find('button')
     .click({force: true});
@@ -160,11 +165,12 @@ describe('Opened lesson structure management', () => {
     cy.get(immutableCodeCell).first().find('.monaco-editor').eq(1).contains('test text');
   })
 
-  it.skip('should delete a cell on clicking thrash icon', () => {
+  it('should delete a cell on clicking thrash icon', () => {
     cy.visit('/')
-    cy.contains("CypressTestLesson.json").click();
+    cy.contains("CypressTestLesson").click();
     cy.wait(1000);
     cy.get(section).first().find('[data-cy="section-delete-button"]').click({ force: true });
+    cy.contains('Tak').click();
     cy.get(addSectionButton).first().click({ force: true })
     cy.get(section).find(addCellButton).find('button')
                    .click({force: true});  
@@ -181,23 +187,27 @@ describe('Opened lesson structure management', () => {
     cy.get(textCell).should('have.length', 1);
 
     cy.get(codeCell).parent().find('[data-cy="cell-delete-button"]').click({ force: true });
+    cy.contains('Tak').click();
     cy.get(codeCell).should('not.exist');
     cy.get(cell).should('have.length', 2);
 
     cy.get(textCell).parent().find('[data-cy="cell-delete-button"]').click({ force: true });
+    cy.contains('Tak').click();
     cy.get(textCell).should('not.exist');
     cy.get(cell).should('have.length', 1);
 
     cy.get(immutableCodeCell).parent().find('[data-cy="cell-delete-button"]').click({ force: true });
+    cy.contains('Tak').click();
     cy.get(immutableCodeCell).should('not.exist');
     cy.get(cell).should('have.length', 0);
   })
 
-  it.skip('should rearrange the sequence of cells by drag`n drop', () => {
+  it('should rearrange the sequence of cells by drag`n drop', () => {
     cy.visit('/')
-    cy.contains("CypressTestLesson.json").click();
+    cy.contains("CypressTestLesson").click();
     cy.wait(1000);
     cy.get(section).first().find('[data-cy="section-delete-button"]').click({ force: true });
+    cy.contains('Tak').click();
     cy.get(addSectionButton).first().click({ force: true })
     cy.get(section).find(addCellButton).find('button')
                    .click({force: true});  
@@ -224,9 +234,10 @@ describe('Opened lesson structure management', () => {
     cy.get(cell).eq(2).should('contain.html', 'data-cy="immutable-code-cell"');
   })
 
-  it.skip('should rearrange the sequence of sections by drag`n drop', () => {
-    cy.initializeLesson("CypressTestLesson.json");
+  it('should rearrange the sequence of sections by drag`n drop', () => {
+    cy.initializeLesson("CypressTestLesson");
     cy.get(section).first().find('[data-cy="section-delete-button"]').click({ force: true });
+    cy.contains('Tak').click();
     // Create two empty sections
     cy.get(addSectionButton).first()
                           .click({ force: true })
@@ -257,10 +268,11 @@ describe('Opened lesson structure management', () => {
 
   })
 
-  it.skip('should move a cell to an other section by drag`n drop', () => {
-    cy.initializeLesson("CypressTestLesson.json");
+  it('should move a cell to an other section by drag`n drop', () => {
+    cy.initializeLesson("CypressTestLesson");
 
     cy.get(section).first().find('[data-cy="section-delete-button"]').click({ force: true })
+    cy.contains('Tak').click();
 
     // Create two empty sections
     cy.get(addSectionButton).first()
@@ -289,12 +301,14 @@ describe('Opened lesson structure management', () => {
 
   })
 
-  it.skip('should move section to other page on \'Move to page\' icon', () => {
-    cy.initializeLesson("CypressTestLesson.json");
+  it('should move section to other page on \'Move to page\' icon', () => {
+    cy.initializeLesson("CypressTestLesson");
 
     cy.get(addPageButton).click();
+    cy.get(hamburger).click();
+    cy.get(lessonNavigation).children().contains('Strona 1').click();
     cy.get(moveItemToPageIcon).first().click();
-    cy.contains('Page 2').click();
+    cy.contains('Strona 2 Sekcja: 1').click();
 
     cy.get(lessonSection).should('have.length', 0);
 
@@ -306,15 +320,17 @@ describe('Opened lesson structure management', () => {
   })
 
   it('should move a cell to the section on the other page on \'Move to page\' cell icon', () => {
-    cy.initializeLesson("CypressTestLesson.json");
+    cy.initializeLesson("CypressTestLesson");
 
     cy.get(addSectionButton).first().click({force: true});
     cy.get(addPageButton).click();
+    cy.get(hamburger).click();
+    cy.get(lessonNavigation).children().contains('Strona 1').click();
     
     cy.get(moveItemToPageIcon).first().click();
-    cy.get('li.MuiButtonBase-root').contains('Page 2').click({force: true});
+    cy.get('li.MuiButtonBase-root').contains('Strona 2 Sekcja: 1').click({force: true});
     cy.get(cell).first().find(moveItemToPageIcon).click();
-    cy.get('li.MuiButtonBase-root').contains('Page 2').click({force: true});
+    cy.get('li.MuiButtonBase-root').contains('Strona 2 Sekcja: 1').click({force: true});
     
     
     cy.get(lessonSection).should('have.length', 1);

@@ -73,75 +73,8 @@ const LessonSection = (props) => {
             <div className='section-header-container'>
               <SectionHeader userType={props.userType} page={props.page} sectionIdx={props.sectionIdx}/>
               <div className='section-misc-buttons-container'>
-                  {props.userType === UserType.teacher && <div data-cy="section-drag" className='section-grab' {...props.handleDrag} ><TbGridDots/></div>}
-                  {props.userType === UserType.teacher && <button data-cy="section-delete-button" className='section-delete-button' onClick={props.section?.cells.length > 0 ? openConfirmSectionDeletionModal : removeSectionHandler}><BsTrash3/></button>}
-                  {props.userType === UserType.teacher && <div> <MovableMenuContext pageID={props.page} sectionID={props.sectionIdx} isSection={true}> <TbArrowsMove/> </MovableMenuContext> </div> }
               </div>
             </div>
-            {props.userType === UserType.teacher && <AddCellButton key={"-1addcell" + props.sectionIdx} cellIdx={-1} currentPage={props.page} sectionIdx={props.sectionIdx} />}
-            {props.userType === UserType.teacher && 
-                <StrictModeDroppable droppableId={'section'+props.sectionIdx}>
-                    {(provided) => {
-                        return (<div className='cell-list-container' {...provided.droppableProps} ref={provided.innerRef}>
-                            {props.section?.cells.map((cell, idx) => {
-                                let cellToAdd
-                                if (cell.type === "TextCell") {
-                                    cellToAdd =
-                                        (
-                                            <Cell key={"cell" + idx + "text" + props.sectionIdx} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}>
-                                                <TextCell key={idx + "text" + props.sectionIdx} profileType={cell.profileType} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></TextCell>
-                                            </Cell>
-                                        )
-                                } else if (cell.type === "CodeCell") {
-                                    cellToAdd =
-                                        (
-                                            <Cell key={"cell" + idx + "code" + props.sectionIdx} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}>
-                                                <CodeCell key={idx + "code" + props.sectionIdx} profileType={cell.profileType} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></CodeCell>
-                                            </Cell>
-                                        )
-                                } else if (cell.type === "ImmutableCodeCell") {
-                                    cellToAdd =
-                                        (
-                                            <Cell key={"cell" + idx + "immmutable-code" + props.sectionIdx} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}>
-                                                <ImmutableCodeCell key={idx + "code" + props.sectionIdx} profileType={cell.profileType} text={cell.value} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}></ImmutableCodeCell>
-                                            </Cell>
-                                        )
-                                } else if (cell.type === "QuizCell") {
-                                    cellToAdd =
-                                        (
-                                            <Cell key={"cell" + idx + "quiz" + props.sectionIdx} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}>
-                                                <QuizCell key={idx + "quiz" + props.sectionIdx} profileType={cell.profileType} text={cell.value} content={cell.options} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType} sidebar={props.sidebar}></QuizCell>
-                                            </Cell>
-                                        )
-                                } 
-                                else if (cell.type === "Empty") {
-                                    cellToAdd =
-                                        (
-                                            <Cell key={"cell" + idx + "empty" + props.sectionIdx} cell={cell} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} userType={props.userType}>
-                                                <EmptyCell key={idx + "empty" + props.sectionIdx} profileType={cell.profileType} text={cell.value} cell={cell} cellIdx={idx} userType={props.userType}></EmptyCell>
-                                            </Cell>
-                                        )
-                                }
-                                if (cellToAdd) {
-                                    return (
-                                        <Draggable key={props.sectionIdx+"dragcell"+idx} draggableId={props.sectionIdx+"dragcell"+idx} index={idx}>
-                                            {(provided) => {
-                                                return (<div data-cy="draggable-cell" {...provided.draggableProps}  ref={provided.innerRef}>
-                                                    {React.cloneElement(cellToAdd, {handleDrag: provided.dragHandleProps})}
-                                                   <div {...provided.dragHandleProps}></div>
-                                                    <AddCellButton key={idx + "addcell" + props.sectionIdx} cellIdx={idx} currentPage={props.page} sectionIdx={props.sectionIdx} />
-                                                </div>)
-                                            }}
-                                        </Draggable>)
-                                }
-                                else
-                                    return null
-                            })}
-                        {provided.placeholder}
-                        </div>)
-                    }}
-                </StrictModeDroppable>
-            }
             <ConfirmActionModal open={confirmActionModalOpen} {...confirmActionModalConfig} />
             {props.userType === "STUDENT" && props.section?.cells.map((cell, idx) => {
                 if (cell.type === "TextCell") {

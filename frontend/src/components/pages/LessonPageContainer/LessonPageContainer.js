@@ -223,7 +223,7 @@ const LessonPageContainer = () => {
 
               <IconContext.Provider value={{ color: '#fff' }}>
               <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-                <ul className='nav-menu-items'>
+                <ul className='nav-menu-items' data-cy='lesson-navigation'>
                   <li className='navbar-toggle'>
                   </li>
       

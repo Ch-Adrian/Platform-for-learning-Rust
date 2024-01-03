@@ -60,7 +60,6 @@ function HomePage() {
             </div>
             <div className='file-picker-container'>
                 <FilePicker openLesson={loadImportedLesson}/>
-                {DEFINED_USER_TYPE === UserType.teacher && <div data-cy="new-lesson-button" className='default-lesson-button' onClick={loadNewLesson}>Stwórz nową lekcję</div>}
             </div>
         </div>
         

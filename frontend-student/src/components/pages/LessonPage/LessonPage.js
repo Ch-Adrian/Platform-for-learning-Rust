@@ -32,28 +32,6 @@ const LessonPage = ({userType, setUserType, sidebar}) => {
         <div className='page-container' data-cy="lesson-page-container">
             <DragDropContext onDragEnd={handleOnDragEnd}>
                 {userType === UserType.student && <div className='top-page-padding'/>}
-                {userType === UserType.teacher && <AddSectionButton key={"-1addSection"+page} sectionIdx={-1} page={page} alwaysVisible={lessonDefinition?.pages[page]?.sections?.length === 0}/>}
-                {userType === UserType.teacher && lessonDefinition && 
-                <StrictModeDroppable droppableId={'page'+page} type="droppableItem">
-                {(provided) => {
-                    return (
-                    <div className='section-list-container' {...provided.droppableProps} ref={provided.innerRef}>
-                        {lessonDefinition.pages[page].sections.map((section, idx) => {
-                        return (
-                        <React.Fragment key={idx}>
-                            <Draggable key={page+"dragSection"+idx} draggableId={page+"dragsection"+idx} index={idx}>
-                                            {(provided) => {
-                                                return (
-                                                <div {...provided.draggableProps}  ref={provided.innerRef}>
-                                                    <LessonSection  key={idx} section={section} sectionIdx={idx} page={page} userType={userType} handleDrag={provided.dragHandleProps} sidebar={sidebar}></LessonSection>
-                                                    <AddSectionButton key={idx+"addSection"+page} sectionIdx={idx} page={page} alwaysVisible={false}/>
-                                                </div>)}}
-                            </Draggable>
-                        </React.Fragment>)
-                        })}
-                        {provided.placeholder}
-                    </div>)}}
-                </StrictModeDroppable>}
             </DragDropContext>
             {userType === UserType.student && lessonDefinition && lessonDefinition.pages[page].sections.map((section, idx) => {
             return (<React.Fragment key={idx}>

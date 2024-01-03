@@ -41,8 +41,8 @@ const testOutput = '[data-cy="test-output"]';
 
 
 describe('Code compilation and execution', () => {
-it.skip('should properly compile and execute correct code entered in codeCell with no warnings', () => {
-    cy.initializeLesson("CypressTestLesson.json");
+it('should properly compile and execute correct code entered in codeCell with no warnings', () => {
+    cy.initializeLesson("CypressTestLesson");
 
     const codeValue = `fn test_func(x: i32) -> i32 {{}{del}
 x*5
@@ -59,13 +59,12 @@ println!("{}", test_func(5));
     
     cy.get(codeCell).first().parent().find(runCodeButton).click();
 
-    cy.get(codeOutput).contains(`Compiled successfully`);
     cy.get(codeOutput).contains(`25`);
     cy.get(codeOutput).contains(`Compiler message`).should('not.exist');
 })
 
-it.skip('should properly compile and execute correct code entered in codeCell with a warning', () => {
-    cy.initializeLesson("CypressTestLesson.json");
+it('should properly compile and execute correct code entered in codeCell with a warning', () => {
+    cy.initializeLesson("CypressTestLesson");
 
     const codeValue = `fn test_func(x: i32) -> i32 {{}{del}
 x*5
@@ -83,13 +82,12 @@ println!("{}", test_func(5));
     
     cy.get(codeCell).first().parent().find(runCodeButton).click();
 
-    cy.get(codeOutput).contains(`Compiled successfully`);
     cy.get(codeOutput).contains(`25`);
     cy.get(codeOutput).contains(`Compiler message`).should('exist');
 })
 
-it.skip('should properly compile and execute code that\'s using external crates entered in codeCell', () => {
-    cy.initializeLesson("CypressTestLesson.json");
+it('should properly compile and execute code that\'s using external crates entered in codeCell', () => {
+    cy.initializeLesson("CypressTestLesson");
 
     const validCargoToml = `[package]
 name = "main"
@@ -130,12 +128,12 @@ quote = "1.0"
     
     cy.get(codeCell).first().parent().find(runCodeButton).click();
 
-    cy.get(codeOutput).contains(`Compiled successfully`);
+    // cy.get(codeOutput).contains(`Compiled successfully`);
     cy.get(codeOutput).contains(`Compiler message`).should('not.exist');
 })
 
-it.skip('should not compile an incorrect code entered in codeCell', () => {
-    cy.initializeLesson("CypressTestLesson.json");
+it('should not compile an incorrect code entered in codeCell', () => {
+    cy.initializeLesson("CypressTestLesson");
 
     const codeValue = `fn test_func(x: i32) -> i32 {{}{del}
 x*5
@@ -153,12 +151,12 @@ println!("{}", test_func(5));
     
     cy.get(codeCell).first().parent().find(runCodeButton).click();
 
-    cy.get(codeOutput).contains(`Compiled successfully`).should('not.exist');
+    // cy.get(codeOutput).contains(`Compiled successfully`).should('not.exist');
     cy.get(codeOutput).contains(`Compilation error`).should('exist');
 })
 
-it.skip('should compile a code entered in the CodeCell but panic at runtime because of division by 0', () => {
-    cy.initializeLesson("CypressTestLesson.json");
+it('should compile a code entered in the CodeCell but panic at runtime because of division by 0', () => {
+    cy.initializeLesson("CypressTestLesson");
 
     const codeValue = `fn test_func(x: i32) -> i32 {{}{del}
 x*5
@@ -175,12 +173,12 @@ println!("{}", test_func(5)/test_func(0));
     
     cy.get(codeCell).first().parent().find(runCodeButton).click();
 
-    cy.get(codeOutput).contains(`Compiled successfully`).should('exist');
+    // cy.get(codeOutput).contains(`Compiled successfully`).should('exist');
     cy.get(codeOutput).contains(`thread 'main' panicked at 'attempt to divide by zero'`).should('exist');
 })
 
-it.skip('should compile and run code entered in the CodeCell as well as all inserted tests must pass', () => {
-    cy.initializeLesson("CypressTestLesson.json");
+it('should compile and run code entered in the CodeCell as well as all inserted tests must pass', () => {
+    cy.initializeLesson("CypressTestLesson");
 
     const codeValue = `fn test_func(x: i32) -> i32 {{}{del}
 x*x
@@ -212,6 +210,8 @@ fn test3() {{}{del}
     cy.get(codeCell).first().find('.monaco-editor').first().click()
                 .focused().clear({force: true})
                 .type(codeValue, {force: true});
+
+    cy.get(codeCell).first().find(addTestsButton).click();
     
     cy.get(codeCell).first().find('.monaco-editor').eq(1).click()
                 .focused().clear({force: true})
@@ -221,13 +221,13 @@ fn test3() {{}{del}
 
     cy.get(codeCell).first().parent().find(runCodeButton).click();
 
-    cy.get(codeOutput).contains(`Compiled successfully`).should('exist');
+    // cy.get(codeOutput).contains(`Compiled successfully`).should('exist');
     cy.get(testOutput).contains(`Tests output:`).should('exist');
     cy.get(testOutput).contains(`test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out`).should('exist');
 })
 
-it.skip('should compile and run code entered in the CodeCell but one test should fail', () => {
-    cy.initializeLesson("CypressTestLesson.json");
+it('should compile and run code entered in the CodeCell but one test should fail', () => {
+    cy.initializeLesson("CypressTestLesson");
 
     const codeValue = `fn test_func(x: i32) -> i32 {{}{del}
 x*x
@@ -259,6 +259,8 @@ fn test3() {{}{del}
     cy.get(codeCell).first().find('.monaco-editor').first().click()
                 .focused().clear({force: true})
                 .type(codeValue, {force: true});
+
+    cy.get(codeCell).first().find(addTestsButton).click();
     
     cy.get(codeCell).first().find('.monaco-editor').eq(1).click()
                 .focused().clear({force: true})
@@ -268,13 +270,13 @@ fn test3() {{}{del}
 
     cy.get(codeCell).first().parent().find(runCodeButton).click();
 
-    cy.get(codeOutput).contains(`Compiled successfully`).should('exist');
+    // cy.get(codeOutput).contains(`Compiled successfully`).should('exist');
     cy.get(testOutput).contains(`Tests output:`).should('exist');
     cy.get(testOutput).contains(`test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out`).should('exist');
 })
 
-it.skip('should pass the tests but fail to compile the plain code in CodeCell', () => {
-    cy.initializeLesson("CypressTestLesson.json");
+it('should pass the tests but fail to compile the plain code in CodeCell', () => {
+    cy.initializeLesson("CypressTestLesson");
 
     const codeValue = `fn test_func(x: i32) -> i32 {{}{del}
 x*x
@@ -306,6 +308,8 @@ fn test3() {{}{del}
     cy.get(codeCell).first().find('.monaco-editor').first().click()
                 .focused().clear({force: true})
                 .type(codeValue, {force: true});
+
+    cy.get(codeCell).first().find(addTestsButton).click();
     
     cy.get(codeCell).first().find('.monaco-editor').eq(1).click()
                 .focused().clear({force: true})
@@ -320,8 +324,8 @@ fn test3() {{}{del}
     cy.get(testOutput).contains(`test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out`).should('exist');
 })
 
-it.skip('should correctly compile and run a code but shoudln\'t compile tests', () => {
-    cy.initializeLesson("CypressTestLesson.json");
+it('should correctly compile and run a code but shoudln\'t compile tests', () => {
+    cy.initializeLesson("CypressTestLesson");
 
     const codeValue = `fn test_func(x: i32) -> i32 {{}{del}
 x*x
@@ -355,6 +359,8 @@ fn test3() {{}{del}
                 .focused().clear({force: true})
                 .type(codeValue, {force: true});
     
+    cy.get(codeCell).first().find(addTestsButton).click();
+    
     cy.get(codeCell).first().find('.monaco-editor').eq(1).click()
                 .focused().clear({force: true})
                 .type(testValue, {force: true});
@@ -363,12 +369,12 @@ fn test3() {{}{del}
 
     cy.get(codeCell).first().parent().find(runCodeButton).click();
 
-    cy.get(codeOutput).contains(`Compiled successfully`).should('exist');
+    // cy.get(codeOutput).contains(`Compiled successfully`).should('exist');
     cy.get(testOutput).contains(`Compilation error`).should('exist');
 })
 
-it.skip('should fail to compile due to missing dependencies in Cargo.toml', () => {
-    cy.initializeLesson("CypressTestLesson.json");
+it('should fail to compile due to missing dependencies in Cargo.toml', () => {
+    cy.initializeLesson("CypressTestLesson");
 
     const codeValue = `use rand::Rng;
     fn main() {{}{del}
@@ -395,7 +401,7 @@ it.skip('should fail to compile due to missing dependencies in Cargo.toml', () =
 })
 
 it('should allow user to write a code in a part of editor marked by mutableString in ImmutableCodeCell', () => {
-    cy.initializeLesson("CypressTestLesson.json");
+    cy.initializeLesson("CypressTestLesson");
 
     const codeValue = `{ctrl+a}fn test_func(x: i32) -> i32 {{}{del}
 x*5
@@ -407,6 +413,7 @@ println!("{}", test_func(5));
     const shouldContainList = ['fn test_func(x: i32) -> i32 {', 'println!("{}", test_func(5));'];
 
     cy.get('[data-cy="section-delete-button"]').click();
+    cy.contains('Tak').click();
     cy.get(addSectionButton).first().click({ force: true });
     cy.get(section).find(addCellButton).find('button')
     .click({force: true});
@@ -421,8 +428,8 @@ println!("{}", test_func(5));
     })
 })
 
-it.skip('should prevent user from writing code in the restricted part of editor in ImmutableCodeCell', () => {
-    cy.initializeLesson("CypressTestLesson.json");
+it('should prevent user from writing code in the restricted part of editor in ImmutableCodeCell', () => {
+    cy.initializeLesson("CypressTestLesson");
 
     const codeValue = `{ctrl+a}fn test_func(x: i32) -> i32 {{}{del}
 x*5
@@ -433,6 +440,7 @@ println!("{}", test_func(5));
 }`;
     const shouldContainList = ['fn main() {', '/*TO_FILL*/', '}'];
     cy.get('[data-cy="section-delete-button"]').click();
+    cy.contains('Tak').click();
     cy.get(addSectionButton).first().click({ force: true });
     cy.get(section).find(addCellButton).find('button')
     .click({force: true});

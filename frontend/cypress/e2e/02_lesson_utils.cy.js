@@ -40,27 +40,33 @@ const codeOutput = '[data-cy="code-output"]';
 const testOutput = '[data-cy="test-output"]';
 
 describe('Opened lesson management utilities', () => {
-  it.skip('should successfully rename a lesson from list - old name shouldn\'t be visible in the lessons list', () => {
+  it('should successfully rename a lesson from list - old name shouldn\'t be visible in the lessons list', () => {
     // First, create a lesson, and save it
     cy.visit('/')
     cy.get(newLessonButton).click();
+    // Wait untill page is fully loaded
+    cy.contains('Gotowe', {timeout: 20000});
+    cy.contains('Loading...').should('not.exist');
     // Set name
-    cy.get(lessonName).clear().type('ToRename', {force: true});
+    cy.get(lessonName).clear().type('ToRenameOld', {force: true});
     // Go to starting page
     cy.get(backButton).click();
     cy.contains('Tak').click();
 
     // Now get an already existing lesson
-    cy.contains("ToRename.json").click();
+    cy.contains("ToRenameOld").click().wait(650);
+    // Wait untill page is fully loaded
+    cy.contains('Gotowe', {timeout: 20000});
+    cy.contains('Loading...').should('not.exist');
     cy.get(lessonName).clear().type('ToRenameNew', {force: true});
-    cy.get(backButton).click();
-    cy.contains('Tak').click();
+    cy.get(backButton).click().wait(100);
+    cy.contains('Tak').click({force: true});
 
-    cy.get('[data-cy="lesson-list"]').contains("ToRename.json").should('not.exist');
-    cy.contains("ToRenameNew.json").should('exist');
+    cy.get('[data-cy="lesson-list"]').contains("ToRenameOld").should('not.exist');
+    cy.contains("ToRenameNew").should('exist');
   })
 
-  it.skip('should successfully save a lesson after text cell modification', () => {
+  it('should successfully save a lesson after text cell modification', () => {
     const curDate = Date.now();
 
     cy.visit('/')
@@ -92,7 +98,7 @@ describe('Opened lesson management utilities', () => {
     cy.get(codeCell).first().find('.monaco-editor').first().should('contain.text', curDate);
   })
 
-  it.skip('should successfully save a lesson after immutable code cell modification', () => {
+  it('should successfully save a lesson after immutable code cell modification', () => {
     const curDate = Date.now();
 
     cy.visit('/')
@@ -105,10 +111,10 @@ describe('Opened lesson management utilities', () => {
     cy.contains("Nie").click();
 
     cy.contains("CypressTestLesson").click();
-    cy.get(immutableCodeCell).first().find('.monaco-editor').last().should('have.text', curDate);
+    cy.get(immutableCodeCell).first().find('.monaco-editor').last().should('contain.text', curDate);
   })
 
-  it.skip('should fail building a project when a Cargo.toml with error is provided', () => {
+  it('should fail building a project when a Cargo.toml with error is provided', () => {
     cy.initializeLesson("CypressTestLesson");
     cy.get(configButton).click();
     cy.get(configTextarea).clear({force: true}).type("WRONG VALUE - SHOULD FAIL", {force: true});
@@ -117,7 +123,7 @@ describe('Opened lesson management utilities', () => {
     cy.contains("Error building project! Check cargo file").should('exist');
   })
 
-  it.skip('should succesfully build a project with a valid Cargo.toml file', () => {
+  it('should succesfully build a project with a valid Cargo.toml file', () => {
     cy.initializeLesson("CypressTestLesson");
     cy.get(configButton).click();
     cy.get(configTextarea).clear({force: true}).type(defaultCargoToml, {force: true});
@@ -126,7 +132,7 @@ describe('Opened lesson management utilities', () => {
     cy.contains("Gotowe").should('exist');
   })
 
-  it.skip('should hide lesson content management utilities accessible only to teacher on \'switch mode\' switch', () => {
+  it('should hide lesson content management utilities accessible only to teacher on \'switch mode\' switch', () => {
     cy.initializeLesson("CypressTestLesson");
 
     cy.get('[data-cy="mode-switch"]').find('.react-switch').click();

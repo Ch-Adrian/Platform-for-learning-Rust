@@ -11,7 +11,7 @@ const NameHeader = ({lessonName, setLessonName, lessonDefinition, setStatusInfo,
       const oldName = lessonName;
       const newName = e.currentTarget.textContent;
       try {
-  
+        
         const response = await LessonFileSaveService.getAllLessons();
         if (response.data.some(lesson => lesson.name === oldName + ".json")) {
           try {

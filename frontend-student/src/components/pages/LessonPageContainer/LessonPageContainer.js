@@ -213,9 +213,6 @@ const LessonPageContainer = () => {
               </div>
             </div>
             <div style={{display: 'flex', marginRight: '1rem'}} className={DEFINED_USER_TYPE === userType.teacher ? 'right-side-buttons right-side-buttons' : 'right-side-buttons'}>
-              {DEFINED_USER_TYPE === UserType.teacher && <UserTypeSwitch handleSwitchUserType={handleSwitchUserType}/>}
-              {DEFINED_USER_TYPE === UserType.teacher && <button data-cy="add-page-button" title="Dodaj stronę" className='general-button-item' variant='light' onClick={newPageEvent}><IoMdAdd color="white" /><DescriptionIcon/></button>}
-              {DEFINED_USER_TYPE === UserType.teacher && <button data-cy="remove-page-button"  title="Usuń stronę" className='general-button-item' variant='light' disabled={lessonDefinition && lessonDefinition.pages && lessonDefinition.pages.length === 1} onClick={openConfirmPageDeletionModal}><IoIosRemove /><DescriptionIcon/></button>}
               <button data-cy="config-button" className='general-button-item' variant='light'  title="Konfiguracja Cargo.toml" onClick={() => setConfigModalOpen(true)}><SettingsIcon /></button>
             </div>
           </div>

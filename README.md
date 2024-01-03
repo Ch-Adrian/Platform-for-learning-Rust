@@ -15,7 +15,8 @@ npm 9.7.1
 
 ### Operating system:
 Windows\
-Linux
+Linux\
+MacOS
 
 ## Project set-up:
 
@@ -24,7 +25,8 @@ To run platform locally You have to prepare\
 system to run technologies specified above.
 
 If You want to use docker You have to install\
-only docker and run relevant command.
+docker and run relevant command\
+in main directory containing docker-compose.yml file.
 
 ### To run docker for teacher:
 For the first time under windows or linux run:\

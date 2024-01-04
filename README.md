@@ -60,10 +60,10 @@ For teacher version You have to enter frontend\
 directory(for student this directory is frontend-student).\
 Then if You run project\
 for the first time please use command:\
-`npm install` to install packages
+`npm run build` to install packages
 
 Now you can run platform with:\
-`npm start` command.
+`serve -s build` command.
 
 Afterwards open web browser and go to link:\
 http://localhost:3000

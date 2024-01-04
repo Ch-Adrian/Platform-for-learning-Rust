@@ -10,6 +10,7 @@ import pl.edu.agh.backend.exceptions.CompilerErrorException;
 import java.io.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import pl.edu.agh.backend.exceptions.ConfigurationErrorException;
 
 
 public class ProgramProcess {
@@ -50,6 +51,19 @@ public class ProgramProcess {
 
         if (process.exitValue() != 0) {
             throw new CompilerErrorException(rustFile.getCodeFileName(), compilerMessage.toString());
+        }
+
+        return compilerResponseConfig.createResponse(compilerMessage.toString(), "", rustFile);
+    }
+
+    private CompilationResponse checkConfiguration() throws ConfigurationErrorException, IOException, InterruptedException {
+        processBuilder.command(rustFile.getCompilationCommand());
+
+        Process process = processBuilder.start();
+        process.waitFor();
+
+        if (process.exitValue() != 0) {
+            throw new ConfigurationErrorException(compilerMessage.toString());
         }
 
         return compilerResponseConfig.createResponse(compilerMessage.toString(), "", rustFile);
@@ -106,10 +120,7 @@ public class ProgramProcess {
         try {
             this.writeContentToFile(rustFile);
             this.cleanCodeFile();
-            return this.compileProgram();
-        } catch (CompilerErrorException ex) {
-            logger.error(ex.getMessage());
-            return compilerResponseConfig.createError(ex.getMessage());
+            return this.checkConfiguration();
         } catch (IOException | InterruptedException ex) {
             logger.error(ex.getMessage());
             return compilerResponseConfig.createError("Exception occurred during compilation in Java environment.");
